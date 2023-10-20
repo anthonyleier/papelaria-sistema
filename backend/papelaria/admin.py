@@ -3,19 +3,33 @@ from papelaria.models import Cliente, Vendedor, Produto, DiaDaSemana, Venda, Ite
 
 
 class ClienteAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'email', 'telefone')
+    list_display = ['nome', 'email', 'telefone']
+    list_display_links = ['nome']
+    search_fields = ['nome', 'email']
+    list_per_page = 20
+    ordering = ['nome']
 
 
 class VendedorAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'email', 'telefone')
+    list_display = ['nome', 'email', 'telefone']
+    list_display_links = ['nome']
+    search_fields = ['nome', 'email']
+    list_per_page = 20
+    ordering = ['nome']
 
 
 class ProdutoAdmin(admin.ModelAdmin):
-    list_display = ('codigo', 'descricao', 'valor_unitario', 'percentual_comissao')
+    list_display = ['codigo', 'descricao', 'valor_unitario', 'percentual_comissao']
+    list_display_links = ['codigo', 'descricao']
+    search_fields = ['descricao']
+    list_per_page = 20
+    ordering = ['codigo']
 
 
 class DiaDaSemanaAdmin(admin.ModelAdmin):
-    list_display = ('dia', 'percentual_minimo', 'percentual_maximo')
+    list_display = ['dia', 'percentual_minimo', 'percentual_maximo']
+    list_display_links = ['dia']
+    ordering = ['dia']
 
 
 class ItemVendaInline(admin.TabularInline):
@@ -23,12 +37,16 @@ class ItemVendaInline(admin.TabularInline):
 
 
 class VendaAdmin(admin.ModelAdmin):
-    list_display = ('numero_nota_fiscal', 'data_hora', 'cliente', 'vendedor')
+    list_display = ['numero_nota_fiscal', 'data_hora', 'cliente', 'vendedor']
+    search_fields = ['numero_nota_fiscal']
+    list_per_page = 20
+    ordering = ['numero_nota_fiscal']
     inlines = [ItemVendaInline]
 
 
 class ItemVendaAdmin(admin.ModelAdmin):
-    list_display = ('venda', 'produto', 'quantidade', 'comissao')
+    list_display = ['venda', 'produto', 'quantidade', 'comissao']
+    list_per_page = 20
 
 
 admin.site.register(Cliente, ClienteAdmin)
