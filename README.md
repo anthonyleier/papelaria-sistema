@@ -56,8 +56,8 @@ Apenas faça bom uso delas, a dica é não esquecer que esse espaço é para mos
 ## Suas tarefas
 
 ### A. Desenvolver uma aplicação Python/Django que atenda os critérios a seguir
-- [ ] Permitir, via Django admin, cadastrar produtos, clientes e vendedores
-- [ ] Permitir, via Django admin, configurar os dias da semana e os mínimos e máximos de comissão.
+- [X] Permitir, via Django admin, cadastrar produtos, clientes e vendedores
+- [X] Permitir, via Django admin, configurar os dias da semana e os mínimos e máximos de comissão.
 - [ ] Expor uma API que possibilite CRUD de produtos, clientes, vendedores e vendas.
 - [ ] Expor uma API que permita obter a lista de vendedores com o valor total de comissões a ser pago a cada um pelas vendas de dado período.
 - [ ] Criar testes unitários

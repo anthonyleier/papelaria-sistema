@@ -11,8 +11,8 @@ urlpatterns = [
     path('vendedores/', views.VendedorListCreateView.as_view(), name='vendedor-list-create'),
     path('vendedores/<int:pk>/', views.VendedorRetrieveUpdateDestroyView.as_view(), name='vendedor-retrieve-update-destroy'),
 
-    path('vendedores-comissao/', views.VendedorComissaoList.as_view(), name='vendedor-comissao-list'),
-
     path('vendas/', views.VendaListCreateView.as_view(), name='venda-list-create'),
     path('vendas/<int:pk>/', views.VendaRetrieveUpdateDestroyView.as_view(), name='venda-retrieve-update-destroy'),
+
+    path('comissao/', views.VendedorComissaoList.as_view(), name='vendedor-comissao-list'),
 ]
