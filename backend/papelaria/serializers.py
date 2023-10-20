@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Cliente, Vendedor, Produto, DiaDaSemana, Venda, ItemVenda
+from papelaria.models import Cliente, Vendedor, Produto, DiaDaSemana, Venda, ItemVenda
 
 
 class ClienteSerializer(serializers.ModelSerializer):

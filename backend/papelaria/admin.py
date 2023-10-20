@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Cliente, Vendedor, Produto, DiaDaSemana, Venda, ItemVenda
+from papelaria.models import Cliente, Vendedor, Produto, DiaDaSemana, Venda, ItemVenda
 
 
 class ClienteAdmin(admin.ModelAdmin):
