@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 
-from utils import calcular_percentual_aceitavel
+from papelaria.utils import calcular_percentual_aceitavel
 
 
 class Cliente(models.Model):
