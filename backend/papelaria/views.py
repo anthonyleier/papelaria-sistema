@@ -43,3 +43,16 @@ class VendaListCreateView(generics.ListCreateAPIView):
 class VendaRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Venda.objects.all()
     serializer_class = VendaSerializer
+
+
+class VendedorComissaoList(APIView):
+    def get(self, request, format=None):
+        vendedores = Vendedor.objects.all()
+        comissoes = {}
+        for vendedor in vendedores:
+            total_comissao = 0
+            vendas = Venda.objects.filter(vendedor=vendedor)
+            for venda in vendas:
+                total_comissao += venda.calcular_total_comissao()
+            comissoes[vendedor.nome] = total_comissao
+        return Response(comissoes)
