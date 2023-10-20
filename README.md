@@ -73,7 +73,7 @@ Apenas faça bom uso delas, a dica é não esquecer que esse espaço é para mos
     - [ ] Pedir uma faixa de datas
     - [ ] Apresentar a lista de vendedores e o valor total de comissões a pagar para cada vendedor, com base nas vendas do período
     - [ ] Apresentar total geral de comissões
-- [ ] Atender os protótipos criados pela equipe de UX, disponíveis nos links abaixo: 
+- [ ] Atender os protótipos criados pela equipe de UX, disponíveis nos links abaixo:
     - [Protótipo navegável](https://www.figma.com/proto/LrQFIRtrRJq1GVzofm07qU/Teste-Python-DEV?page-id=69%3A5896&node-id=830%3A2&viewport=1335%2C779%2C0.5&scaling=min-zoom&starting-point-node-id=830%3A124) - Dá uma visão de como seria a App funcionando.
     - [Protótipo aberto](https://www.figma.com/file/LrQFIRtrRJq1GVzofm07qU/Teste-Python-DEV?node-id=69%3A5896) - Apresenta as páginas da App como idealizadas pelo UX.
 

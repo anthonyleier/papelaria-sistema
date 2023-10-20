@@ -1,3 +1,62 @@
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator
 
-# Create your models here.
+from utils import calcular_percentual_aceitavel
+
+
+class Cliente(models.Model):
+    nome = models.CharField(max_length=100)
+    email = models.EmailField()
+    telefone = models.CharField(max_length=15)
+
+    def __str__(self):
+        return self.nome
+
+
+class Vendedor(models.Model):
+    nome = models.CharField(max_length=100)
+    email = models.EmailField()
+    telefone = models.CharField(max_length=15)
+
+    def __str__(self):
+        return self.nome
+
+
+class Produto(models.Model):
+    codigo = models.CharField(max_length=20)
+    descricao = models.CharField(max_length=200)
+    valor_unitario = models.DecimalField(max_digits=10, decimal_places=2)
+    percentual_comissao = models.DecimalField(max_digits=3, decimal_places=2, validators=[MinValueValidator(0), MaxValueValidator(0.10)])
+
+    def __str__(self):
+        return self.descricao
+
+
+class DiaDaSemana(models.Model):
+    dia = models.CharField(max_length=20)
+    percentual_minimo = models.DecimalField(max_digits=3, decimal_places=2)
+    percentual_maximo = models.DecimalField(max_digits=3, decimal_places=2)
+
+    def __str__(self):
+        return self.dia
+
+
+class Venda(models.Model):
+    numero_nota_fiscal = models.CharField(max_length=20)
+    data_hora = models.DateTimeField()
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    vendedor = models.ForeignKey(Vendedor, on_delete=models.CASCADE)
+    produtos = models.ManyToManyField(Produto, through='ItemVenda')
+
+    def __str__(self):
+        return f'Venda {self.numero_nota_fiscal}'
+
+
+class ItemVenda(models.Model):
+    venda = models.ForeignKey(Venda, on_delete=models.CASCADE)
+    produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
+    quantidade = models.PositiveIntegerField()
+    comissao = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+
+    def __str__(self):
+        return f'Item: {self.produto.descricao}'
