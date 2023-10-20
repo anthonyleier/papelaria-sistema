@@ -48,6 +48,12 @@ class Venda(models.Model):
     vendedor = models.ForeignKey(Vendedor, on_delete=models.CASCADE)
     produtos = models.ManyToManyField(Produto, through='ItemVenda')
 
+    def calcular_total_comissao(self):
+        total_comissao = 0
+        for item in self.itemvenda_set.all():
+            total_comissao += item.calcular_comissao()
+        return total_comissao
+
     def __str__(self):
         return f'Venda {self.numero_nota_fiscal}'
 
@@ -57,6 +63,26 @@ class ItemVenda(models.Model):
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     quantidade = models.PositiveIntegerField()
     comissao = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+
+    def calcular_comissao(self):
+        dia_semana = self.venda.data_hora.strftime('%A')
+        try:
+            dia_semana_atual = DiaDaSemana.objects.get(dia=dia_semana)
+            percentual_minimo_dia = dia_semana_atual.percentual_minimo
+            percentual_maximo_dia = dia_semana_atual.percentual_maximo
+
+        except DiaDaSemana.DoesNotExist:
+            percentual_minimo_dia = 0
+            percentual_maximo_dia = 0.1
+
+        percentual_produto = self.produto.percentual_comissao
+        percentual_comissao = calcular_percentual_aceitavel(percentual_produto, percentual_minimo_dia, percentual_maximo_dia)
+
+        comissao_item = self.quantidade * self.produto.valor_unitario * percentual_comissao
+        self.comissao = comissao_item
+
+        self.save()
+        return comissao_item
 
     def __str__(self):
         return f'Item: {self.produto.descricao}'
