@@ -14,6 +14,9 @@ class Cliente(models.Model):
 
 
 class Vendedor(models.Model):
+    class Meta:
+        verbose_name_plural = "Vendedores"
+
     nome = models.CharField(max_length=100)
     email = models.EmailField()
     telefone = models.CharField(max_length=15)
@@ -23,7 +26,7 @@ class Vendedor(models.Model):
 
 
 class Produto(models.Model):
-    codigo = models.CharField(max_length=20)
+    codigo = models.AutoField(primary_key=True, unique=True)
     descricao = models.CharField(max_length=200)
     valor_unitario = models.DecimalField(max_digits=10, decimal_places=2)
     percentual_comissao = models.DecimalField(max_digits=3, decimal_places=2, validators=[MinValueValidator(0), MaxValueValidator(0.10)])
@@ -33,12 +36,16 @@ class Produto(models.Model):
 
 
 class DiaDaSemana(models.Model):
-    dia = models.CharField(max_length=20)
+    class Meta:
+        verbose_name = "Dia da Semana"
+        verbose_name_plural = "Dias da Semana"
+
+    dia = models.PositiveIntegerField()
     percentual_minimo = models.DecimalField(max_digits=3, decimal_places=2)
     percentual_maximo = models.DecimalField(max_digits=3, decimal_places=2)
 
     def __str__(self):
-        return self.dia
+        return str(self.dia)
 
 
 class Venda(models.Model):
@@ -59,13 +66,17 @@ class Venda(models.Model):
 
 
 class ItemVenda(models.Model):
+    class Meta:
+        verbose_name = "Item de Venda"
+        verbose_name_plural = "Itens de Venda"
+
     venda = models.ForeignKey(Venda, on_delete=models.CASCADE)
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     quantidade = models.PositiveIntegerField()
     comissao = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
     def calcular_comissao(self):
-        dia_semana = self.venda.data_hora.strftime('%A')
+        dia_semana = self.venda.data_hora.weekday()
         try:
             dia_semana_atual = DiaDaSemana.objects.get(dia=dia_semana)
             percentual_minimo_dia = dia_semana_atual.percentual_minimo
