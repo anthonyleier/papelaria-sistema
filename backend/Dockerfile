@@ -1,4 +1,6 @@
-FROM python:3.12-alpine
+FROM python:3.12
+
+RUN apt-get update && apt-get install -y --no-install-recommends libpq-dev
 
 WORKDIR /app
 
@@ -8,7 +10,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN python manage.py migrate
 RUN python manage.py collectstatic --noinput
 
 EXPOSE 8000
