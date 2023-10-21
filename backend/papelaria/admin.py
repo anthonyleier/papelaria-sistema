@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from papelaria.models import Cliente, Vendedor, Produto, DiaDaSemana, Venda, ItemVenda
 
 

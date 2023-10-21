@@ -1,8 +1,9 @@
-from rest_framework import generics
+from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from papelaria.models import Cliente, Vendedor, Produto, Venda, ItemVenda, DiaDaSemana
-from papelaria.serializers import ClienteSerializer, VendedorSerializer, ProdutoSerializer, VendaSerializer, ItemVendaSerializer, DiaDaSemanaSerializer
+
+from papelaria.models import Cliente, Vendedor, Produto, Venda
+from papelaria.serializers import ClienteSerializer, VendedorSerializer, ProdutoSerializer, VendaSerializer, ItemVendaSerializer
 
 
 class ProdutoListCreateView(generics.ListCreateAPIView):
@@ -35,9 +36,27 @@ class VendedorRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = VendedorSerializer
 
 
-class VendaListCreateView(generics.ListCreateAPIView):
-    queryset = Venda.objects.all()
-    serializer_class = VendaSerializer
+class VendaListCreateView(APIView):
+    def get(self, request):
+        vendas = Venda.objects.all()
+        serializer = VendaSerializer(vendas, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        venda_serializer = VendaSerializer(data=request.data)
+        if venda_serializer.is_valid():
+            venda = venda_serializer.save()
+
+            produtos = request.data.get('produtos', [])
+            for produto in produtos:
+                item_serializer = ItemVendaSerializer(data=produto)
+                if item_serializer.is_valid():
+                    item_serializer.save(venda=venda)
+                else:
+                    return Response(item_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+            return Response(venda_serializer.data, status=status.HTTP_201_CREATED)
+        return Response(venda_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class VendaRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
