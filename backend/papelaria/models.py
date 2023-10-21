@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.utils import timezone
 
 from papelaria.utils import calcular_percentual_aceitavel
 
@@ -50,7 +51,7 @@ class DiaDaSemana(models.Model):
 
 class Venda(models.Model):
     numero_nota_fiscal = models.CharField(max_length=20)
-    data_hora = models.DateTimeField()
+    data_hora = models.DateTimeField(default=timezone.now)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     vendedor = models.ForeignKey(Vendedor, on_delete=models.CASCADE)
     produtos = models.ManyToManyField(Produto, through='ItemVenda')
@@ -77,6 +78,7 @@ class ItemVenda(models.Model):
 
     def calcular_comissao(self):
         dia_semana = self.venda.data_hora.weekday()
+
         try:
             dia_semana_atual = DiaDaSemana.objects.get(dia=dia_semana)
             percentual_minimo_dia = dia_semana_atual.percentual_minimo
