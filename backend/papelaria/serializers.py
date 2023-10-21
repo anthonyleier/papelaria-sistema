@@ -20,12 +20,6 @@ class ProdutoSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class DiaDaSemanaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = DiaDaSemana
-        fields = '__all__'
-
-
 class VendaSerializer(serializers.ModelSerializer):
     produtos = ProdutoSerializer(many=True, read_only=True)
 
@@ -37,4 +31,4 @@ class VendaSerializer(serializers.ModelSerializer):
 class ItemVendaSerializer(serializers.ModelSerializer):
     class Meta:
         model = ItemVenda
-        fields = '__all__'
+        fields = ['produto', 'quantidade', 'comissao']
