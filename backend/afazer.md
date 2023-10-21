@@ -1,7 +1,3 @@
-- CRUD de Vendas (API)
-- Comissão (API)
-- Criar testes unitários
-
 - Colocar docker
 - Colocar postgres
 

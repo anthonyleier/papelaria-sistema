@@ -3,7 +3,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from papelaria.models import Cliente, Vendedor, Produto, Venda
+from papelaria.models import Cliente, Vendedor, Produto, Venda, DiaDaSemana
 
 
 class ProdutoTests(TestCase):
@@ -71,4 +71,34 @@ class VendaTests(TestCase):
 
     def test_calculo_comissao(self):
         venda = Venda.objects.get(id=self.response.data['id'])
-        self.assertEqual(float(venda.calcular_total_comissao()), 6.29700)  # (10 * 20.99 * 0.03) = 6.297
+        self.assertEqual(float(venda.calcular_total_comissao()), 6.297)  # (10 * 20.99 * 0.03) = 6.297
+
+    def test_calculo_comissao_vendedor(self):
+        response = self.client.get(reverse('vendedor-comissao-list'))
+        self.assertEqual(float(response.data.get(self.vendedor.id)), 6.297)  # 6.297 - Alex Fernandes Araujo
+
+    def test_calculo_comissao_limitador_minimo(self):
+        DiaDaSemana.objects.create(dia=2, percentual_minimo=0.04, percentual_maximo=0.07)
+        venda_data = {
+            'numero_nota_fiscal': '64789',
+            'data_hora': '2023-10-18T12:00:00Z',
+            'cliente': self.cliente.id,
+            'vendedor': self.vendedor.id,
+            'produtos': [{'produto': self.produto.codigo, 'quantidade': 10}]
+        }
+        response = self.client.post(reverse('venda-list-create'), venda_data, format='json')
+        venda = Venda.objects.get(id=response.data['id'])
+        self.assertEqual(float(venda.calcular_total_comissao()), 8.396)  # (10 * 20.99 * 0.04) = 8.396
+
+    def test_calculo_comissao_limitador_maximo(self):
+        DiaDaSemana.objects.create(dia=4, percentual_minimo=0.00, percentual_maximo=0.02)
+        venda_data = {
+            'numero_nota_fiscal': '64789',
+            'data_hora': '2023-10-20T12:00:00Z',
+            'cliente': self.cliente.id,
+            'vendedor': self.vendedor.id,
+            'produtos': [{'produto': self.produto.codigo, 'quantidade': 10}]
+        }
+        response = self.client.post(reverse('venda-list-create'), venda_data, format='json')
+        venda = Venda.objects.get(id=response.data['id'])
+        self.assertEqual(float(venda.calcular_total_comissao()), 4.198)  # (10 * 20.99 * 0.02) = 4.198

@@ -73,5 +73,5 @@ class VendedorComissaoList(APIView):
             vendas = Venda.objects.filter(vendedor=vendedor)
             for venda in vendas:
                 total_comissao += venda.calcular_total_comissao()
-            comissoes[vendedor.nome] = total_comissao
+            comissoes[vendedor.id] = total_comissao
         return Response(comissoes)
