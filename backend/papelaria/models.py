@@ -2,6 +2,8 @@ from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils import timezone
 
+from decimal import Decimal
+
 from papelaria.utils import calcular_percentual_aceitavel
 
 
@@ -91,7 +93,7 @@ class ItemVenda(models.Model):
         percentual_produto = self.produto.percentual_comissao
         percentual_comissao = calcular_percentual_aceitavel(percentual_produto, percentual_minimo_dia, percentual_maximo_dia)
 
-        comissao_item = self.quantidade * self.produto.valor_unitario * percentual_comissao
+        comissao_item = Decimal(self.quantidade) * self.produto.valor_unitario * Decimal(percentual_comissao)
         self.comissao = comissao_item
 
         self.save()

@@ -9,7 +9,7 @@ from papelaria.models import Cliente, Vendedor, Produto, Venda
 class ProdutoTests(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.produto_data = {'codigo': 'P123', 'descricao': 'Caneta', 'valor_unitario': 2.5, 'percentual_comissao': 0.05}
+        self.produto_data = {'descricao': 'Tesoura sem ponta', 'valor_unitario': 6.50, 'percentual_comissao': 0.05}
         self.response = self.client.post(reverse('produto-list-create'), self.produto_data, format='json')
 
     def test_criar_produto(self):
@@ -23,7 +23,7 @@ class ProdutoTests(TestCase):
 class ClienteTests(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.cliente_data = {'nome': 'João', 'email': 'joao@example.com', 'telefone': '123456789'}
+        self.cliente_data = {'nome': 'Leonardo Sousa Ferreira', 'email': 'LeonardoSousaFerreira@teleworm.us', 'telefone': '(51) 9843-9940'}
         self.response = self.client.post(reverse('cliente-list-create'), self.cliente_data, format='json')
 
     def test_criar_cliente(self):
@@ -37,7 +37,7 @@ class ClienteTests(TestCase):
 class VendedorTests(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.vendedor_data = {'nome': 'Maria', 'email': 'maria@example.com', 'telefone': '987654321'}
+        self.vendedor_data = {'nome': 'Bianca Oliveira Azevedo', 'email': 'BiancaOliveiraAzevedo@teleworm.us', 'telefone': '(12) 2179-5851'}
         self.response = self.client.post(reverse('vendedor-list-create'), self.vendedor_data, format='json')
 
     def test_criar_vendedor(self):
@@ -51,15 +51,14 @@ class VendedorTests(TestCase):
 class VendaTests(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.cliente = Cliente.objects.create(nome='Ana', email='ana@example.com', telefone='555555555')
-        self.vendedor = Vendedor.objects.create(nome='Pedro', email='pedro@example.com', telefone='999999999')
-        self.produto = Produto.objects.create(codigo='P123', descricao='Lápis', valor_unitario=1.0, percentual_comissao=0.1)
+        self.cliente = Cliente.objects.create(nome='Matheus Rodrigues Cavalcanti', email='MatheusRodriguesCavalcanti@teleworm.us', telefone='(51) 3829-5220')
+        self.vendedor = Vendedor.objects.create(nome='Alex Fernandes Araujo', email='AlexFernandesAraujo@dayrep.com', telefone='(12) 4880-3155')
+        self.produto = Produto.objects.create(descricao='Papel Sulfite A4', valor_unitario=20.99, percentual_comissao=0.03)
         self.venda_data = {
-            'numero_nota_fiscal': 'N123',
-            'data_hora': '2023-09-20T12:00:00Z',
+            'numero_nota_fiscal': '12345',
             'cliente': self.cliente.id,
             'vendedor': self.vendedor.id,
-            'produtos': [{'produto': self.produto.id, 'quantidade': 10}]
+            'produtos': [{'produto': self.produto.codigo, 'quantidade': 10}]
         }
         self.response = self.client.post(reverse('venda-list-create'), self.venda_data, format='json')
 
@@ -72,4 +71,4 @@ class VendaTests(TestCase):
 
     def test_calculo_comissao(self):
         venda = Venda.objects.get(id=self.response.data['id'])
-        self.assertEqual(venda.calcular_total_comissao(), 1.0)  # (10 * 1.0 * 0.1) = 1.0
+        self.assertEqual(float(venda.calcular_total_comissao()), 6.29700)  # (10 * 20.99 * 0.03) = 6.297
