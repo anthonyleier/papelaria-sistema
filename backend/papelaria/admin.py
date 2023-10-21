@@ -3,19 +3,19 @@ from papelaria.models import Cliente, Vendedor, Produto, DiaDaSemana, Venda, Ite
 
 
 class ClienteAdmin(admin.ModelAdmin):
-    list_display = ['nome', 'email', 'telefone']
+    list_display = ['id', 'nome', 'email', 'telefone']
     list_display_links = ['nome']
     search_fields = ['nome', 'email']
     list_per_page = 20
-    ordering = ['nome']
+    ordering = ['id']
 
 
 class VendedorAdmin(admin.ModelAdmin):
-    list_display = ['nome', 'email', 'telefone']
+    list_display = ['id', 'nome', 'email', 'telefone']
     list_display_links = ['nome']
     search_fields = ['nome', 'email']
     list_per_page = 20
-    ordering = ['nome']
+    ordering = ['id']
 
 
 class ProdutoAdmin(admin.ModelAdmin):
@@ -37,7 +37,7 @@ class ItemVendaInline(admin.TabularInline):
 
 
 class VendaAdmin(admin.ModelAdmin):
-    list_display = ['numero_nota_fiscal', 'data_hora', 'cliente', 'vendedor']
+    list_display = ['id', 'numero_nota_fiscal', 'data_hora', 'cliente', 'vendedor']
     search_fields = ['numero_nota_fiscal']
     list_per_page = 20
     ordering = ['numero_nota_fiscal']
@@ -45,7 +45,7 @@ class VendaAdmin(admin.ModelAdmin):
 
 
 class ItemVendaAdmin(admin.ModelAdmin):
-    list_display = ['venda', 'produto', 'quantidade', 'comissao']
+    list_display = ['id', 'venda', 'produto', 'quantidade', 'comissao']
     list_per_page = 20
 
 
