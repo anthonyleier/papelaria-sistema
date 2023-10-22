@@ -1,7 +1,8 @@
-import './App.css';
-import React from 'react';
-import { FaShoppingCart, FaDollarSign, FaArrowRight } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { FaShoppingCart, FaDollarSign, FaArrowRight } from "react-icons/fa";
+import { Link } from "react-router-dom";
+
+import "./menu.css";
 
 function MenuPage() {
   return (
@@ -29,4 +30,3 @@ function MenuPage() {
 }
 
 export default MenuPage;
-
