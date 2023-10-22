@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import DetalhesVenda from "./DetalhesVenda";
 import { formatarData, formatarMoeda, buscarDadosAPI, deletarDadosAPI } from "../../utils";
 import ExcluirVenda from "./ExcluirVenda";
@@ -56,7 +57,7 @@ const LinhaVenda = (props) => {
         <td>{calcularValorTotal(venda.produtos)}</td>
         <td>
           <button onClick={() => toggleLinhaExpandida(index)}>Ver Itens</button>
-          <button onClick={() => editarVenda(venda)}>Editar</button>
+          <Link to={`/vendas/alterar/${venda.id}`}><button>Editar</button></Link>
           <button
             onClick={() => {
               setAbrirPopupExclusao(true);

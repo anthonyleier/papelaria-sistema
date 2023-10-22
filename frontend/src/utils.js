@@ -38,7 +38,6 @@ export const buscarDataAtual = () => {
 
 export const buscarDadosAPI = async (endpoint, setter) => {
   try {
-    console.log('consultando')
     const response = await axios.get(`http://localhost:8000/${endpoint}/`);
     setter(response.data);
     return response.data;
@@ -53,6 +52,16 @@ export const enviarDadosAPI = async (endpoint, dados) => {
     return response.data;
   } catch (error) {
     console.error(`Erro ao enviar dados para API (${endpoint})`, error);
+  }
+};
+
+export const atualizarDadosAPI = async (endpoint, id, dados) => {
+  try {
+    console.log(dados)
+    const response = await axios.put(`http://localhost:8000/${endpoint}/${id}/`, dados);
+    return response.data;
+  } catch (error) {
+    console.error(`Erro ao atualizar dados para API (${endpoint})`, error);
   }
 };
 

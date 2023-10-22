@@ -64,11 +64,47 @@ class VendaListCreateView(APIView):
         return Response(venda_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class VendaRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Venda.objects.all()
-    serializer_class = VendaSerializer
+class VendaRetrieveUpdateDestroyView(APIView):
+    def get_object(self, pk):
+        try:
+            return Venda.objects.get(pk=pk)
+        except Venda.DoesNotExist:
+            return None
 
-# Altere a view abaixo para receber data inicio e data fim para retornar os dados
+    def get(self, request, pk):
+        venda = self.get_object(pk)
+        if not venda:
+            return Response({'message': 'Venda não encontrada.'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = VendaSerializer(venda)
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        venda = self.get_object(pk)
+        if not venda:
+            return Response({'message': 'Venda não encontrada.'}, status=status.HTTP_404_NOT_FOUND)
+
+        venda_serializer = VendaSerializer(venda, data=request.data)
+        if venda_serializer.is_valid():
+            venda = venda_serializer.save()
+
+            produtos = request.data.get('produtos', [])
+            for produto in produtos:
+                item_serializer = ItemVendaSerializer(data=produto)
+                if item_serializer.is_valid():
+                    item_serializer.save(venda=venda)
+                else:
+                    return Response(item_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(venda_serializer.data)
+        return Response(venda_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk):
+        venda = self.get_object(pk)
+        if not venda:
+            return Response({'message': 'Venda não encontrada.'}, status=status.HTTP_404_NOT_FOUND)
+
+        venda.delete()
+        return Response({'message': 'Venda excluída com sucesso.'}, status=status.HTTP_204_NO_CONTENT)
 
 
 class VendedorComissaoList(APIView):

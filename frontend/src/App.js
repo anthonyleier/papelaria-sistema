@@ -5,6 +5,7 @@ import MenuPage from "./Menu/MenuPage";
 import VendasPage from "./Vendas/Listar/VendasPage";
 import ComissoesPage from "./Comissoes/Listar/comissoesPage";
 import NovaVenda from "./Vendas/Criar/NovaVenda";
+import AlterarVenda from "./Vendas/Alterar/AlterarVenda";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Routes>
         <Route path="/vendas" element={<VendasPage />} />
         <Route path="/vendas/adicionar" element={<NovaVenda />} />
+        <Route path="/vendas/alterar/:id" element={<AlterarVenda />} />
         <Route path="/comissoes" element={<ComissoesPage />} />
         <Route path="/" element={<MenuPage />} />
       </Routes>

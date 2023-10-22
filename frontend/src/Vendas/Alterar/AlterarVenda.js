@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { buscarDadosAPI, buscarDataAtual, enviarDadosAPI, gerarNumeroNotaFiscal } from "../../utils";
+import { atualizarDadosAPI, buscarDadosAPI, buscarDataAtual, enviarDadosAPI, gerarNumeroNotaFiscal } from "../../utils";
 import Navbar from "../../Navbar/navbar";
 import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+const NovaVenda = () => {
+  const [vendas, setVendas] = useState([]);
+  const [venda, setVenda] = useState([]);
+  const [carregando, setCarregando] = useState(true);
 
-const AlterarVenda = () => {
   const [produtosDisponiveis, setProdutosDisponiveis] = useState([]);
   const [clientesDisponiveis, setClientesDisponiveis] = useState([]);
   const [vendedoresDisponiveis, setVendedoresDisponiveis] = useState([]);
@@ -15,12 +19,46 @@ const AlterarVenda = () => {
   const [clienteVenda, setClienteVenda] = useState("");
   const [produtosVenda, setProdutosVenda] = useState([]);
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  useEffect(() => {
+    buscarDadosAPI("vendas", setVendas);
+    buscarDadosAPI("vendedores", setVendedoresDisponiveis);
+    buscarDadosAPI("clientes", setClientesDisponiveis);
+    buscarDadosAPI("produtos", setProdutosDisponiveis);
+  }, []);
+  const carregarVendedor = (venda) => {
+    setVendedorVenda(venda.vendedor);
+  };
+  const carregarCliente = (venda) => {
+    setClienteVenda(venda.cliente);
+  };
+  const carregarProdutos = (venda) => {
+    let carregar = [];
+    venda.produtos.forEach((produto) => {
+      carregar.push({ produto: parseInt(produto.codigo), quantidade: parseInt(produto.quantidade) });
+    });
+    setProdutosVenda(carregar);
+  };
+
+  useEffect(() => {
+    if (vendas.length > 0 && vendedoresDisponiveis.length > 0 && clientesDisponiveis.length > 0 && produtosDisponiveis.length > 0) {
+      const vendaEncontrada = vendas.find((venda) => venda.id == id);
+      if (vendaEncontrada) {
+        carregarVendedor(vendaEncontrada);
+        carregarCliente(vendaEncontrada);
+        carregarProdutos(vendaEncontrada);
+        setVenda(vendaEncontrada);
+        setCarregando(false);
+      }
+    }
+  }, [vendas, id]);
 
   const adicionarProduto = () => {
     if (produtoSelecionado && quantidadeSelecionada > 0) {
       const novoProduto = {
-        produto: produtoSelecionado,
-        quantidade: quantidadeSelecionada,
+        produto: parseInt(produtoSelecionado),
+        quantidade: parseInt(quantidadeSelecionada),
       };
       setProdutosVenda([...produtosVenda, novoProduto]);
       setProdutoSelecionado("");
@@ -35,28 +73,23 @@ const AlterarVenda = () => {
   };
 
   const finalizarVenda = () => {
-    let numeroNotaFiscal = gerarNumeroNotaFiscal();
+    let numeroNotaFiscal = venda.numero_nota_fiscal;
     let dados = { numero_nota_fiscal: numeroNotaFiscal, cliente: clienteVenda, vendedor: vendedorVenda, produtos: produtosVenda };
     console.log("Venda finalizada:", dados);
-    enviarDadosAPI("vendas", dados);
+    atualizarDadosAPI("vendas", id, dados);
     navigate("/vendas");
   };
 
-  useEffect(() => {
-    buscarDadosAPI("vendedores", setVendedoresDisponiveis);
-    buscarDadosAPI("clientes", setClientesDisponiveis);
-    buscarDadosAPI("produtos", setProdutosDisponiveis);
-  }, []);
+  if (carregando) return <p>Carregando...</p>;
 
   return (
     <div>
-      <Navbar tituloDaPagina="Nova Venda" />
-      <h1>Nova Venda</h1>
+      <Navbar tituloDaPagina="Alterar Venda" />
+      <h1>Alterar Venda {venda.id}</h1>
       <div className="menu-lateral">
         <label>Data e Hora:</label>
         <input type="text" value={buscarDataAtual()} readOnly />
-
-        <select onChange={(e) => setVendedorVenda(e.target.value)}>
+        <select value={vendedorVenda} onChange={(e) => setVendedorVenda(e.target.value)}>
           <option value="">Selecione o Vendedor</option>
           {vendedoresDisponiveis.map((vendedor) => (
             <option key={vendedor.id} value={vendedor.id}>
@@ -64,7 +97,7 @@ const AlterarVenda = () => {
             </option>
           ))}
         </select>
-        <select onChange={(e) => setClienteVenda(e.target.value)}>
+        <select value={clienteVenda} onChange={(e) => setClienteVenda(e.target.value)}>
           <option value="">Selecione o Cliente</option>
           {clientesDisponiveis.map((cliente) => (
             <option key={cliente.id} value={cliente.id}>
@@ -101,4 +134,4 @@ const AlterarVenda = () => {
   );
 };
 
-export default AlterarVenda;
+export default NovaVenda;
