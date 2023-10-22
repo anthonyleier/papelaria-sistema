@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 
-import { buscarDadosAPI, formatarMoeda } from "../../utils";
+import { buscarDadosAPI } from "../../utils";
 import Navbar from "../../Navbar/navbar";
 import LinhaVenda from "./LinhaVenda";
 
 import "./vendaspage.css";
+import { Link } from "react-router-dom";
 
 const VendasPage = () => {
   const [vendas, setVendas] = useState([]);
@@ -20,6 +21,8 @@ const VendasPage = () => {
   return (
     <div>
       <Navbar tituloDaPagina="Vendas" />
+      <h1>Vendas Realizadas</h1>
+      <Link to="/vendas/adicionar" className="menu-option"><p>Inserir Nova Venda</p></Link>
       <table>
         <thead>
           <tr>

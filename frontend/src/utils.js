@@ -22,6 +22,20 @@ export const formatarData = (dataString) => {
   return dataFormatada;
 };
 
+export const buscarDataAtual = () => {
+  const now = new Date();
+  const day = now.getDate();
+  const month = now.getMonth() + 1;
+  const year = now.getFullYear();
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+
+  const formattedDate = `${day}/${month < 10 ? "0" : ""}${month}/${year}`;
+  const formattedTime = `${hours < 10 ? "0" : ""}${hours}:${minutes < 10 ? "0" : ""}${minutes}`;
+
+  return `${formattedDate} - ${formattedTime}`;
+};
+
 export const buscarDadosAPI = async (endpoint, setter) => {
   try {
     const response = await axios.get(`http://localhost:8000/${endpoint}/`);
@@ -31,3 +45,26 @@ export const buscarDadosAPI = async (endpoint, setter) => {
     console.error(`Erro ao buscar dados da API (${endpoint})`, error);
   }
 };
+
+export const enviarDadosAPI = async (endpoint, dados) => {
+  try {
+    const response = await axios.post(`http://localhost:8000/${endpoint}/`, dados);
+    return response.data;
+  } catch (error) {
+    console.error(`Erro ao enviar dados para API (${endpoint})`, error);
+  }
+};
+
+export function gerarNumeroNotaFiscal() {
+  const dataAtual = new Date();
+  const ano = dataAtual.getFullYear();
+  const mes = dataAtual.getMonth() + 1;
+  const dia = dataAtual.getDate();
+  const hora = dataAtual.getHours();
+  const minutos = dataAtual.getMinutes();
+  const segundos = dataAtual.getSeconds();
+
+  const numeroFormatado = parseInt(`${ano}${mes < 10 ? "0" : ""}${mes}${dia < 10 ? "0" : ""}${dia}${hora < 10 ? "0" : ""}${hora}${minutos < 10 ? "0" : ""}${minutos}${segundos < 10 ? "0" : ""}${segundos}`);
+
+  return numeroFormatado;
+}
