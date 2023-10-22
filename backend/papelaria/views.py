@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 
 from papelaria.models import Cliente, Vendedor, Produto, Venda
 from papelaria.serializers import ClienteSerializer, VendedorSerializer, ProdutoSerializer, VendaSerializer, ItemVendaSerializer
+from papelaria.utils import montar_json_venda
 
 
 class ProdutoListCreateView(generics.ListCreateAPIView):
@@ -41,8 +42,10 @@ class VendedorRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 class VendaListCreateView(APIView):
     def get(self, request):
         vendas = Venda.objects.all()
-        serializer = VendaSerializer(vendas, many=True)
-        return Response(serializer.data)
+        retorno = []
+        for venda in vendas:
+            retorno.append(montar_json_venda(venda))
+        return Response(retorno)
 
     def post(self, request):
         venda_serializer = VendaSerializer(data=request.data)
