@@ -3,6 +3,8 @@ import { atualizarDadosAPI, buscarDadosAPI, buscarDataAtual, enviarDadosAPI, ger
 import Navbar from "../../Navbar/navbar";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
+
+
 const NovaVenda = () => {
   const [vendas, setVendas] = useState([]);
   const [venda, setVenda] = useState([]);

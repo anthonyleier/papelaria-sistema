@@ -1,10 +1,4 @@
-.relatorio-comissoes {
-  text-align: center;
-}
 
-.filtro {
-  margin: 20px 0;
-}
 
 .tabela-comissoes {
   width: 100%;
@@ -16,14 +10,44 @@
   border: 1px solid #ddd;
   padding: 8px;
   text-align: left;
+  
 }
 
-.tabela-comissoes th {
-  background-color: #f2f2f2;
+.tabela-comissoes td {
+  background-color: #f0f0f0;
 }
+
+
 
 .tabela-comissoes tfoot {
   font-weight: bold;
 }
 
-/* Outros estilos personalizados conforme necessário */
+.filtro {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+}
+
+input[type="date"] {
+  width: 150px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  outline: none;
+}
+
+input[type="date"]::placeholder {
+  color: #999;
+}
+
+input[type="date"]::-webkit-datetime-edit-text {
+  color: #333;
+}
+
+.cabecalho-tabela {
+  background-color: #00585e;
+  color: #f0f0f0;
+}

@@ -49,9 +49,8 @@ function ComissoesPage() {
   return (
     <div>
       <Navbar tituloDaPagina="Comissões" />
-      <div className="relatorio-comissoes">
+      <div class="header-pagina">
         <h1>Relatório de Comissões</h1>
-
         <div className="filtro">
           <label>Data Inicial:</label>
           <input type="date" value={dataInicio} onChange={(e) => setDataInicio(e.target.value)} />
@@ -59,35 +58,35 @@ function ComissoesPage() {
           <label>Data Final:</label>
           <input type="date" value={dataFim} onChange={(e) => setDataFim(e.target.value)} />
         </div>
-
-        <table className="tabela-comissoes">
-          <thead>
-            <tr>
-              <th>Cód.</th>
-              <th>Vendedor</th>
-              <th>Total de Vendas</th>
-              <th>Total de Comissões</th>
-            </tr>
-          </thead>
-          <tbody>
-            {comissoes.map((comissao, index) => (
-              <tr key={index}>
-                <td>{comissao.id_vendedor}</td>
-                <td>{comissao.nome_vendedor}</td>
-                <td>{comissao.qtd_vendas}</td>
-                <td>{formatarMoeda(comissao.valor_comissao)}</td>
-              </tr>
-            ))}
-          </tbody>
-          <tfoot>
-            <tr>
-              <td colSpan="2">Total de Comissões do Período:</td>
-              <td></td>
-              <td>{formatarMoeda(totalComissoes)}</td>
-            </tr>
-          </tfoot>
-        </table>
       </div>
+
+      <table className="tabela-comissoes">
+        <thead class="cabecalho-tabela">
+          <tr>
+            <th>Cód.</th>
+            <th>Vendedor</th>
+            <th>Total de Vendas</th>
+            <th>Total de Comissões</th>
+          </tr>
+        </thead>
+        <tbody>
+          {comissoes.map((comissao, index) => (
+            <tr key={index}>
+              <td>{comissao.id_vendedor}</td>
+              <td>{comissao.nome_vendedor}</td>
+              <td>{comissao.qtd_vendas}</td>
+              <td>{formatarMoeda(comissao.valor_comissao)}</td>
+            </tr>
+          ))}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colSpan="2">Total de Comissões do Período:</td>
+            <td></td>
+            <td>{formatarMoeda(totalComissoes)}</td>
+          </tr>
+        </tfoot>
+      </table>
     </div>
   );
 }
