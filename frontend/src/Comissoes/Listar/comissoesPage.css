@@ -1,29 +1,29 @@
 .relatorio-comissoes {
-    text-align: center;
-  }
-  
-  .date-fields {
-    margin: 20px 0;
-  }
-  
-  .commission-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .commission-table th, .commission-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-  }
-  
-  .commission-table th {
-    background-color: #f2f2f2;
-  }
-  
-  .commission-table tfoot {
-    font-weight: bold;
-  }
-  
-  /* Outros estilos personalizados conforme necessário */
-  
+  text-align: center;
+}
+
+.filtro {
+  margin: 20px 0;
+}
+
+.tabela-comissoes {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabela-comissoes th,
+.tabela-comissoes td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.tabela-comissoes th {
+  background-color: #f2f2f2;
+}
+
+.tabela-comissoes tfoot {
+  font-weight: bold;
+}
+
+/* Outros estilos personalizados conforme necessário */

@@ -1,40 +1,50 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Navbar from "../../Navbar/navbar";
 
-import './comissoesPage.css'
+import "./comissoesPage.css";
 
 function ComissoesPage() {
-  const [dataInicio, setDataInicio] = useState('');
-  const [dataFim, setDataFim] = useState('');
+  const [dataInicio, setDataInicio] = useState("2023-10-01");
+  const [dataFim, setDataFim] = useState("2023-10-31");
   const [comissoes, setComissoes] = useState([]);
   const [totalComissoes, setTotalComissoes] = useState(0);
 
+  const formatarMoeda = (valor) => {
+    const valorArrendondado = Math.round(valor * 100) / 100;
+    const valorFormatado = valorArrendondado.toLocaleString("PT-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+    return valorFormatado;
+  };
+
   useEffect(() => {
-    // Função para buscar dados da API com base nas datas
-    const fetchData = async () => {
+    const calcularTotalComissoes = () => {
+      let total = 0;
+      comissoes.forEach((comissao) => {
+        console.log(comissao.valor_comissao);
+        total += comissao.valor_comissao;
+      });
+      setTotalComissoes(total);
+    };
+
+    calcularTotalComissoes();
+  }, [comissoes]);
+
+  useEffect(() => {
+    const buscarDadosAPI = async () => {
       try {
         const response = await axios.get(`http://localhost:8000/comissao/?data_inicial=${dataInicio}&data_final=${dataFim}`);
-        console.log(response.data)
-        setComissoes(Object.values(response.data)); // Atualiza o estado com os dados da API
+        console.log(response.data);
+        setComissoes(Object.values(response.data));
       } catch (error) {
-        console.error('Erro ao buscar dados da API', error);
+        console.error("Erro ao buscar dados da API", error);
       }
     };
 
-    if (dataInicio && dataFim) {
-      fetchData(); // Chama a função de busca de dados quando as datas são selecionadas
-    }
+    buscarDadosAPI();
   }, [dataInicio, dataFim]);
-
-  // Função para calcular o total de comissões
-  const calcularTotalComissoes = () => {
-    let total = 0;
-    comissoes.forEach((comissao) => {
-      total += comissao.totalComissao;
-    });
-    setTotalComissoes(0);
-  };
 
   return (
     <div>
@@ -42,26 +52,18 @@ function ComissoesPage() {
       <div className="relatorio-comissoes">
         <h1>Relatório de Comissões</h1>
 
-        <div className="date-fields">
-          <label>Data de Início:</label>
-          <input
-            type="date"
-            value={dataInicio}
-            onChange={(e) => setDataInicio(e.target.value)}
-          />
+        <div className="filtro">
+          <label>Data Inicial:</label>
+          <input type="date" value={dataInicio} onChange={(e) => setDataInicio(e.target.value)} />
 
-          <label>Data de Fim:</label>
-          <input
-            type="date"
-            value={dataFim}
-            onChange={(e) => setDataFim(e.target.value)}
-          />
+          <label>Data Final:</label>
+          <input type="date" value={dataFim} onChange={(e) => setDataFim(e.target.value)} />
         </div>
 
-        <table className="commission-table">
+        <table className="tabela-comissoes">
           <thead>
             <tr>
-              <th>Código</th>
+              <th>Cód.</th>
               <th>Vendedor</th>
               <th>Total de Vendas</th>
               <th>Total de Comissões</th>
@@ -73,17 +75,15 @@ function ComissoesPage() {
                 <td>{comissao.id_vendedor}</td>
                 <td>{comissao.nome_vendedor}</td>
                 <td>{comissao.qtd_vendas}</td>
-                <td>{comissao.valor_comissao}</td>
-                {/* <td>{(comissao.vendas * 0.05).toFixed(2)}</td>{" "} */}
-                {/* 5% de comissão */}
+                <td>{formatarMoeda(comissao.valor_comissao)}</td>
               </tr>
             ))}
           </tbody>
           <tfoot>
             <tr>
-              <td colSpan="2">Total:</td>
+              <td colSpan="2">Total de Comissões do Período:</td>
               <td></td>
-              {/* <td>{calcularTotalComissoes().toFixed(2)}</td> */}
+              <td>{formatarMoeda(totalComissoes)}</td>
             </tr>
           </tfoot>
         </table>
