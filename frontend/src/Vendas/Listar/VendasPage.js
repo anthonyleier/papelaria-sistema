@@ -1,104 +1,103 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Navbar from "../../Navbar/navbar";
+
 import "./vendaspage.css";
 
-function excluirVenda(){
+function excluirVenda() {}
 
-}
+function editarVenda() {}
 
-function editarVenda(){
+function verItensDaVenda() {}
 
-}
-
-function verItensDaVenda(){
-
-}
 const VendasPage = () => {
-  const vendas = [
-    {
-      notaFiscal: 1005,
-      data: "19/10/2022 - 14:25",
-      cliente: "Jorge Lacerda dos Santos",
-      valorTotal: 71.1,
-    },
-    {
-      notaFiscal: 1004,
-      data: "19/10/2022 - 14:20",
-      cliente: "Francisco Severino Ferreira",
-      valorTotal: 65.99,
-    },
-    {
-      notaFiscal: 1003,
-      data: "19/10/2022 - 13:05",
-      cliente: "Vanessa Elza Liz Freitas",
-      valorTotal: 85.12,
-    },
-    {
-      notaFiscal: 1002,
-      data: "19/10/2022 - 12:10",
-      cliente: "Rebeca Beatriz Moreira",
-      valorTotal: 102.53,
-    },
-    {
-      notaFiscal: 1001,
-      data: "19/10/2022 - 11:13",
-      cliente: "Gustavo Pietro da Luz",
-      valorTotal: 253.75,
-    },
-    {
-      notaFiscal: 1000,
-      data: "19/10/2022 - 09:45",
-      cliente: "Agatha Manuela Viana",
-      valorTotal: 22.36,
-    },
-    {
-      notaFiscal: 999,
-      data: "18/10/2022 - 14:25",
-      cliente: "Fabiana Stefany Luana Gomes",
-      valorTotal: 48.45,
-    },
-    {
-      notaFiscal: 998,
-      data: "18/10/2022 - 12:10",
-      cliente: "Rosa Ester Carvalho",
-      valorTotal: 75.78,
-    },
-    {
-      notaFiscal: 997,
-      data: "18/10/2022 - 09:45",
-      cliente: "Marcos Fábio Alexandre da Costa",
-      valorTotal: 54.95,
-    },
-  ];
+  const [vendas, setVendas] = useState([]);
+  const [vendedores, setVendedores] = useState([]);
+  const [clientes, setClientes] = useState([]);
+  const [carregando, setCarregando] = useState(true);
+
+  const formatarData = (dataString) => {
+    const data = new Date(dataString);
+
+    const dia = data.getDate();
+    const mes = data.getMonth() + 1;
+    const ano = data.getFullYear();
+    const horas = data.getHours();
+    const minutos = data.getMinutes();
+
+    const dataFormatada = `${dia}/${mes < 10 ? "0" : ""}${mes}/${ano} - ${horas}:${minutos < 10 ? "0" : ""}${minutos}`;
+    return dataFormatada;
+  };
+
+  const calcularValorTotal = (produtos) => {
+    let valorTotal = 0;
+    produtos.forEach(produto => {
+      valorTotal += parseFloat(produto.valor_unitario) * parseFloat(produto.quantidade)
+    });
+    return valorTotal;
+  };
+
+  const getNomeVendedor = (id) => {
+    const vendedor = vendedores.find((vendedor) => vendedor.id === id);
+    return vendedor ? vendedor.nome : null;
+  };
+
+  const getNomeCliente = (id) => {
+    const cliente = clientes.find((vendedor) => vendedor.id === id);
+    return cliente ? cliente.nome : null;
+  };
+
+  useEffect(() => {
+    const buscarDados = async (endpoint, setter) => {
+      try {
+        const response = await axios.get(`http://localhost:8000/${endpoint}/`);
+        setter(response.data);
+        setCarregando(false);
+      } catch (error) {
+        console.error(`Erro ao buscar dados da API (${endpoint})`, error);
+        setCarregando(false);
+      }
+    };
+
+    buscarDados("vendas", setVendas);
+    buscarDados("clientes", setClientes);
+    buscarDados("vendedores", setVendedores);
+  }, []);
+
+  if (carregando) return <p>Carregando...</p>;
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Nota Fiscal</th>
-          <th>Cliente</th>
-          <th>Vendedor</th>
-          <th>Data da Venda</th>
-          <th>Valor Total</th>
-          <th>Opções</th>
-        </tr>
-      </thead>
-      <tbody>
-        {vendas.map((venda) => (
-          <tr key={venda.id}>
-            <td>{venda.notaFiscal}</td>
-            <td>{venda.cliente}</td>
-            <td>{venda.vendedor}</td>
-            <td>{venda.data}</td>
-            <td>{venda.valorTotal}</td>
-            <td>
-              <button onClick={() => verItensDaVenda(venda)}>Ver Itens</button>
-              <button onClick={() => editarVenda(venda)}>Editar</button>
-              <button onClick={() => excluirVenda(venda)}>Excluir</button>
-            </td>
+    <div>
+      <Navbar tituloDaPagina="Vendas" />
+      <table>
+        <thead>
+          <tr>
+            <th>Nota Fiscal</th>
+            <th>Cliente</th>
+            <th>Vendedor</th>
+            <th>Data da Venda</th>
+            <th>Valor Total</th>
+            <th>Opções</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {vendas.map((venda) => (
+            <tr key={venda.id}>
+              <td>{venda.numero_nota_fiscal}</td>
+              <td>{getNomeCliente(venda.cliente)}</td>
+              <td>{getNomeVendedor(venda.vendedor)}</td>
+              <td>{formatarData(venda.data_hora)}</td>
+              <td>{calcularValorTotal(venda.produtos)}</td>
+              <td>
+                <button onClick={() => verItensDaVenda(venda)}>Ver Itens</button>
+                <button onClick={() => editarVenda(venda)}>Editar</button>
+                <button onClick={() => excluirVenda(venda)}>Excluir</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 
