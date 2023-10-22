@@ -87,6 +87,8 @@ class VendaRetrieveUpdateDestroyView(APIView):
         venda_serializer = VendaSerializer(venda, data=request.data)
         if venda_serializer.is_valid():
             venda = venda_serializer.save()
+            venda.produtos.set([])
+            venda.save()
 
             produtos = request.data.get('produtos', [])
             for produto in produtos:

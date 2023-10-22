@@ -74,8 +74,9 @@ class VendaTests(TestCase):
         self.assertEqual(float(venda.calcular_total_comissao()), 6.297)  # (10 * 20.99 * 0.03) = 6.297
 
     def test_calculo_comissao_vendedor(self):
-        response = self.client.get(reverse('vendedor-comissao-list'))
-        self.assertEqual(float(response.data.get(self.vendedor.id)), 6.297)  # 6.297 - Alex Fernandes Araujo
+        response = self.client.get(reverse('vendedor-comissao-list') + '?data_inicial=2023-01-01&data_final=2023-12-31')
+        vendedor = [vendedor for vendedor in response.data if vendedor["id_vendedor"] == self.vendedor.id][0]
+        self.assertEqual(float(vendedor.get('valor_comissao')), 6.297)  # 6.297 - Alex Fernandes Araujo
 
     def test_calculo_comissao_limitador_minimo(self):
         DiaDaSemana.objects.create(dia=2, percentual_minimo=0.04, percentual_maximo=0.07)
