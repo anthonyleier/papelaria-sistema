@@ -49,13 +49,13 @@ const LinhaVenda = (props) => {
 
   return (
     <div>
-      <tr key={venda.id}>
-        <td>{venda.numero_nota_fiscal}</td>
-        <td>{getNomeCliente(venda.cliente)}</td>
-        <td>{getNomeVendedor(venda.vendedor)}</td>
-        <td>{formatarData(venda.data_hora)}</td>
-        <td>{calcularValorTotal(venda.produtos)}</td>
-        <td>
+      <div key={venda.id} class='linha-tabela'>
+        <div>{venda.numero_nota_fiscal}</div>
+        <div>{getNomeCliente(venda.cliente)}</div>
+        <div>{getNomeVendedor(venda.vendedor)}</div>
+        <div>{formatarData(venda.data_hora)}</div>
+        <div>{calcularValorTotal(venda.produtos)}</div>
+        <div>
           <button onClick={() => toggleLinhaExpandida(index)}>Ver Itens</button>
           <Link to={`/vendas/alterar/${venda.id}`}><button>Editar</button></Link>
           <button
@@ -65,8 +65,8 @@ const LinhaVenda = (props) => {
           >
             Excluir
           </button>
-        </td>
-      </tr>
+        </div>
+      </div>
       {linhasExpandidas.includes(index) && <DetalhesVenda venda={venda} />}
     </div>
   );

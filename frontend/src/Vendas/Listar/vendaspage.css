@@ -1,46 +1,40 @@
 body {
-    font-family: Arial, sans-serif;
-   }
-   
-   table {
-    width: 100%;
-    border-collapse: collapse;
-   }
-   
-   table th, table td {
-    padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-   }
-   
-   table th {
-    background-color: #4CAF50;
-    color: white;
-   }
-   
-   tr:nth-child(even) {
-    background-color: #f2f2f2;
-   }
-   
-   tr:hover {
-    background-color: #ddd;
-   }
-   
-   button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    transition-duration: 0.4s;
-   }
-   
-   button:hover {
-    background-color: #45a049;
-    color: white;
-   }
+  font-family: Arial, sans-serif;
+}
+
+.cabecalho {
+  display: flex;
+  padding: 10px;
+  justify-content: space-around;
+  background-color: #00585e;
+  color: #f0f0f0;
+}
+
+.linha-tabela {
+  display: flex;
+  padding: 10px;
+  justify-content: space-around;
+  background-color: #f0f0f0;
+}
+
+.header-pagina {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  color: #00585e;
+  padding-top: 20px;
+  padding-bottom: 50px;
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+.botao-header {
+  background-color: #00585e;
+  color: #f0f0f0;
+  border-radius: 10px;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}

@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 const VendasPage = () => {
   const [vendas, setVendas] = useState([]);
   const [carregando, setCarregando] = useState(true);
-  const [forcar, setForcar] = useState(false)
+  const [forcar, setForcar] = useState(false);
 
   useEffect(() => {
     buscarDadosAPI("vendas", setVendas);
@@ -21,7 +21,7 @@ const VendasPage = () => {
     deletarDadosAPI("vendas", venda.id);
     setAbrirPopupExclusao(false);
     buscarDadosAPI("vendas", setVendas);
-    setForcar(true)
+    setForcar(true);
   };
 
   if (carregando) return <p>Carregando...</p>;
@@ -29,27 +29,29 @@ const VendasPage = () => {
   return (
     <div>
       <Navbar tituloDaPagina="Vendas" />
-      <h1>Vendas Realizadas</h1>
-      <Link to="/vendas/adicionar" className="menu-option">
-        <p>Inserir Nova Venda</p>
-      </Link>
-      <table>
-        <thead>
-          <tr>
-            <th>Nota Fiscal</th>
-            <th>Cliente</th>
-            <th>Vendedor</th>
-            <th>Data da Venda</th>
-            <th>Valor Total</th>
-            <th>Opções</th>
-          </tr>
-        </thead>
-        <tbody>
+      <div class="header-pagina">
+        <h1>Vendas Realizadas</h1>
+        <Link to="/vendas/adicionar" className="botao-header">
+          <p>Inserir Nova Venda</p>
+        </Link>
+      </div>
+      <div>
+        <div>
+          <div class="cabecalho">
+            <div class="tabela-cabecalho">Nota Fiscal</div>
+            <div class="tabela-cabecalho">Cliente</div>
+            <div class="tabela-cabecalho">Vendedor</div>
+            <div class="tabela-cabecalho">Data da Venda</div>
+            <div class="tabela-cabecalho">Valor Total</div>
+            <div class="tabela-cabecalho">Opções</div>
+          </div>
+        </div>
+        <div>
           {vendas.map((venda) => (
             <LinhaVenda venda={venda} onExcluir={excluirVenda} />
           ))}
-        </tbody>
-      </table>
+        </div>
+      </div>
     </div>
   );
 };

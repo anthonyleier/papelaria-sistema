@@ -3,28 +3,24 @@ import { formatarMoeda } from "../../utils";
 const DetalhesVenda = (props) => {
   const venda = props.venda;
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Produtos/Serviço</th>
-          <th>Quantidade</th>
-          <th>Preço Unitário</th>
-          <th>% de Comissão</th>
-          <th>Comissão</th>
-        </tr>
-      </thead>
-      <tbody>
-        {venda.produtos.map((produto) => (
-          <tr>
-            <td>{produto.descricao}</td>
-            <td>{produto.quantidade}</td>
-            <td>{formatarMoeda(produto.valor_unitario)}</td>
-            <td>{produto.percentual_comissao * 100 + "%"}</td>
-            <td>{formatarMoeda(produto.valor_unitario * produto.percentual_comissao)}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <div>
+      <div class="cabecalho">
+        <div>Produtos/Serviço</div>
+        <div>Quantidade</div>
+        <div>Preço Unitário</div>
+        <div>% de Comissão</div>
+        <div>Comissão</div>
+      </div>
+      {venda.produtos.map((produto) => (
+        <div class="linha-tabela">
+          <div>{produto.descricao}</div>
+          <div>{produto.quantidade}</div>
+          <div>{formatarMoeda(produto.valor_unitario)}</div>
+          <div>{produto.percentual_comissao * 100 + "%"}</div>
+          <div>{formatarMoeda(produto.valor_unitario * produto.percentual_comissao)}</div>
+        </div>
+      ))}
+    </div>
   );
 };
 export default DetalhesVenda;
