@@ -1,4 +1,3 @@
-// Altere este código com um botão de remover produtos adicionados
 import React, { useState, useEffect } from "react";
 import { buscarDadosAPI, buscarDataAtual, enviarDadosAPI, gerarNumeroNotaFiscal } from "../../utils";
 import Navbar from "../../Navbar/navbar";
@@ -39,7 +38,7 @@ const NovaVenda = () => {
     let dados = { numero_nota_fiscal: numeroNotaFiscal, cliente: clienteVenda, vendedor: vendedorVenda, produtos: produtosVenda };
     console.log("Venda finalizada:", dados);
     enviarDadosAPI("vendas", dados);
-    // navigate("/vendas");
+    navigate("/vendas");
   };
 
   useEffect(() => {

@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import DetalhesVenda from "./DetalhesVenda";
-import { formatarData, formatarMoeda, buscarDadosAPI } from "../../utils";
-
+import { formatarData, formatarMoeda, buscarDadosAPI, deletarDadosAPI } from "../../utils";
+import ExcluirVenda from "./ExcluirVenda";
 const LinhaVenda = (props) => {
   const venda = props.venda;
   const index = props.index;
+  const excluirVenda = props.onExcluir;
   const [linhasExpandidas, setLinhasExpandidas] = useState([]);
   const [vendedores, setVendedores] = useState([]);
   const [clientes, setClientes] = useState([]);
-
-  function excluirVenda() {}
+  const [abrirPopupExclusao, setAbrirPopupExclusao] = useState(false);
 
   function editarVenda() {}
 
@@ -44,6 +44,8 @@ const LinhaVenda = (props) => {
     buscarDadosAPI("vendedores", setVendedores);
   }, []);
 
+  if (abrirPopupExclusao) return <ExcluirVenda venda={venda} onExcluir={excluirVenda} setAbrirPopupExclusao={setAbrirPopupExclusao} />;
+
   return (
     <div>
       <tr key={venda.id}>
@@ -55,7 +57,13 @@ const LinhaVenda = (props) => {
         <td>
           <button onClick={() => toggleLinhaExpandida(index)}>Ver Itens</button>
           <button onClick={() => editarVenda(venda)}>Editar</button>
-          <button onClick={() => excluirVenda(venda)}>Excluir</button>
+          <button
+            onClick={() => {
+              setAbrirPopupExclusao(true);
+            }}
+          >
+            Excluir
+          </button>
         </td>
       </tr>
       {linhasExpandidas.includes(index) && <DetalhesVenda venda={venda} />}
