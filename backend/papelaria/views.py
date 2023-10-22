@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -63,15 +65,33 @@ class VendaRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Venda.objects.all()
     serializer_class = VendaSerializer
 
+# Altere a view abaixo para receber data inicio e data fim para retornar os dados
+
 
 class VendedorComissaoList(APIView):
     def get(self, request, format=None):
+        data_incial_param = request.query_params.get('data_inicial')
+        data_final_param = request.query_params.get('data_final')
+
+        if not data_incial_param or not data_final_param:
+            return Response({'error': 'É necessário fornecer data inicial e data final.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            data_inicial = datetime.strptime(data_incial_param, '%Y-%m-%d').date()
+            data_final = datetime.strptime(data_final_param, '%Y-%m-%d').date()
+        except ValueError:
+            return Response({'error': 'Formato de data inválido. Use o formato AAAA-MM-DD.'}, status=status.HTTP_400_BAD_REQUEST)
+
         vendedores = Vendedor.objects.all()
-        comissoes = {}
+        comissoes = []
         for vendedor in vendedores:
             total_comissao = 0
-            vendas = Venda.objects.filter(vendedor=vendedor)
+            print(data_inicial)
+            print(data_final)
+            vendas = Venda.objects.filter(vendedor=vendedor, data_hora__range=(data_inicial, data_final))
+
             for venda in vendas:
                 total_comissao += venda.calcular_total_comissao()
-            comissoes[vendedor.id] = total_comissao
+
+            comissoes.append({'id_vendedor': vendedor.id, 'nome_vendedor': vendedor.nome, 'qtd_vendas': len(vendas), 'valor_comissao': total_comissao})
         return Response(comissoes)
