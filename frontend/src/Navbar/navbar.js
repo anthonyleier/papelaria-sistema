@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import "./navbar.css";
 
-const navbar = ({ tituloDaPagina }) => {
+const Navbar = ({ tituloDaPagina }) => {
   const [menuAberto, setMenuAberto] = useState(false);
 
   const toggleMenu = () => {
@@ -37,10 +37,10 @@ const navbar = ({ tituloDaPagina }) => {
           </ul>
         </div>
       )}
-      <img src="logo.svg" alt="Logo da Empresa" className="logo" />
+      <img src="/logo.svg" alt="Logo da Empresa" className="logo" />
       <h1 className="titulo-pagina">{tituloDaPagina}</h1>
     </nav>
   );
 };
 
-export default navbar;
+export default Navbar;
