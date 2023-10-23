@@ -15,7 +15,7 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  align-items: start;
+  align-items: flex-start;
   background-color: #f0f0f0;
   color: #00585e;
   height: 500px;
@@ -25,7 +25,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  align-items: start;
+  align-items: flex-start;
   height: 100%;
 }
 
