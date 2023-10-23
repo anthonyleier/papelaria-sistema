@@ -4,7 +4,7 @@ const DetalhesVenda = (props) => {
   const venda = props.venda;
   return (
     <div>
-      <div class="cabecalho">
+      <div className="cabecalho">
         <div>Produtos/Serviço</div>
         <div>Quantidade</div>
         <div>Preço Unitário</div>
@@ -12,7 +12,7 @@ const DetalhesVenda = (props) => {
         <div>Comissão</div>
       </div>
       {venda.produtos.map((produto) => (
-        <div class="linha-tabela">
+        <div className="linha-tabela">
           <div>{produto.descricao}</div>
           <div>{produto.quantidade}</div>
           <div>{formatarMoeda(produto.valor_unitario)}</div>

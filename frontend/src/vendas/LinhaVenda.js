@@ -49,7 +49,7 @@ const LinhaVenda = (props) => {
 
   return (
     <div>
-      <div key={venda.id} class="linha-tabela">
+      <div key={venda.id} className="linha-tabela">
         <div>{venda.numero_nota_fiscal}</div>
         <div>{getNomeCliente(venda.cliente)}</div>
         <div>{getNomeVendedor(venda.vendedor)}</div>

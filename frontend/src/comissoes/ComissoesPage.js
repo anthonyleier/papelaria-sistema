@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import Navbar from "../navbar/Navbar";
 import { formatarMoeda, buscarDadosAPI } from "../utils";
-import "./comissoesPage.css";
+import "./comissoes.css";
 
 function ComissoesPage() {
   const [dataInicio, setDataInicio] = useState("2023-10-01");
@@ -30,7 +30,7 @@ function ComissoesPage() {
   return (
     <div>
       <Navbar tituloDaPagina="Comissões" />
-      <div class="header-pagina">
+      <div className="header-pagina">
         <h1>Relatório de Comissões</h1>
         <div className="filtro">
           <label>Data Inicial:</label>
@@ -42,7 +42,7 @@ function ComissoesPage() {
       </div>
 
       <table className="tabela-comissoes">
-        <thead class="cabecalho-tabela">
+        <thead className="cabecalho-tabela">
           <tr>
             <th>Cód.</th>
             <th>Vendedor</th>

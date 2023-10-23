@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
 
-import "./vendaInteracao.css";
 import Navbar from "../navbar/Navbar";
 import { buscarDadosAPI, buscarDataAtual, enviarDadosAPI, gerarNumeroNotaFiscal, formatarMoeda } from "../utils";
 
