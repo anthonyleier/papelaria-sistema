@@ -3,9 +3,17 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
+import Select from "react-select";
 
 import Navbar from "../navbar/Navbar";
-import { buscarDadosAPI, buscarDataAtual, formatarMoeda, atualizarDadosAPI, gerarNumeroNotaFiscal, enviarDadosAPI } from "../utils";
+import {
+    buscarDadosAPI,
+    buscarDataAtual,
+    formatarMoeda,
+    atualizarDadosAPI,
+    gerarNumeroNotaFiscal,
+    enviarDadosAPI,
+} from "../utils";
 
 const AlterarVenda = () => {
     const [vendas, setVendas] = useState([]);
@@ -62,7 +70,12 @@ const AlterarVenda = () => {
 
     useEffect(() => {
         if (modoEdicao) {
-            if (vendas.length > 0 && vendedoresDisponiveis.length > 0 && clientesDisponiveis.length > 0 && produtosDisponiveis.length > 0) {
+            if (
+                vendas.length > 0 &&
+                vendedoresDisponiveis.length > 0 &&
+                clientesDisponiveis.length > 0 &&
+                produtosDisponiveis.length > 0
+            ) {
                 const vendaEncontrada = vendas.find((venda) => venda.id == id);
                 if (vendaEncontrada) {
                     carregarVendedor(vendaEncontrada);
@@ -81,9 +94,9 @@ const AlterarVenda = () => {
 
     const adicionarProduto = () => {
         if (produtoSelecionado && quantidadeSelecionada > 0) {
-            const produto = produtosDisponiveis.find((elemento) => elemento.codigo == produtoSelecionado);
+            const produto = produtosDisponiveis.find((elemento) => elemento.codigo == produtoSelecionado.codigo);
             const novoProduto = {
-                produto: produtoSelecionado,
+                produto: produtoSelecionado.codigo,
                 descricao: produto.descricao,
                 quantidade: parseInt(quantidadeSelecionada),
                 valor_unitario: parseFloat(produto.valor_unitario),
@@ -103,7 +116,12 @@ const AlterarVenda = () => {
 
     const finalizarVendaAlteracao = () => {
         let numeroNotaFiscal = venda.numero_nota_fiscal;
-        let dados = { numero_nota_fiscal: numeroNotaFiscal, cliente: clienteVenda, vendedor: vendedorVenda, produtos: produtosVenda };
+        let dados = {
+            numero_nota_fiscal: numeroNotaFiscal,
+            cliente: clienteVenda,
+            vendedor: vendedorVenda,
+            produtos: produtosVenda,
+        };
         console.log("Venda finalizada:", dados);
         atualizarDadosAPI("vendas/", id, dados);
         navigate("/vendas");
@@ -111,7 +129,12 @@ const AlterarVenda = () => {
 
     const finalizarVendaInclusao = () => {
         let numeroNotaFiscal = gerarNumeroNotaFiscal();
-        let dados = { numero_nota_fiscal: numeroNotaFiscal, cliente: clienteVenda, vendedor: vendedorVenda, produtos: produtosVenda };
+        let dados = {
+            numero_nota_fiscal: numeroNotaFiscal,
+            cliente: clienteVenda,
+            vendedor: vendedorVenda,
+            produtos: produtosVenda,
+        };
         console.log("Venda finalizada:", dados);
         enviarDadosAPI("vendas/", dados);
         navigate("/vendas");
@@ -123,6 +146,9 @@ const AlterarVenda = () => {
 
     if (carregando) return <p>Carregando...</p>;
 
+    const handleProdutoChange = (value) => {
+        setProdutoSelecionado(value);
+    };
     return (
         <div>
             {modoEdicao ? <Navbar tituloDaPagina="Alterar Venda" /> : <Navbar tituloDaPagina="Nova Venda" />}
@@ -132,18 +158,24 @@ const AlterarVenda = () => {
 
                     <div className="grupo-inputs-produto">
                         <div className="input-produto">
-                            <select onChange={(e) => setProdutoSelecionado(e.target.value)}>
-                                <option value="">Selecione o Produto</option>
-                                {produtosDisponiveis.map((produto) => (
-                                    <option key={produto.codigo} value={produto.codigo}>
-                                        {produto.descricao}
-                                    </option>
-                                ))}
-                            </select>
+                            <Select
+                                options={produtosDisponiveis}
+                                onChange={handleProdutoChange}
+                                value={produtoSelecionado}
+                                getOptionLabel={(option) => option.descricao}
+                                getOptionValue={(option) => option.codigo}
+                                placeholder="Buscar produto pelo código ou descrição"
+                                isSearchable={true}
+                            />
                         </div>
 
                         <div className="input-produto">
-                            <input type="number" className="input-texto" value={quantidadeSelecionada} onChange={(e) => setQuantidadeSelecionada(e.target.value)} />
+                            <input
+                                type="number"
+                                className="input-texto"
+                                value={quantidadeSelecionada}
+                                onChange={(e) => setQuantidadeSelecionada(e.target.value)}
+                            />
                         </div>
 
                         <div className="input-produto">
