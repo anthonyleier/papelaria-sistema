@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
 
 import Navbar from "../navbar/Navbar";
-import { buscarDadosAPI, buscarDataAtual, formatarMoeda, atualizarDadosAPI } from "../utils";
+import { buscarDadosAPI, buscarDataAtual, formatarMoeda, atualizarDadosAPI, gerarNumeroNotaFiscal, enviarDadosAPI } from "../utils";
 
 const AlterarVenda = () => {
     const [vendas, setVendas] = useState([]);
@@ -24,6 +24,8 @@ const AlterarVenda = () => {
     const [produtosVenda, setProdutosVenda] = useState([]);
     const navigate = useNavigate();
     const { id } = useParams();
+
+    const modoEdicao = id ? true : false;
 
     const calcularTotalVenda = () => {
         const valorTotal = produtosVenda.reduce((total, produto) => {
@@ -59,15 +61,21 @@ const AlterarVenda = () => {
     };
 
     useEffect(() => {
-        if (vendas.length > 0 && vendedoresDisponiveis.length > 0 && clientesDisponiveis.length > 0 && produtosDisponiveis.length > 0) {
-            const vendaEncontrada = vendas.find((venda) => venda.id == id);
-            if (vendaEncontrada) {
-                carregarVendedor(vendaEncontrada);
-                carregarCliente(vendaEncontrada);
-                carregarProdutos(vendaEncontrada);
-                setVenda(vendaEncontrada);
-                setCarregando(false);
+        if (modoEdicao) {
+            if (vendas.length > 0 && vendedoresDisponiveis.length > 0 && clientesDisponiveis.length > 0 && produtosDisponiveis.length > 0) {
+                const vendaEncontrada = vendas.find((venda) => venda.id == id);
+                if (vendaEncontrada) {
+                    carregarVendedor(vendaEncontrada);
+                    carregarCliente(vendaEncontrada);
+                    carregarProdutos(vendaEncontrada);
+                    setVenda(vendaEncontrada);
+                    setCarregando(false);
+                }
             }
+        }
+
+        if (!modoEdicao) {
+            setCarregando(false);
         }
     }, [vendas, id]);
 
@@ -93,7 +101,7 @@ const AlterarVenda = () => {
         setProdutosVenda(novosProdutos);
     };
 
-    const finalizarVenda = () => {
+    const finalizarVendaAlteracao = () => {
         let numeroNotaFiscal = venda.numero_nota_fiscal;
         let dados = { numero_nota_fiscal: numeroNotaFiscal, cliente: clienteVenda, vendedor: vendedorVenda, produtos: produtosVenda };
         console.log("Venda finalizada:", dados);
@@ -101,17 +109,28 @@ const AlterarVenda = () => {
         navigate("/vendas");
     };
 
+    const finalizarVendaInclusao = () => {
+        let numeroNotaFiscal = gerarNumeroNotaFiscal();
+        let dados = { numero_nota_fiscal: numeroNotaFiscal, cliente: clienteVenda, vendedor: vendedorVenda, produtos: produtosVenda };
+        console.log("Venda finalizada:", dados);
+        enviarDadosAPI("vendas/", dados);
+        navigate("/vendas");
+    };
+
+    const finalizarVenda = () => {
+        modoEdicao ? finalizarVendaAlteracao() : finalizarVendaInclusao();
+    };
+
     if (carregando) return <p>Carregando...</p>;
 
     return (
         <div>
-            <Navbar tituloDaPagina="Nova Venda" />
+            {modoEdicao ? <Navbar tituloDaPagina="Alterar Venda" /> : <Navbar tituloDaPagina="Nova Venda" />}
             <div className="conteudo-pagina-editar-venda">
                 <div className="aba-produtos">
                     <h2>Produtos</h2>
 
                     <div className="grupo-inputs-produto">
-
                         <div className="input-produto">
                             <select onChange={(e) => setProdutoSelecionado(e.target.value)}>
                                 <option value="">Selecione o Produto</option>

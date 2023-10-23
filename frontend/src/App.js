@@ -3,8 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import VendasPage from "./vendas/VendasPage";
 import ComissoesPage from "./comissoes/ComissoesPage";
-import NovaVenda from "./vendas/NovaVenda";
-import AlterarVenda from "./vendas/AlterarVenda";
+import VendaForm from "./vendas/VendaForm";
 
 function App() {
   return (
@@ -12,8 +11,8 @@ function App() {
       <Routes>
         <Route path="/" element={<VendasPage />} />
         <Route path="/vendas" element={<VendasPage />} />
-        <Route path="/vendas/adicionar" element={<NovaVenda />} />
-        <Route path="/vendas/alterar/:id" element={<AlterarVenda />} />
+        <Route path="/vendas/adicionar" element={<VendaForm />} />
+        <Route path="/vendas/alterar/:id" element={<VendaForm />} />
         <Route path="/comissoes" element={<ComissoesPage />} />
       </Routes>
     </Router>
