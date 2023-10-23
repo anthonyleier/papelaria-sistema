@@ -55,6 +55,15 @@ Com as aplicações rodando, elas estarão disponíveis no localhost, na porta 8
 `http://localhost:8000/admin`
 `http://localhost:3000`
 
+## Testes
+O projeto em Django contém testes automatizados que podem ser testados com o comando test.
+
+`python manage.py test`
+
+Caso esteja executando dentro do docker, pode executar o mesmo comando com a estrutura abaixo
+
+`docker exec -it papelaria-sistema-backend-1 python manage.py test`
+
 ## Descrição da Atividade
 
 Nós, da [AMCom](https://www.amcom.com.br/), atuamos no mercado de tecnologia da informação há mais de 20 anos e fornecemos soluções inovadoras para empresas de diversos segmentos. Inovamos com tecnologias emergentes e metodologias e práticas ágeis, cocriando produtos que atendem às demandas específicas de cada negócio, impulsionando a eficiência operacional desde a produção até o pós-venda.
