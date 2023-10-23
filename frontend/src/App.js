@@ -1,21 +1,20 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import MenuPage from "./Menu/MenuPage";
-import VendasPage from "./Vendas/Listar/VendasPage";
-import ComissoesPage from "./Comissoes/Listar/comissoesPage";
-import NovaVenda from "./Vendas/Criar/NovaVenda";
-import AlterarVenda from "./Vendas/Alterar/AlterarVenda";
+import VendasPage from "./vendas/VendasPage";
+import ComissoesPage from "./comissoes/ComissoesPage";
+import NovaVenda from "./vendas/NovaVenda";
+import AlterarVenda from "./vendas/AlterarVenda";
 
 function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<VendasPage />} />
         <Route path="/vendas" element={<VendasPage />} />
         <Route path="/vendas/adicionar" element={<NovaVenda />} />
         <Route path="/vendas/alterar/:id" element={<AlterarVenda />} />
         <Route path="/comissoes" element={<ComissoesPage />} />
-        <Route path="/" element={<MenuPage />} />
       </Routes>
     </Router>
   );

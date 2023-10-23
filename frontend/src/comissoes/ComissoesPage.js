@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import Navbar from "../../Navbar/navbar";
 
+import Navbar from "../navbar/Navbar";
+import { formatarMoeda, buscarDadosAPI } from "../utils";
 import "./comissoesPage.css";
 
 function ComissoesPage() {
@@ -9,15 +9,6 @@ function ComissoesPage() {
   const [dataFim, setDataFim] = useState("2023-10-31");
   const [comissoes, setComissoes] = useState([]);
   const [totalComissoes, setTotalComissoes] = useState(0);
-
-  const formatarMoeda = (valor) => {
-    const valorArrendondado = Math.round(valor * 100) / 100;
-    const valorFormatado = valorArrendondado.toLocaleString("PT-BR", {
-      style: "currency",
-      currency: "BRL",
-    });
-    return valorFormatado;
-  };
 
   useEffect(() => {
     const calcularTotalComissoes = () => {
@@ -33,17 +24,7 @@ function ComissoesPage() {
   }, [comissoes]);
 
   useEffect(() => {
-    const buscarDadosAPI = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8000/comissao/?data_inicial=${dataInicio}&data_final=${dataFim}`);
-        console.log(response.data);
-        setComissoes(Object.values(response.data));
-      } catch (error) {
-        console.error("Erro ao buscar dados da API", error);
-      }
-    };
-
-    buscarDadosAPI();
+    buscarDadosAPI(`comissao/?data_inicial=${dataInicio}&data_final=${dataFim}`, setComissoes);
   }, [dataInicio, dataFim]);
 
   return (

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 
-import { buscarDadosAPI, deletarDadosAPI } from "../../utils";
-import Navbar from "../../Navbar/navbar";
+import { buscarDadosAPI, deletarDadosAPI } from "../utils";
+import Navbar from "../navbar/Navbar";
 import LinhaVenda from "./LinhaVenda";
 
-import "./vendaspage.css";
+import "./vendasPage.css";
 import { Link } from "react-router-dom";
 
 const VendasPage = () => {
@@ -13,14 +13,14 @@ const VendasPage = () => {
   const [forcar, setForcar] = useState(false);
 
   useEffect(() => {
-    buscarDadosAPI("vendas", setVendas);
+    buscarDadosAPI("vendas/", setVendas);
     if (vendas != []) setCarregando(false);
   }, [forcar]);
 
   const excluirVenda = (venda, setAbrirPopupExclusao) => {
     deletarDadosAPI("vendas", venda.id);
     setAbrirPopupExclusao(false);
-    buscarDadosAPI("vendas", setVendas);
+    buscarDadosAPI("vendas/", setVendas);
     setForcar(true);
   };
 

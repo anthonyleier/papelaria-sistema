@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { buscarDadosAPI, buscarDataAtual, enviarDadosAPI, gerarNumeroNotaFiscal } from "../../utils";
-import Navbar from "../../Navbar/navbar";
+import { buscarDadosAPI, buscarDataAtual, enviarDadosAPI, gerarNumeroNotaFiscal } from "../utils";
+import Navbar from "../navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 const NovaVenda = () => {
   const [produtosDisponiveis, setProdutosDisponiveis] = useState([]);
@@ -42,9 +42,9 @@ const NovaVenda = () => {
   };
 
   useEffect(() => {
-    buscarDadosAPI("vendedores", setVendedoresDisponiveis);
-    buscarDadosAPI("clientes", setClientesDisponiveis);
-    buscarDadosAPI("produtos", setProdutosDisponiveis);
+    buscarDadosAPI("vendedores/", setVendedoresDisponiveis);
+    buscarDadosAPI("clientes/", setClientesDisponiveis);
+    buscarDadosAPI("produtos/", setProdutosDisponiveis);
   }, []);
 
   return (

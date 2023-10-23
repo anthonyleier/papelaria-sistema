@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { atualizarDadosAPI, buscarDadosAPI, buscarDataAtual, enviarDadosAPI, gerarNumeroNotaFiscal } from "../../utils";
-import Navbar from "../../Navbar/navbar";
+import { atualizarDadosAPI, buscarDadosAPI, buscarDataAtual, enviarDadosAPI, gerarNumeroNotaFiscal } from "../utils";
+import Navbar from "../navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
@@ -24,10 +24,10 @@ const NovaVenda = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    buscarDadosAPI("vendas", setVendas);
-    buscarDadosAPI("vendedores", setVendedoresDisponiveis);
-    buscarDadosAPI("clientes", setClientesDisponiveis);
-    buscarDadosAPI("produtos", setProdutosDisponiveis);
+    buscarDadosAPI("vendas/", setVendas);
+    buscarDadosAPI("vendedores/", setVendedoresDisponiveis);
+    buscarDadosAPI("clientes/", setClientesDisponiveis);
+    buscarDadosAPI("produtos/", setProdutosDisponiveis);
   }, []);
   const carregarVendedor = (venda) => {
     setVendedorVenda(venda.vendedor);

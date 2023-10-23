@@ -2,10 +2,7 @@ import axios from "axios";
 
 export const formatarMoeda = (valor) => {
   const valorArrendondado = Math.round(valor * 100) / 100;
-  const valorFormatado = valorArrendondado.toLocaleString("PT-BR", {
-    style: "currency",
-    currency: "BRL",
-  });
+  const valorFormatado = valorArrendondado.toLocaleString("PT-BR", { style: "currency", currency: "BRL" });
   return valorFormatado;
 };
 
@@ -38,7 +35,7 @@ export const buscarDataAtual = () => {
 
 export const buscarDadosAPI = async (endpoint, setter) => {
   try {
-    const response = await axios.get(`http://localhost:8000/${endpoint}/`);
+    const response = await axios.get(`http://localhost:8000/${endpoint}`);
     setter(response.data);
     return response.data;
   } catch (error) {
@@ -48,7 +45,7 @@ export const buscarDadosAPI = async (endpoint, setter) => {
 
 export const enviarDadosAPI = async (endpoint, dados) => {
   try {
-    const response = await axios.post(`http://localhost:8000/${endpoint}/`, dados);
+    const response = await axios.post(`http://localhost:8000/${endpoint}`, dados);
     return response.data;
   } catch (error) {
     console.error(`Erro ao enviar dados para API (${endpoint})`, error);
@@ -57,7 +54,7 @@ export const enviarDadosAPI = async (endpoint, dados) => {
 
 export const atualizarDadosAPI = async (endpoint, id, dados) => {
   try {
-    console.log(dados)
+    console.log(dados);
     const response = await axios.put(`http://localhost:8000/${endpoint}/${id}/`, dados);
     return response.data;
   } catch (error) {
@@ -84,6 +81,5 @@ export function gerarNumeroNotaFiscal() {
   const segundos = dataAtual.getSeconds();
 
   const numeroFormatado = parseInt(`${ano}${mes < 10 ? "0" : ""}${mes}${dia < 10 ? "0" : ""}${dia}${hora < 10 ? "0" : ""}${hora}${minutos < 10 ? "0" : ""}${minutos}${segundos < 10 ? "0" : ""}${segundos}`);
-
   return numeroFormatado;
 }

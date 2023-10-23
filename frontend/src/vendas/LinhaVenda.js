@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import DetalhesVenda from "./DetalhesVenda";
-import { formatarData, formatarMoeda, buscarDadosAPI, deletarDadosAPI } from "../../utils";
+import { formatarData, formatarMoeda, buscarDadosAPI, deletarDadosAPI } from "../utils";
 import ExcluirVenda from "./ExcluirVenda";
 const LinhaVenda = (props) => {
   const venda = props.venda;
@@ -41,8 +41,8 @@ const LinhaVenda = (props) => {
   };
 
   useEffect(() => {
-    buscarDadosAPI("clientes", setClientes);
-    buscarDadosAPI("vendedores", setVendedores);
+    buscarDadosAPI("clientes/", setClientes);
+    buscarDadosAPI("vendedores/", setVendedores);
   }, []);
 
   if (abrirPopupExclusao) return <ExcluirVenda venda={venda} onExcluir={excluirVenda} setAbrirPopupExclusao={setAbrirPopupExclusao} />;

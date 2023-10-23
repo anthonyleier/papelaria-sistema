@@ -1,4 +1,4 @@
-import { formatarMoeda } from "../../utils";
+import { formatarMoeda } from "../utils";
 
 const DetalhesVenda = (props) => {
   const venda = props.venda;

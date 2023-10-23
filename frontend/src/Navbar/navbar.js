@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import "./navbar.css";
 
-const Navbar = ({ tituloDaPagina }) => {
+const navbar = ({ tituloDaPagina }) => {
   const [menuAberto, setMenuAberto] = useState(false);
 
   const toggleMenu = () => {
@@ -43,4 +43,4 @@ const Navbar = ({ tituloDaPagina }) => {
   );
 };
 
-export default Navbar;
+export default navbar;
