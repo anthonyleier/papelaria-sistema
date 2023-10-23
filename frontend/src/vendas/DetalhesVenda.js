@@ -5,7 +5,7 @@ const DetalhesVenda = (props) => {
     const venda = props.venda;
     return (
         <React.Fragment key={venda.id}>
-            <tr>
+            <tr className="thead-custom">
                 <td colSpan='2'>Produtos/Serviço</td>
                 <td>Quantidade</td>
                 <td>Preço Unitário</td>

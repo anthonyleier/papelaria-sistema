@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { RiEditBoxLine } from 'react-icons/ri';
+import { FaTrash } from 'react-icons/fa';
 
 import DetalhesVenda from "./DetalhesVenda";
 import ExcluirVenda from "./ExcluirVenda";
@@ -55,18 +57,10 @@ const LinhaVenda = (props) => {
             <td>{getNomeVendedor(venda.vendedor)}</td>
             <td>{formatarData(venda.data_hora)}</td>
             <td>{calcularValorTotal(venda.produtos)}</td>
-            <td>
-                <button onClick={() => toggleLinhaExpandida(index)}>Ver Itens</button>
-                <Link to={`/vendas/alterar/${venda.id}`}>
-                    <button>Editar</button>
-                </Link>
-                <button
-                    onClick={() => {
-                        setAbrirPopupExclusao(true);
-                    }}
-                >
-                    Excluir
-                </button>
+            <td className="tabela-opcoes">
+                <span className="botao-ver-itens-venda" onClick={() => toggleLinhaExpandida(index)}>Ver Itens</span>
+                <Link className="botao-editar-venda" to={`/vendas/alterar/${venda.id}`}><RiEditBoxLine /></Link>
+                <span className="botao-excluir-venda" onClick={() => {setAbrirPopupExclusao(true);}}><FaTrash/></span>
             </td>
         </tr>
         {linhasExpandidas.includes(index) && <DetalhesVenda venda={venda} />}
