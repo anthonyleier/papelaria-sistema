@@ -4,7 +4,7 @@ const ExcluirVenda = (props) => {
   const excluirVenda = props.onExcluir;
 
   return (
-    <div className="popup">
+    <div className="popup-exclusao">
       <p>Tem certeza de que deseja excluir esta venda?</p>
       <button
         onClick={() => {

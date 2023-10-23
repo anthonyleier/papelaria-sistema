@@ -1,12 +1,50 @@
 :root {
-  --primary: #00585e;
-  --background: #f0f0f0;
-  --danger: rgb(158, 11, 11);
+    --primary: #00585e;
+    --secondary: #333;
+    --background: #999;
+    --white: #fff;
+    --danger: rgb(158, 11, 11);
 }
 
 body {
     font-family: "Montserrat", sans-serif;
 }
+
+button {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+/* Linha de Venda */
+.tabela-opcoes {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.botao-ver-itens-venda {
+    color: var(--primary);
+    cursor: pointer;
+}
+
+.botao-editar-venda {
+    color: var(--primary);
+    cursor: pointer;
+}
+
+.botao-excluir {
+    color: var(--danger);
+    cursor: pointer;
+}
+
+/* Tabela de Vendas */
 
 table {
     border-collapse: collapse;
@@ -17,8 +55,8 @@ table {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-th, .thead-custom {
-
+th,
+.thead-custom {
     color: #333;
     font-weight: bold;
     padding: 10px;
@@ -31,66 +69,6 @@ td {
     text-align: center;
     border-bottom: 1px solid #ddd;
 }
-
-.action-cell {
-    text-align: center;
-}
-
-.botao-ver-itens-venda {
-  color: var(--primary);
-  cursor: pointer;
-}
-
-.botao-editar-venda {
-  color: var(--primary);
-  cursor: pointer;
-}
-
-.botao-excluir-venda {
-  color: var(--danger);
-  cursor: pointer;
-}
-
-
-.tabela-opcoes{
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-}
-
-
-button {
-    background-color: var(--primary);
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    font-weight: bold;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-}
-
-button:hover {
-    background-color: var(--primary);
-}
-
-.cabecalho {
-    display: flex;
-    padding: 10px;
-    justify-content: space-around;
-    background-color: var(--primary);
-    color: #f0f0f0;
-}
-
-.linha-tabela {
-    display: flex;
-    padding: 10px;
-    justify-content: space-around;
-    background-color: #f0f0f0;
-}
-
 .header-pagina {
     display: flex;
     align-items: center;
@@ -113,94 +91,16 @@ button:hover {
     text-decoration: none;
 }
 
-.sessoes-pagina {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    background-color: #fff;
-    color: #00585e;
-}
-
-.conteudo {
+/* Editar Venda */
+.conteudo-pagina-editar-venda {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: flex-start;
-    background-color: #f0f0f0;
-    color: #00585e;
+    background-color: var(--white);
     height: 500px;
 }
-
-.aba-dados {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: flex-start;
-    height: 100%;
-}
-
-.input-texto {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    text-align: center;
-}
-
-.input-select {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-}
-
-.input-select::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    width: 15px;
-    height: 15px;
-}
-
-.input-text:focus,
-.input-select:focus {
-    outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
-
-.input-select option {
-    background-color: #fff;
-    color: #000;
-}
-
-.inserir-produto {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    width: 800px;
-    margin-bottom: 50px;
-    margin-top: 50px;
-}
-
-.interacao {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.botao-interacao {
+.botao-padrao-venda {
     background-color: var(--primary);
     color: #f0f0f0;
     border-radius: 5px;
@@ -208,4 +108,84 @@ button:hover {
     border: none;
     cursor: pointer;
     text-decoration: none;
+}
+
+/* Aba Produtos */
+.aba-produtos {
+    width: 60%;
+}
+
+.grupo-inputs-produto {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+.input-produto input,
+.input-produto select {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.tabela-produtos-venda {
+    color: var(--secondary);
+}
+
+/* Aba Dados */
+.aba-dados {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    height: 100%;
+    width: 20%;
+    padding-left: 50px;
+    border-left: 1px solid var(--secondary);
+}
+
+.input-dados {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 95%;
+}
+
+.input-dados input,
+.input-dados select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.input-dados label {
+    width: 100%;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.valor-total-venda {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.botoes-confirmacao {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
 }

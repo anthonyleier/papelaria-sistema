@@ -60,7 +60,7 @@ const LinhaVenda = (props) => {
             <td className="tabela-opcoes">
                 <span className="botao-ver-itens-venda" onClick={() => toggleLinhaExpandida(index)}>Ver Itens</span>
                 <Link className="botao-editar-venda" to={`/vendas/alterar/${venda.id}`}><RiEditBoxLine /></Link>
-                <span className="botao-excluir-venda" onClick={() => {setAbrirPopupExclusao(true);}}><FaTrash/></span>
+                <span className="botao-excluir" onClick={() => {setAbrirPopupExclusao(true);}}><FaTrash/></span>
             </td>
         </tr>
         {linhasExpandidas.includes(index) && <DetalhesVenda venda={venda} />}
