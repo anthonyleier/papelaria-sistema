@@ -44,6 +44,18 @@ button {
     cursor: pointer;
 }
 
+/* Deletar Venda */
+.botoes-perguntar-exclusao {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.botao-confirmar-exclusao {
+    background-color: var(--danger);
+}
+
 /* Tabela de Vendas */
 
 table {

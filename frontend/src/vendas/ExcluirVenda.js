@@ -4,23 +4,13 @@ const ExcluirVenda = (props) => {
   const excluirVenda = props.onExcluir;
 
   return (
-    <div className="popup-exclusao">
-      <p>Tem certeza de que deseja excluir esta venda?</p>
-      <button
-        onClick={() => {
-          excluirVenda(venda, setAbrirPopupExclusao);
-        }}
-      >
-        Sim, Excluir
-      </button>
-      <button
-        onClick={() => {
-          setAbrirPopupExclusao(false);
-        }}
-      >
-        Cancelar
-      </button>
-    </div>
+    <tr>
+      <td colSpan="5"><p>Tem certeza de que deseja excluir esta venda?</p></td>
+      <td className="botoes-perguntar-exclusao">
+        <button className="botao-confirmar-exclusao" onClick={() => {excluirVenda(venda, setAbrirPopupExclusao);}}>Sim, Excluir</button>
+        <button onClick={() => {setAbrirPopupExclusao(false);}}>Cancelar</button>
+      </td>
+    </tr>
   );
 };
 export default ExcluirVenda;
