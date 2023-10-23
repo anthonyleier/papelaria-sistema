@@ -36,23 +36,23 @@ const VendasPage = () => {
                 </Link>
             </div>
 
-            <div>
-                <div>
-                    <div className="cabecalho">
-                        <div className="tabela-cabecalho">Nota Fiscal</div>
-                        <div className="tabela-cabecalho">Cliente</div>
-                        <div className="tabela-cabecalho">Vendedor</div>
-                        <div className="tabela-cabecalho">Data da Venda</div>
-                        <div className="tabela-cabecalho">Valor Total</div>
-                        <div className="tabela-cabecalho">Opções</div>
-                    </div>
-                </div>
-                <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nota Fiscal</th>
+                        <th>Cliente</th>
+                        <th>Vendedor</th>
+                        <th>Data da Venda</th>
+                        <th>Valor Total</th>
+                        <th>Opções</th>
+                    </tr>
+                </thead>
+                <tbody>
                     {vendas.map((venda) => (
                         <LinhaVenda venda={venda} onExcluir={excluirVenda} />
                     ))}
-                </div>
-            </div>
+                </tbody>
+            </table>
         </div>
     );
 };
