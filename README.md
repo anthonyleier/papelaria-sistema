@@ -56,6 +56,7 @@ Com as aplicações rodando, elas estarão disponíveis no localhost, na porta 8
 `http://localhost:3000`
 
 ## Testes
+
 O projeto em Django contém testes automatizados que podem ser testados com o comando test.
 
 `python manage.py test`
