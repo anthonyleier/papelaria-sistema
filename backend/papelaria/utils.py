@@ -19,7 +19,6 @@ def buscar_quantidade_itemvenda(venda_id, produto_id):
 
 
 def montar_json_venda(venda):
-    print(venda)
     retorno = {}
     retorno['id'] = venda.id
     retorno['numero_nota_fiscal'] = venda.numero_nota_fiscal

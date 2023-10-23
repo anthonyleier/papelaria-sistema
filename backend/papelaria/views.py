@@ -127,8 +127,6 @@ class VendedorComissaoList(APIView):
         comissoes = []
         for vendedor in vendedores:
             total_comissao = 0
-            print(data_inicial)
-            print(data_final)
             vendas = Venda.objects.filter(vendedor=vendedor, data_hora__range=(data_inicial, data_final))
 
             for venda in vendas:
