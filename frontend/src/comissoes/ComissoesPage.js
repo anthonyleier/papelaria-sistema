@@ -33,16 +33,13 @@ function ComissoesPage() {
       <div className="header-pagina">
         <h1>Relatório de Comissões</h1>
         <div className="filtro">
-          <label>Data Inicial:</label>
           <input type="date" value={dataInicio} onChange={(e) => setDataInicio(e.target.value)} />
-
-          <label>Data Final:</label>
           <input type="date" value={dataFim} onChange={(e) => setDataFim(e.target.value)} />
         </div>
       </div>
 
-      <table className="tabela-comissoes">
-        <thead className="cabecalho-tabela">
+      <table>
+        <thead>
           <tr>
             <th>Cód.</th>
             <th>Vendedor</th>
@@ -62,8 +59,7 @@ function ComissoesPage() {
         </tbody>
         <tfoot>
           <tr>
-            <td colSpan="2">Total de Comissões do Período:</td>
-            <td></td>
+            <td colSpan="3">Total de Comissões do Período</td>
             <td>{formatarMoeda(totalComissoes)}</td>
           </tr>
         </tfoot>
