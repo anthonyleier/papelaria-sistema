@@ -14,8 +14,6 @@ const LinhaVenda = (props) => {
   const [clientes, setClientes] = useState([]);
   const [abrirPopupExclusao, setAbrirPopupExclusao] = useState(false);
 
-  function editarVenda() {}
-
   function toggleLinhaExpandida(index) {
     if (linhasExpandidas.includes(index)) {
       setLinhasExpandidas(linhasExpandidas.filter((i) => i !== index));

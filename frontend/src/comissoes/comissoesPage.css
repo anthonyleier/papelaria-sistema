@@ -1,5 +1,3 @@
-
-
 .tabela-comissoes {
   width: 100%;
   border-collapse: collapse;
@@ -10,14 +8,11 @@
   border: 1px solid #ddd;
   padding: 8px;
   text-align: left;
-  
 }
 
 .tabela-comissoes td {
   background-color: #f0f0f0;
 }
-
-
 
 .tabela-comissoes tfoot {
   font-weight: bold;

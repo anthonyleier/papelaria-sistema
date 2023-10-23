@@ -152,7 +152,9 @@ const NovaVenda = () => {
             <input type="text" value={calcularTotalVenda()} readOnly className="input-texto" />
           </div>
 
-          <button onClick={finalizarVenda} className="botao-interacao">Finalizar Venda</button>
+          <button onClick={finalizarVenda} className="botao-interacao">
+            Finalizar Venda
+          </button>
         </div>
       </div>
     </div>

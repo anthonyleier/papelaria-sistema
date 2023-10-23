@@ -22,16 +22,16 @@ const Navbar = ({ tituloDaPagina }) => {
           <ul>
             <li>
               <Link to="/vendas">
-                  <FaShoppingCart />
-                  Vendas
-                  <FaArrowRight />
+                <FaShoppingCart />
+                Vendas
+                <FaArrowRight />
               </Link>
             </li>
             <li>
               <Link to="/comissoes">
-                  <FaDollarSign />
-                  Comissões
-                  <FaArrowRight />
+                <FaDollarSign />
+                Comissões
+                <FaArrowRight />
               </Link>
             </li>
           </ul>
