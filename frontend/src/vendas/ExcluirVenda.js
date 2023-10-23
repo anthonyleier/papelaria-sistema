@@ -1,5 +1,3 @@
-
-
 const ExcluirVenda = (props) => {
   const venda = props.venda;
   const setAbrirPopupExclusao = props.setAbrirPopupExclusao;

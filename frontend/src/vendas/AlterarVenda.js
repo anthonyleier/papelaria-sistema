@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { atualizarDadosAPI, buscarDadosAPI, buscarDataAtual, enviarDadosAPI, gerarNumeroNotaFiscal } from "../utils";
-import Navbar from "../navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
+import Navbar from "../navbar/Navbar";
+import { atualizarDadosAPI, buscarDadosAPI, buscarDataAtual } from "../utils";
 
 const NovaVenda = () => {
   const [vendas, setVendas] = useState([]);

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+
 import DetalhesVenda from "./DetalhesVenda";
-import { formatarData, formatarMoeda, buscarDadosAPI, deletarDadosAPI } from "../utils";
 import ExcluirVenda from "./ExcluirVenda";
+import { formatarData, formatarMoeda, buscarDadosAPI } from "../utils";
+
 const LinhaVenda = (props) => {
   const venda = props.venda;
   const index = props.index;
@@ -49,7 +51,7 @@ const LinhaVenda = (props) => {
 
   return (
     <div>
-      <div key={venda.id} class='linha-tabela'>
+      <div key={venda.id} class="linha-tabela">
         <div>{venda.numero_nota_fiscal}</div>
         <div>{getNomeCliente(venda.cliente)}</div>
         <div>{getNomeVendedor(venda.vendedor)}</div>
@@ -57,7 +59,9 @@ const LinhaVenda = (props) => {
         <div>{calcularValorTotal(venda.produtos)}</div>
         <div>
           <button onClick={() => toggleLinhaExpandida(index)}>Ver Itens</button>
-          <Link to={`/vendas/alterar/${venda.id}`}><button>Editar</button></Link>
+          <Link to={`/vendas/alterar/${venda.id}`}>
+            <button>Editar</button>
+          </Link>
           <button
             onClick={() => {
               setAbrirPopupExclusao(true);
