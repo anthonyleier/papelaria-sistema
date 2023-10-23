@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaTrash } from "react-icons/fa";
 
+import "./vendaInteracao.css";
 import Navbar from "../navbar/Navbar";
-import { buscarDadosAPI, buscarDataAtual, enviarDadosAPI, gerarNumeroNotaFiscal } from "../utils";
+import { buscarDadosAPI, buscarDataAtual, enviarDadosAPI, gerarNumeroNotaFiscal, formatarMoeda } from "../utils";
 
 const NovaVenda = () => {
   const [produtosDisponiveis, setProdutosDisponiveis] = useState([]);
@@ -19,14 +21,25 @@ const NovaVenda = () => {
 
   const adicionarProduto = () => {
     if (produtoSelecionado && quantidadeSelecionada > 0) {
+      const produto = produtosDisponiveis.find((elemento) => elemento.codigo == produtoSelecionado);
       const novoProduto = {
         produto: produtoSelecionado,
-        quantidade: quantidadeSelecionada,
+        descricao: produto.descricao,
+        quantidade: parseInt(quantidadeSelecionada),
+        valor_unitario: parseFloat(produto.valor_unitario),
+        total: quantidadeSelecionada * produto.valor_unitario,
       };
       setProdutosVenda([...produtosVenda, novoProduto]);
       setProdutoSelecionado("");
       setQuantidadeSelecionada(1);
     }
+  };
+
+  const calcularTotalVenda = () => {
+    const valorTotal = produtosVenda.reduce((total, produto) => {
+      return total + produto.total;
+    }, 0);
+    return formatarMoeda(valorTotal);
   };
 
   const removerProduto = (index) => {
@@ -39,7 +52,7 @@ const NovaVenda = () => {
     let numeroNotaFiscal = gerarNumeroNotaFiscal();
     let dados = { numero_nota_fiscal: numeroNotaFiscal, cliente: clienteVenda, vendedor: vendedorVenda, produtos: produtosVenda };
     console.log("Venda finalizada:", dados);
-    enviarDadosAPI("vendas", dados);
+    enviarDadosAPI("vendas/", dados);
     navigate("/vendas");
   };
 
@@ -52,51 +65,95 @@ const NovaVenda = () => {
   return (
     <div>
       <Navbar tituloDaPagina="Nova Venda" />
-      <h1>Nova Venda</h1>
-      <div className="menu-lateral">
-        <label>Data e Hora:</label>
-        <input type="text" value={buscarDataAtual()} readOnly />
-
-        <select onChange={(e) => setVendedorVenda(e.target.value)}>
-          <option value="">Selecione o Vendedor</option>
-          {vendedoresDisponiveis.map((vendedor) => (
-            <option key={vendedor.id} value={vendedor.id}>
-              {vendedor.nome}
-            </option>
-          ))}
-        </select>
-        <select onChange={(e) => setClienteVenda(e.target.value)}>
-          <option value="">Selecione o Cliente</option>
-          {clientesDisponiveis.map((cliente) => (
-            <option key={cliente.id} value={cliente.id}>
-              {cliente.nome}
-            </option>
-          ))}
-        </select>
+      <div className="sessoes-pagina">
+        <h2>Produtos</h2>
+        <h2>Dados da Venda</h2>
       </div>
-      <div className="conteudo-venda">
-        <h2>Itens da Venda</h2>
-        <div>
-          <select onChange={(e) => setProdutoSelecionado(e.target.value)}>
-            <option value="">Selecione o Produto</option>
-            {produtosDisponiveis.map((produto) => (
-              <option key={produto.codigo} value={produto.codigo}>
-                {produto.descricao}
-              </option>
-            ))}
-          </select>
-          <input type="number" value={quantidadeSelecionada} onChange={(e) => setQuantidadeSelecionada(e.target.value)} />
-          <button onClick={adicionarProduto}>Adicionar Produto</button>
+      <div className="conteudo">
+        <div className="aba-produtos">
+          <div className="inserir-produto">
+            <div className="interacao">
+              <label>Escolha o produto</label>
+              <select onChange={(e) => setProdutoSelecionado(e.target.value)} className="input-select">
+                <option value="">Selecione o Produto</option>
+                {produtosDisponiveis.map((produto) => (
+                  <option key={produto.codigo} value={produto.codigo}>
+                    {produto.descricao}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="interacao">
+              <label>Defina a quantidade</label>
+              <input type="number" className="input-texto" value={quantidadeSelecionada} onChange={(e) => setQuantidadeSelecionada(e.target.value)} />
+            </div>
+
+            <button onClick={adicionarProduto} className="botao-interacao">
+              Adicionar
+            </button>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Produto/Serviço</th>
+                <th>Quantidade</th>
+                <th>Preço Unitário</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {produtosVenda.map((item, index) => (
+                <tr key={index}>
+                  <td>{item.descricao}</td>
+                  <td>{item.quantidade}</td>
+                  <td>{formatarMoeda(item.valor_unitario)}</td>
+                  <td>{formatarMoeda(item.total)}</td>
+                  <button onClick={() => removerProduto(index)}>
+                    <FaTrash />
+                  </button>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-        <ul>
-          {produtosVenda.map((item, index) => (
-            <li key={index}>
-              {item.produto} - Quantidade: {item.quantidade}
-              <button onClick={() => removerProduto(index)}>Remover</button>
-            </li>
-          ))}
-        </ul>
-        <button onClick={finalizarVenda}>Finalizar Venda</button>
+        <div className="aba-dados">
+          <div className="interacao">
+            <label>Data e Hora da Venda</label>
+            <input type="text" value={buscarDataAtual()} readOnly className="input-texto" />
+          </div>
+
+          <div className="interacao">
+            <label>Escolha um vendedor</label>
+            <select onChange={(e) => setVendedorVenda(e.target.value)} className="input-select">
+              <option value="">Selecione o Vendedor</option>
+              {vendedoresDisponiveis.map((vendedor) => (
+                <option key={vendedor.id} value={vendedor.id}>
+                  {vendedor.nome}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="interacao">
+            <label>Escolha um cliente</label>
+            <select onChange={(e) => setClienteVenda(e.target.value)} className="input-select">
+              <option value="">Selecione o Cliente</option>
+              {clientesDisponiveis.map((cliente) => (
+                <option key={cliente.id} value={cliente.id}>
+                  {cliente.nome}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="interacao">
+            <label>Valor Total da Venda</label>
+            <input type="text" value={calcularTotalVenda()} readOnly className="input-texto" />
+          </div>
+
+          <button onClick={finalizarVenda} className="botao-interacao">Finalizar Venda</button>
+        </div>
       </div>
     </div>
   );

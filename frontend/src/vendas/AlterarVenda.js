@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import { FaTrash } from "react-icons/fa";
 
 import Navbar from "../navbar/Navbar";
-import { atualizarDadosAPI, buscarDadosAPI, buscarDataAtual } from "../utils";
+import { buscarDadosAPI, buscarDataAtual, formatarMoeda, atualizarDadosAPI } from "../utils";
 
 const NovaVenda = () => {
   const [vendas, setVendas] = useState([]);
@@ -23,6 +24,13 @@ const NovaVenda = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
+  const calcularTotalVenda = () => {
+    const valorTotal = produtosVenda.reduce((total, produto) => {
+      return total + produto.total;
+    }, 0);
+    return formatarMoeda(valorTotal);
+  };
+
   useEffect(() => {
     buscarDadosAPI("vendas/", setVendas);
     buscarDadosAPI("vendedores/", setVendedoresDisponiveis);
@@ -38,7 +46,13 @@ const NovaVenda = () => {
   const carregarProdutos = (venda) => {
     let carregar = [];
     venda.produtos.forEach((produto) => {
-      carregar.push({ produto: parseInt(produto.codigo), quantidade: parseInt(produto.quantidade) });
+      carregar.push({
+        produto: parseInt(produto.codigo),
+        descricao: produto.descricao,
+        valor_unitario: produto.valor_unitario,
+        quantidade: parseInt(produto.quantidade),
+        total: produto.valor_unitario * parseInt(produto.quantidade),
+      });
     });
     setProdutosVenda(carregar);
   };
@@ -58,9 +72,13 @@ const NovaVenda = () => {
 
   const adicionarProduto = () => {
     if (produtoSelecionado && quantidadeSelecionada > 0) {
+      const produto = produtosDisponiveis.find((elemento) => elemento.codigo == produtoSelecionado);
       const novoProduto = {
-        produto: parseInt(produtoSelecionado),
+        produto: produtoSelecionado,
+        descricao: produto.descricao,
         quantidade: parseInt(quantidadeSelecionada),
+        valor_unitario: parseFloat(produto.valor_unitario),
+        total: quantidadeSelecionada * produto.valor_unitario,
       };
       setProdutosVenda([...produtosVenda, novoProduto]);
       setProdutoSelecionado("");
@@ -78,7 +96,7 @@ const NovaVenda = () => {
     let numeroNotaFiscal = venda.numero_nota_fiscal;
     let dados = { numero_nota_fiscal: numeroNotaFiscal, cliente: clienteVenda, vendedor: vendedorVenda, produtos: produtosVenda };
     console.log("Venda finalizada:", dados);
-    atualizarDadosAPI("vendas", id, dados);
+    atualizarDadosAPI("vendas/", id, dados);
     navigate("/vendas");
   };
 
@@ -86,51 +104,98 @@ const NovaVenda = () => {
 
   return (
     <div>
-      <Navbar tituloDaPagina="Alterar Venda" />
-      <h1>Alterar Venda {venda.id}</h1>
-      <div className="menu-lateral">
-        <label>Data e Hora:</label>
-        <input type="text" value={buscarDataAtual()} readOnly />
-        <select value={vendedorVenda} onChange={(e) => setVendedorVenda(e.target.value)}>
-          <option value="">Selecione o Vendedor</option>
-          {vendedoresDisponiveis.map((vendedor) => (
-            <option key={vendedor.id} value={vendedor.id}>
-              {vendedor.nome}
-            </option>
-          ))}
-        </select>
-        <select value={clienteVenda} onChange={(e) => setClienteVenda(e.target.value)}>
-          <option value="">Selecione o Cliente</option>
-          {clientesDisponiveis.map((cliente) => (
-            <option key={cliente.id} value={cliente.id}>
-              {cliente.nome}
-            </option>
-          ))}
-        </select>
+      <Navbar tituloDaPagina="Nova Venda" />
+      <div className="sessoes-pagina">
+        <h2>Produtos</h2>
+        <h2>Dados da Venda</h2>
       </div>
-      <div className="conteudo-venda">
-        <h2>Itens da Venda</h2>
-        <div>
-          <select onChange={(e) => setProdutoSelecionado(e.target.value)}>
-            <option value="">Selecione o Produto</option>
-            {produtosDisponiveis.map((produto) => (
-              <option key={produto.codigo} value={produto.codigo}>
-                {produto.descricao}
-              </option>
-            ))}
-          </select>
-          <input type="number" value={quantidadeSelecionada} onChange={(e) => setQuantidadeSelecionada(e.target.value)} />
-          <button onClick={adicionarProduto}>Adicionar Produto</button>
+      <div className="conteudo">
+        <div className="aba-produtos">
+          <div className="inserir-produto">
+            <div className="interacao">
+              <label>Escolha o produto</label>
+              <select onChange={(e) => setProdutoSelecionado(e.target.value)} className="input-select">
+                <option value="">Selecione o Produto</option>
+                {produtosDisponiveis.map((produto) => (
+                  <option key={produto.codigo} value={produto.codigo}>
+                    {produto.descricao}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="interacao">
+              <label>Defina a quantidade</label>
+              <input type="number" className="input-texto" value={quantidadeSelecionada} onChange={(e) => setQuantidadeSelecionada(e.target.value)} />
+            </div>
+
+            <button onClick={adicionarProduto} className="botao-interacao">
+              Adicionar
+            </button>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Produto/Serviço</th>
+                <th>Quantidade</th>
+                <th>Preço Unitário</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {produtosVenda.map((item, index) => (
+                <tr key={index}>
+                  <td>{item.descricao}</td>
+                  <td>{item.quantidade}</td>
+                  <td>{formatarMoeda(item.valor_unitario)}</td>
+                  <td>{formatarMoeda(item.total)}</td>
+                  <button onClick={() => removerProduto(index)}>
+                    <FaTrash />
+                  </button>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-        <ul>
-          {produtosVenda.map((item, index) => (
-            <li key={index}>
-              {item.produto} - Quantidade: {item.quantidade}
-              <button onClick={() => removerProduto(index)}>Remover</button>
-            </li>
-          ))}
-        </ul>
-        <button onClick={finalizarVenda}>Finalizar Venda</button>
+        <div className="aba-dados">
+          <div className="interacao">
+            <label>Data e Hora da Venda</label>
+            <input type="text" value={buscarDataAtual()} readOnly className="input-texto" />
+          </div>
+
+          <div className="interacao">
+            <label>Escolha um vendedor</label>
+            <select value={vendedorVenda} onChange={(e) => setVendedorVenda(e.target.value)} className="input-select">
+              <option value="">Selecione o Vendedor</option>
+              {vendedoresDisponiveis.map((vendedor) => (
+                <option key={vendedor.id} value={vendedor.id}>
+                  {vendedor.nome}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="interacao">
+            <label>Escolha um cliente</label>
+            <select value={clienteVenda} onChange={(e) => setClienteVenda(e.target.value)} className="input-select">
+              <option value="">Selecione o Cliente</option>
+              {clientesDisponiveis.map((cliente) => (
+                <option key={cliente.id} value={cliente.id}>
+                  {cliente.nome}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="interacao">
+            <label>Valor Total da Venda</label>
+            <input type="text" value={calcularTotalVenda()} readOnly className="input-texto" />
+          </div>
+
+          <button onClick={finalizarVenda} className="botao-interacao">
+            Finalizar Venda
+          </button>
+        </div>
       </div>
     </div>
   );

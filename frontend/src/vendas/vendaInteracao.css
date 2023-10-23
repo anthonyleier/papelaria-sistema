@@ -1,0 +1,100 @@
+body {
+  font-family: "Montserrat", sans-serif;
+}
+
+.sessoes-pagina {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #fff;
+  color: #00585e;
+}
+
+.conteudo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: start;
+  background-color: #f0f0f0;
+  color: #00585e;
+  height: 500px;
+}
+
+.aba-dados {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: start;
+  height: 100%;
+}
+
+.input-texto {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.input-select {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.input-select::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  width: 15px;
+  height: 15px;
+}
+
+.input-text:focus,
+.input-select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.input-select option {
+  background-color: #fff;
+  color: #000;
+}
+
+.inserir-produto {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 800px;
+  margin-bottom: 50px;
+  margin-top: 50px;
+}
+
+.interacao {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.botao-interacao {
+  background-color: #00585e;
+  color: #f0f0f0;
+  border-radius: 5px;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
