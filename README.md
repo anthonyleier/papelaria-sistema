@@ -2,11 +2,11 @@
 
 ## Notas
 
-Realizei o desenvolvimento desse projeto em 2 dias, algumas coisas foram simplificadas para atender ao tempo do desafio. Tive um problema ao utilizar serializer de produtos, não estava conseguindo obter as informações do ItemVenda associado ao produto. Portanto fiz uma conexão direta com o banco de dados para consultar essa informação. Não é a forma mais correta, mas para não perder muito tempo, foi necessária.
+Realizei o desenvolvimento desse projeto em 2 dias, algumas coisas foram simplificadas para atender ao tempo do desafio. Tive um problema ao utilizar serializer de produtos, não estava conseguindo obter as informações do ItemVenda associado ao produto. Portanto fiz uma conexão direta com o banco de dados para consultar essa informação. Não é a forma mais correta, mas para não perder muito tempo, foi necessária. Deixei a interface por última etapa também, e por falta de tempo, não teve o refinamento necessário.
 
 ## Desenvolvimentos Futuros
 
-Como desenvolvimentos futuros para esta aplicação, gostaria de implantar a parte de frontend em NextJS, pois facilitaria o desenvolvimento, além de deixar mais robusto e organizado para novas funcionalidades. Além disso, implantar testes no frontend e realizar a melhoria de interface em alguns aspectos que não ficaram como eu gostaria.
+Como desenvolvimentos futuros para esta aplicação, gostaria de implantar a parte de frontend em NextJS, pois facilitaria o desenvolvimento, além de deixar mais robusto e organizado para novas funcionalidades. Além disso, implantar testes no frontend e realizar a melhoria de interface em alguns aspectos que não ficaram como eu gostaria. Por fim, gostaria de unificar os componentes de criar e atualizar Venda em um único componente.
 
 # Instalação
 
