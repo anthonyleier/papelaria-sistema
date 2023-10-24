@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import "./navbar.css";
 
 const Navbar = (props) => {
-    const titulo = props.titulo
+    const titulo = props.titulo;
     const [menuAberto, setMenuAberto] = useState(false);
 
     const toggleMenu = () => {
@@ -19,19 +19,19 @@ const Navbar = (props) => {
                 <FaBars />
             </button>
             {menuAberto && (
-                    <div className="menu-aberto">
+                <div className="menu-aberto">
                     <FaWindowClose onClick={toggleMenu} className="menu-button-fechar" />
-                        <Link to="/vendas" className="menu-link">
-                            <div className="menu-item">
-                                <FaShoppingCart /> <p>Vendas</p> <FaArrowRight />
-                            </div>
-                        </Link>
-                        <Link to="/comissoes" className="menu-link">
-                            <div className="menu-item">
-                                <FaDollarSign /> <p>Comissões</p> <FaArrowRight />
-                            </div>
-                        </Link>
-                    </div>
+                    <Link to="/vendas" className="menu-link">
+                        <div className="menu-item">
+                            <FaShoppingCart /> <p>Vendas</p> <FaArrowRight />
+                        </div>
+                    </Link>
+                    <Link to="/comissoes" className="menu-link">
+                        <div className="menu-item">
+                            <FaDollarSign /> <p>Comissões</p> <FaArrowRight />
+                        </div>
+                    </Link>
+                </div>
             )}
             <img src="/logo.svg" alt="Logo da Empresa" className="logo" />
             <h1 className="titulo-pagina">{titulo}</h1>
