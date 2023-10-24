@@ -12,6 +12,14 @@ O projeto é um sistema de papelaria simples, com controle de clientes, vendedor
 
 Como desenvolvimentos futuros para esta aplicação, gostaria de implantar a parte de frontend em NextJS, pois facilitaria o desenvolvimento, além de deixar mais robusto e organizado para novas funcionalidades. Além disso, também gostaria de implantar testes no frontend e realizar melhoria nas interface de forma geral.
 
+## Postman
+
+A aplicação fornece uma API para interagir com os modelos, é possível realizar o CRUD de clientes, vendedores, produtos e vendas, assim como consultar a comissão calculada pelo sistema para cada vendedor em um período de datas.
+
+Elaborei um exemplo no Postman que pode ser usado como base para utilizar esses endpoints:
+
+https://www.postman.com/anthonyleier/workspace/pblico/collection/24415316-ccb80016-93f6-4e8b-be03-2a7f0952d714?action=share&creator=24415316
+
 # Instalação
 
 Para a instalação, recomendo ter o Docker instalado na sua máquina. Caso deseje executar manualmente, será necessário ter o Python e o NodeJS instalado, conforme versões acima.
