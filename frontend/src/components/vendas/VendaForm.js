@@ -90,12 +90,12 @@ const VendaForm = () => {
                 produtosDisponiveis.length > 0
             ) {
                 const vendaEncontrada = vendas.find((venda) => venda.id === parseInt(id));
+
                 if (vendaEncontrada) {
                     setVendedorVenda(vendaEncontrada.vendedor);
                     setClienteVenda(vendaEncontrada.cliente);
                     carregarProdutos(vendaEncontrada);
                     setVenda(vendaEncontrada);
-                    setCarregando(false);
                 }
             }
         }
@@ -109,9 +109,28 @@ const VendaForm = () => {
         }
     }, [vendedorVenda, clienteVenda, produtosVenda]);
 
+    const inserirProdutoVenda = (produto) => {
+        const produtoExistenteIndex = produtosVenda.findIndex((elemento) => elemento.produto === produto.produto);
+
+        if (produtoExistenteIndex !== -1) {
+            const produtosAtualizados = [...produtosVenda];
+
+            produtosAtualizados[produtoExistenteIndex] = {
+                ...produtosAtualizados[produtoExistenteIndex],
+                quantidade: produtosAtualizados[produtoExistenteIndex].quantidade + produto.quantidade,
+                total: produtosAtualizados[produtoExistenteIndex].total + produto.total,
+            };
+
+            setProdutosVenda(produtosAtualizados);
+        }
+
+        if (produtoExistenteIndex === -1) setProdutosVenda([...produtosVenda, produto]);
+    };
+
     const adicionarProduto = () => {
         if (produtoSelecionado && quantidadeSelecionada > 0) {
             const produto = produtosDisponiveis.find((elemento) => elemento.codigo === produtoSelecionado.codigo);
+
             const novoProduto = {
                 produto: produtoSelecionado.codigo,
                 descricao: produto.descricao,
@@ -119,22 +138,8 @@ const VendaForm = () => {
                 valor_unitario: parseFloat(produto.valor_unitario),
                 total: quantidadeSelecionada * produto.valor_unitario,
             };
-            const produtoExistenteIndex = produtosVenda.findIndex(
-                (elemento) => elemento.produto === produtoSelecionado.codigo
-            );
 
-            if (produtoExistenteIndex !== -1) {
-                const produtosAtualizados = [...produtosVenda];
-                produtosAtualizados[produtoExistenteIndex] = {
-                    ...produtosAtualizados[produtoExistenteIndex],
-                    quantidade: produtosAtualizados[produtoExistenteIndex].quantidade + novoProduto.quantidade,
-                    total: produtosAtualizados[produtoExistenteIndex].total + novoProduto.total,
-                };
-                setProdutosVenda(produtosAtualizados);
-            }
-
-            if (produtoExistenteIndex === -1) setProdutosVenda([...produtosVenda, novoProduto]);
-
+            inserirProdutoVenda(novoProduto);
             setProdutoSelecionado("");
             setQuantidadeSelecionada(1);
         }
@@ -176,9 +181,6 @@ const VendaForm = () => {
 
     if (carregando) return <p>Carregando...</p>;
 
-    const handleProdutoChange = (value) => {
-        setProdutoSelecionado(value);
-    };
     return (
         <div>
             <Navbar titulo={tituloPagina} />
@@ -190,7 +192,9 @@ const VendaForm = () => {
                         <InputProduto>
                             <Select
                                 options={produtosDisponiveis}
-                                onChange={handleProdutoChange}
+                                onChange={(e) => {
+                                    setProdutoSelecionado(e);
+                                }}
                                 value={produtoSelecionado}
                                 getOptionLabel={(option) => `${option.codigo} - ${option.descricao}`}
                                 getOptionValue={(option) => option.codigo}
