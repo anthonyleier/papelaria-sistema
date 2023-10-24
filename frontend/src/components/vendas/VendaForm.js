@@ -66,16 +66,11 @@ const VendaForm = () => {
         buscarDadosAPI("clientes/", setClientesDisponiveis);
         buscarDadosAPI("produtos/", setProdutosDisponiveis);
     }, []);
-    const carregarVendedor = (venda) => {
-        setVendedorVenda(venda.vendedor);
-    };
-    const carregarCliente = (venda) => {
-        setClienteVenda(venda.cliente);
-    };
+
     const carregarProdutos = (venda) => {
-        let carregar = [];
+        let produtosCarregados = [];
         venda.produtos.forEach((produto) => {
-            carregar.push({
+            produtosCarregados.push({
                 produto: parseInt(produto.codigo),
                 descricao: produto.descricao,
                 valor_unitario: produto.valor_unitario,
@@ -83,12 +78,11 @@ const VendaForm = () => {
                 total: produto.valor_unitario * parseInt(produto.quantidade),
             });
         });
-        setProdutosVenda(carregar);
+        setProdutosVenda(produtosCarregados);
     };
 
     useEffect(() => {
         if (modoEdicao) {
-            console.log(vendas);
             if (
                 vendas.length > 0 &&
                 vendedoresDisponiveis.length > 0 &&
@@ -97,8 +91,8 @@ const VendaForm = () => {
             ) {
                 const vendaEncontrada = vendas.find((venda) => venda.id === parseInt(id));
                 if (vendaEncontrada) {
-                    carregarVendedor(vendaEncontrada);
-                    carregarCliente(vendaEncontrada);
+                    setVendedorVenda(vendaEncontrada.vendedor);
+                    setClienteVenda(vendaEncontrada.cliente);
                     carregarProdutos(vendaEncontrada);
                     setVenda(vendaEncontrada);
                     setCarregando(false);
@@ -106,9 +100,7 @@ const VendaForm = () => {
             }
         }
 
-        if (!modoEdicao) {
-            setCarregando(false);
-        }
+        setCarregando(false);
     }, [vendas, id]);
 
     useEffect(() => {
