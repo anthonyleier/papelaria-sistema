@@ -1,16 +1,20 @@
 # Sistema de Papelaria
 
-## Notas
+O projeto é um sistema de papelaria simples, com controle de clientes, vendedores, produtos, vendas e comissões. Algumas funcionalidades estão no frontend, outras podem ser acessadas via Django Admin ou através de API. A estrutura desse projeto foi baseada em Python v3.11 para o backend em Django e NodeJS v18.18 para o frontend em ReactJS. Todo o desenvolvimento do projeto buscou utilizar os conceitos de SOLID, The Twelve-Factor App, bem como mensagens claras e outras boas práticas de versionamento GIT. O projeto atende aos requisitos do desafio.
 
-Realizei o desenvolvimento desse projeto em 2 dias, algumas coisas foram simplificadas para atender ao tempo do desafio. Tive um problema ao utilizar serializer de produtos, não estava conseguindo obter as informações do ItemVenda associado ao produto. Portanto fiz uma conexão direta com o banco de dados para consultar essa informação. Não é a forma mais correta, mas para não perder muito tempo, foi necessária. Deixei a interface por última etapa também, e por falta de tempo, não teve o refinamento necessário.
+## Dificuldades
+
+- buscar_quantidade_itemvenda
+- montar_json_venda
+(Explicar)
 
 ## Desenvolvimentos Futuros
 
-Como desenvolvimentos futuros para esta aplicação, gostaria de implantar a parte de frontend em NextJS, pois facilitaria o desenvolvimento, além de deixar mais robusto e organizado para novas funcionalidades. Além disso, implantar testes no frontend e realizar a melhoria de interface em alguns aspectos que não ficaram como eu gostaria. Por fim, gostaria de unificar os componentes de criar e atualizar Venda em um único componente.
+Como desenvolvimentos futuros para esta aplicação, gostaria de implantar a parte de frontend em NextJS, pois facilitaria o desenvolvimento, além de deixar mais robusto e organizado para novas funcionalidades. Além disso, também gostaria de implantar testes no frontend e realizar melhoria nas interface de forma geral.
 
 # Instalação
 
-Para a instalação, recomendo ter o Docker instalado na sua máquina. Caso deseje executar manualmente, será necessário ter o Python e o NodeJS instalado.
+Para a instalação, recomendo ter o Docker instalado na sua máquina. Caso deseje executar manualmente, será necessário ter o Python e o NodeJS instalado, conforme versões acima.
 
 ## Docker
 
@@ -20,11 +24,11 @@ O projeto foi desenvolvido e pensado para ser executado com Docker Compose, onde
 
 ## Django
 
-Para executar o projeto Django manualmente, sem precisar do Docker, podemos seguir os seguintes comandos:
+Para executar o projeto Django manualmente, sem o uso do Docker, podemos seguir os seguintes comandos:
 
 `cd backend`
 
-`cp .env-example .env `
+`cp .env-example .env`
 
 Caso aqui, queiram executar com sqlite3, é possível alterar o .env, com DATABASE_ENGINE para 'django.db.backends.sqlite3' e DATABASE_NAME para o nome do arquivo, pode ser 'db.sqlite3', e deixar as outras variáveis de banco vazias.
 
