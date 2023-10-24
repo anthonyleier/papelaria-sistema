@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import { buscarDadosAPI, deletarDadosAPI } from "../utils";
+import { buscarDadosAPI, deletarDadosAPI } from "../../utils";
 import Navbar from "../navbar/Navbar";
 import LinhaVenda from "./LinhaVenda";
 import "./vendas.css";

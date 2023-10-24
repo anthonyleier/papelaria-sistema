@@ -13,7 +13,7 @@ import {
     atualizarDadosAPI,
     gerarNumeroNotaFiscal,
     enviarDadosAPI,
-} from "../utils";
+} from "../../utils";
 
 const VendaForm = () => {
     const [vendas, setVendas] = useState([]);

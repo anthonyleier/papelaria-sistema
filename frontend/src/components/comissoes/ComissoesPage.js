@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import Navbar from "../navbar/Navbar";
-import { formatarMoeda, buscarDadosAPI } from "../utils";
+import { formatarMoeda, buscarDadosAPI } from "../../utils";
 import "./comissoes.css";
 
 function ComissoesPage() {

@@ -1,5 +1,5 @@
 import React from "react";
-import { formatarMoeda } from "../utils";
+import { formatarMoeda } from "../../utils";
 
 const LinhaDetalhesVenda = (props) => {
     const venda = props.venda;

@@ -1,9 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import VendasPage from "./vendas/VendasPage";
-import VendaForm from "./vendas/VendaForm";
-import ComissoesPage from "./comissoes/ComissoesPage";
+import VendasPage from "./components/vendas/VendasPage";
+import VendaForm from "./components/vendas/VendaForm";
+import ComissoesPage from "./components/comissoes/ComissoesPage";
 
 function App() {
     return (

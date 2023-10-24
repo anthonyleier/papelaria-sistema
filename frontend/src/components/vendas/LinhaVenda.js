@@ -5,7 +5,7 @@ import { FaTrash } from "react-icons/fa";
 
 import LinhaDetalhesVenda from "./LinhaDetalhesVenda";
 import LinhaExcluirVenda from "./LinhaExcluirVenda";
-import { formatarData, formatarMoeda, buscarDadosAPI } from "../utils";
+import { formatarData, formatarMoeda, buscarDadosAPI } from "../../utils";
 
 const LinhaVenda = (props) => {
     const venda = props.venda;
