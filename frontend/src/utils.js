@@ -54,7 +54,6 @@ export const enviarDadosAPI = async (endpoint, dados) => {
 
 export const atualizarDadosAPI = async (endpoint, id, dados) => {
   try {
-    console.log(dados);
     const response = await axios.put(`http://localhost:8000/${endpoint}${id}/`, dados);
     return response.data;
   } catch (error) {

@@ -96,7 +96,6 @@ const AlterarVenda = () => {
     }, [vendas, id]);
 
     useEffect(() => {
-        console.log(produtosVenda.length);
         if (vendedorVenda && clienteVenda && produtosVenda.length > 0) {
             setFormularioPreenchido(true);
         }
@@ -146,7 +145,6 @@ const AlterarVenda = () => {
             vendedor: vendedorVenda,
             produtos: produtosVenda,
         };
-        console.log("Venda finalizada:", dados);
         atualizarDadosAPI("vendas/", id, dados);
         navigate("/vendas");
     };
@@ -159,7 +157,6 @@ const AlterarVenda = () => {
             vendedor: vendedorVenda,
             produtos: produtosVenda,
         };
-        console.log("Venda finalizada:", dados);
         enviarDadosAPI("vendas/", dados);
         navigate("/vendas");
     };

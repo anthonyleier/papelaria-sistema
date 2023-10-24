@@ -50,7 +50,6 @@ const NovaVenda = () => {
   const finalizarVenda = () => {
     let numeroNotaFiscal = gerarNumeroNotaFiscal();
     let dados = { numero_nota_fiscal: numeroNotaFiscal, cliente: clienteVenda, vendedor: vendedorVenda, produtos: produtosVenda };
-    console.log("Venda finalizada:", dados);
     enviarDadosAPI("vendas/", dados);
     navigate("/vendas");
   };

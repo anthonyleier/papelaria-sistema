@@ -14,7 +14,6 @@ function ComissoesPage() {
     const calcularTotalComissoes = () => {
       let total = 0;
       comissoes.forEach((comissao) => {
-        console.log(comissao.valor_comissao);
         total += comissao.valor_comissao;
       });
       setTotalComissoes(total);

@@ -9,21 +9,24 @@ import "./vendas.css";
 const VendasPage = () => {
     const [vendas, setVendas] = useState([]);
     const [carregando, setCarregando] = useState(true);
-    const [forcar, setForcar] = useState(false);
 
     useEffect(() => {
         buscarDadosAPI("vendas/", setVendas);
-        if (vendas != []) setCarregando(false);
-    }, [forcar]);
+        setCarregando(false);
+    }, []);
+
+    const removerVendaLista = (id) => {
+        const vendasAtualizadas = vendas.filter((venda) => venda.id != id);
+        setVendas(vendasAtualizadas);
+    };
 
     const excluirVenda = (venda, setAbrirPopupExclusao) => {
         deletarDadosAPI("vendas", venda.id);
         setAbrirPopupExclusao(false);
-        buscarDadosAPI("vendas/", setVendas);
-        setForcar(true);
+        removerVendaLista(venda.id);
     };
 
-    if (carregando) return <p>Carregando...</p>;
+    if (carregando) return <h1>Carregando...</h1>;
 
     return (
         <div>
