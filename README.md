@@ -162,4 +162,4 @@ Apenas faça bom uso delas, a dica é não esquecer que esse espaço é para mos
 
 ## Como entregar
 
-O seu projeto deve estar acessível para download em algum repositório git remoto, e deve conter no README instruções detalhadas para instalação e execução.
+O seu projeto deve estar acessível para download em algum repositório git remoto, e deve conter no README instruções detalhadas para instalação e execução, incluindo pré-requisitos (ex: as versões utilizadas do Python no Backend e do NodeJS no Frontend).
