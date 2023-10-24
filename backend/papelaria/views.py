@@ -5,8 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from papelaria.models import Cliente, Vendedor, Produto, Venda
-from papelaria.serializers import ClienteSerializer, VendedorSerializer, ProdutoSerializer, VendaSerializer, ItemVendaSerializer
-from papelaria.utils import montar_json_venda
+from papelaria.serializers import ClienteSerializer, VendedorSerializer, ProdutoSerializer, VendaSerializer, ItemVendaSerializer, VendaSerializerCustom
 
 
 class ProdutoListCreateView(generics.ListCreateAPIView):
@@ -42,10 +41,8 @@ class VendedorRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 class VendaListCreateView(APIView):
     def get(self, request):
         vendas = Venda.objects.all()
-        retorno = []
-        for venda in vendas:
-            retorno.append(montar_json_venda(venda))
-        return Response(retorno)
+        serializer = VendaSerializerCustom(vendas, many=True)
+        return Response(serializer.data)
 
     def post(self, request):
         venda_serializer = VendaSerializer(data=request.data)
@@ -73,14 +70,16 @@ class VendaRetrieveUpdateDestroyView(APIView):
 
     def get(self, request, pk):
         venda = self.get_object(pk)
+
         if not venda:
             return Response({'message': 'Venda não encontrada.'}, status=status.HTTP_404_NOT_FOUND)
 
-        serializer = VendaSerializer(venda)
+        serializer = VendaSerializerCustom(venda)
         return Response(serializer.data)
 
     def put(self, request, pk):
         venda = self.get_object(pk)
+
         if not venda:
             return Response({'message': 'Venda não encontrada.'}, status=status.HTTP_404_NOT_FOUND)
 

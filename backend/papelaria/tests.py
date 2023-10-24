@@ -145,9 +145,9 @@ class VendaTests(TestCase):
         venda_esperada = {
             'id': 1,
             'numero_nota_fiscal': '12345',
-            'cliente': 1,
-            'vendedor': 1,
-            'produtos': [{'codigo': 1, 'descricao': 'Papel Sulfite A4', 'valor_unitario': 20.99, 'percentual_comissao': 0.03, 'quantidade': 10}]
+            'cliente': {"id": 1},
+            'vendedor': {"id": 1},
+            'produtos': [{'codigo': '1', 'descricao': 'Papel Sulfite A4', 'valor_unitario': '20.99', 'percentual_comissao': '0.03'}]
         }
         response = self.client.get(reverse('venda-list-create'))
         venda_encontrada = response.json()[0]
@@ -158,8 +158,8 @@ class VendaTests(TestCase):
         venda_esperada = {
             'id': 1,
             'numero_nota_fiscal': '12345',
-            'cliente': 1,
-            'vendedor': 1,
+            'cliente': {"id": 1},
+            'vendedor': {"id": 1},
         }
         response = self.client.get(reverse('venda-retrieve-update-destroy', kwargs={'pk': 1}))
         venda_encontrada = response.json()
