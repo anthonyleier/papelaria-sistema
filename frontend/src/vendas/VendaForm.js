@@ -171,7 +171,7 @@ const AlterarVenda = () => {
                                 options={produtosDisponiveis}
                                 onChange={handleProdutoChange}
                                 value={produtoSelecionado}
-                                getOptionLabel={(option) => option.descricao}
+                                getOptionLabel={(option) => `${option.codigo} - ${option.descricao}`}
                                 getOptionValue={(option) => option.codigo}
                                 placeholder="Buscar produto pelo código ou descrição"
                                 isSearchable={true}
@@ -232,7 +232,7 @@ const AlterarVenda = () => {
                             <option value="">Selecione o Vendedor</option>
                             {vendedoresDisponiveis.map((vendedor) => (
                                 <option key={vendedor.id} value={vendedor.id}>
-                                    {vendedor.nome}
+                                    {vendedor.id} - {vendedor.nome}
                                 </option>
                             ))}
                         </select>
@@ -244,7 +244,7 @@ const AlterarVenda = () => {
                             <option value="">Selecione o Cliente</option>
                             {clientesDisponiveis.map((cliente) => (
                                 <option key={cliente.id} value={cliente.id}>
-                                    {cliente.nome}
+                                    {cliente.id} - {cliente.nome}
                                 </option>
                             ))}
                         </select>
