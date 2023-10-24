@@ -35,6 +35,7 @@ const AlterarVenda = () => {
     const navigate = useNavigate();
     const { id } = useParams();
 
+    const tituloPagina = id ? `Alterar Venda ${id}` : "Nova Venda";
     const modoEdicao = id ? true : false;
 
     const calcularTotalVenda = () => {
@@ -95,7 +96,7 @@ const AlterarVenda = () => {
     }, [vendas, id]);
 
     useEffect(() => {
-        console.log(produtosVenda.length)
+        console.log(produtosVenda.length);
         if (vendedorVenda && clienteVenda && produtosVenda.length > 0) {
             setFormularioPreenchido(true);
         }
@@ -160,7 +161,7 @@ const AlterarVenda = () => {
     };
     return (
         <div>
-            {modoEdicao ? <Navbar tituloDaPagina="Alterar Venda" /> : <Navbar tituloDaPagina="Nova Venda" />}
+            <Navbar tituloDaPagina={tituloPagina} />
             <div className="conteudo-pagina-editar-venda">
                 <div className="aba-produtos">
                     <h2>Produtos</h2>
