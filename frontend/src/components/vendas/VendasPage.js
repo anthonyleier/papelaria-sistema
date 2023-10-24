@@ -16,7 +16,7 @@ const VendasPage = () => {
     }, []);
 
     const removerVendaLista = (id) => {
-        const vendasAtualizadas = vendas.filter((venda) => venda.id != id);
+        const vendasAtualizadas = vendas.filter((venda) => venda.id !== id);
         setVendas(vendasAtualizadas);
     };
 

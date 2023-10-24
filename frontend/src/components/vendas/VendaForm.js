@@ -79,7 +79,7 @@ const VendaForm = () => {
                 clientesDisponiveis.length > 0 &&
                 produtosDisponiveis.length > 0
             ) {
-                const vendaEncontrada = vendas.find((venda) => venda.id == id);
+                const vendaEncontrada = vendas.find((venda) => venda.id === id);
                 if (vendaEncontrada) {
                     carregarVendedor(vendaEncontrada);
                     carregarCliente(vendaEncontrada);
@@ -104,7 +104,7 @@ const VendaForm = () => {
 
     const adicionarProduto = () => {
         if (produtoSelecionado && quantidadeSelecionada > 0) {
-            const produto = produtosDisponiveis.find((elemento) => elemento.codigo == produtoSelecionado.codigo);
+            const produto = produtosDisponiveis.find((elemento) => elemento.codigo === produtoSelecionado.codigo);
             const novoProduto = {
                 produto: produtoSelecionado.codigo,
                 descricao: produto.descricao,
