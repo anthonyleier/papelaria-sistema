@@ -1,7 +1,7 @@
 import React from "react";
 import { formatarMoeda } from "../utils";
 
-const DetalhesVenda = (props) => {
+const LinhaDetalhesVenda = (props) => {
     const venda = props.venda;
 
     return (
@@ -26,4 +26,4 @@ const DetalhesVenda = (props) => {
         </>
     );
 };
-export default DetalhesVenda;
+export default LinhaDetalhesVenda;

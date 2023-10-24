@@ -15,7 +15,7 @@ import {
     enviarDadosAPI,
 } from "../utils";
 
-const AlterarVenda = () => {
+const VendaForm = () => {
     const [vendas, setVendas] = useState([]);
     const [venda, setVenda] = useState([]);
     const [carregando, setCarregando] = useState(true);
@@ -287,4 +287,4 @@ const AlterarVenda = () => {
     );
 };
 
-export default AlterarVenda;
+export default VendaForm;

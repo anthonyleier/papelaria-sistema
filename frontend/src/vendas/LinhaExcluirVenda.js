@@ -1,4 +1,4 @@
-const ExcluirVenda = (props) => {
+const LinhaExcluirVenda = (props) => {
   const venda = props.venda;
   const setLinhaExclusao = props.setLinhaExclusao;
   const excluirVenda = props.onExcluir;
@@ -13,4 +13,4 @@ const ExcluirVenda = (props) => {
     </tr>
   );
 };
-export default ExcluirVenda;
+export default LinhaExcluirVenda;

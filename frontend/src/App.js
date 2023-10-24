@@ -2,8 +2,8 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import VendasPage from "./vendas/VendasPage";
-import ComissoesPage from "./comissoes/ComissoesPage";
 import VendaForm from "./vendas/VendaForm";
+import ComissoesPage from "./comissoes/ComissoesPage";
 
 function App() {
     return (

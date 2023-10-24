@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { RiEditBoxLine } from "react-icons/ri";
 import { FaTrash } from "react-icons/fa";
 
-import DetalhesVenda from "./DetalhesVenda";
-import ExcluirVenda from "./ExcluirVenda";
+import LinhaDetalhesVenda from "./LinhaDetalhesVenda";
+import LinhaExcluirVenda from "./LinhaExcluirVenda";
 import { formatarData, formatarMoeda, buscarDadosAPI } from "../utils";
 
 const LinhaVenda = (props) => {
@@ -44,7 +44,7 @@ const LinhaVenda = (props) => {
     }, []);
 
     if (linhaExclusao)
-        return <ExcluirVenda venda={venda} onExcluir={excluirVenda} setLinhaExclusao={setLinhaExclusao} />;
+        return <LinhaExcluirVenda venda={venda} onExcluir={excluirVenda} setLinhaExclusao={setLinhaExclusao} />;
 
     return (
         <>
@@ -71,7 +71,7 @@ const LinhaVenda = (props) => {
                     </span>
                 </td>
             </tr>
-            {linhaExpandida && <DetalhesVenda venda={venda} />}
+            {linhaExpandida && <LinhaDetalhesVenda venda={venda} />}
         </>
     );
 };
