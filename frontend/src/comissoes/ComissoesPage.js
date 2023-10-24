@@ -28,7 +28,7 @@ function ComissoesPage() {
 
   return (
     <div>
-      <Navbar tituloDaPagina="Comissões" />
+      <Navbar titulo="Comissões" />
       <div className="header-pagina">
         <h1>Relatório de Comissões</h1>
         <div className="filtro">

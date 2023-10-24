@@ -172,7 +172,7 @@ const VendaForm = () => {
     };
     return (
         <div>
-            <Navbar tituloDaPagina={tituloPagina} />
+            <Navbar titulo={tituloPagina} />
             <div className="conteudo-pagina-editar-venda">
                 <div className="aba-produtos">
                     <h2>Produtos</h2>

@@ -30,7 +30,7 @@ const VendasPage = () => {
 
     return (
         <div>
-            <Navbar tituloDaPagina="Vendas" />
+            <Navbar titulo="Vendas" />
 
             <div className="header-pagina">
                 <h1>Vendas Realizadas</h1>

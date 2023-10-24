@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 
 import "./navbar.css";
 
-const Navbar = ({ tituloDaPagina }) => {
+const Navbar = (props) => {
+    const titulo = props.titulo
     const [menuAberto, setMenuAberto] = useState(false);
 
     const toggleMenu = () => {
@@ -33,7 +34,7 @@ const Navbar = ({ tituloDaPagina }) => {
                     </div>
             )}
             <img src="/logo.svg" alt="Logo da Empresa" className="logo" />
-            <h1 className="titulo-pagina">{tituloDaPagina}</h1>
+            <h1 className="titulo-pagina">{titulo}</h1>
         </nav>
     );
 };
