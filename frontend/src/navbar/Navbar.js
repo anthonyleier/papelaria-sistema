@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import "./navbar.css";
 
 const Navbar = ({ tituloDaPagina }) => {
-    const [menuAberto, setMenuAberto] = useState(true);
+    const [menuAberto, setMenuAberto] = useState(false);
 
     const toggleMenu = () => {
         setMenuAberto(!menuAberto);
