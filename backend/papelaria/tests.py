@@ -9,15 +9,41 @@ from papelaria.models import Cliente, Vendedor, Produto, Venda, DiaDaSemana
 class ProdutoTests(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.produto_data = {'descricao': 'Tesoura sem ponta', 'valor_unitario': 6.50, 'percentual_comissao': 0.05}
+        self.produto_data = {'descricao': 'Tesoura sem ponta', 'valor_unitario': '6.50', 'percentual_comissao': '0.05'}
         self.response = self.client.post(reverse('produto-list-create'), self.produto_data, format='json')
 
-    def test_criar_produto(self):
-        self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
-
+    # GET - produtos/
     def test_listar_produtos(self):
         response = self.client.get(reverse('produto-list-create'))
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        produto_buscado = self.produto_data
+        produto_buscado['codigo'] = 1
+        self.assertIn(produto_buscado, response.json())
+
+    # GET - produtos/id
+    def test_consultar_produtos(self):
+        response = self.client.get(reverse('produto-retrieve-update-destroy', kwargs={'pk': 1}))
+        produto_buscado = self.produto_data
+        produto_buscado['codigo'] = 1
+        self.assertDictEqual(produto_buscado, response.json())
+
+    # POST - produtos/
+    def test_criar_produto(self):
+        produto_criado = self.produto_data
+        produto_criado['codigo'] = 1
+        self.assertDictEqual(produto_criado, self.response.json())
+
+    # PUT - produtos/id
+    def test_atualizar_produto(self):
+        produto_atualizado = self.produto_data
+        produto_atualizado['codigo'] = 1
+        produto_atualizado['valor_unitario'] = '10.50'
+        response = self.client.put(reverse('produto-retrieve-update-destroy', kwargs={'pk': 1}), produto_atualizado, format='json')
+        self.assertDictEqual(produto_atualizado, response.json())
+
+    # DELETE - produtos/id
+    def test_deletar_produto(self):
+        response = self.client.delete(reverse('produto-retrieve-update-destroy', kwargs={'pk': 1}))
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
 
 class ClienteTests(TestCase):
@@ -26,12 +52,38 @@ class ClienteTests(TestCase):
         self.cliente_data = {'nome': 'Leonardo Sousa Ferreira', 'email': 'LeonardoSousaFerreira@teleworm.us', 'telefone': '(51) 9843-9940'}
         self.response = self.client.post(reverse('cliente-list-create'), self.cliente_data, format='json')
 
-    def test_criar_cliente(self):
-        self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
-
+    # GET - clientes/
     def test_listar_clientes(self):
         response = self.client.get(reverse('cliente-list-create'))
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        cliente_buscado = self.cliente_data
+        cliente_buscado['id'] = 1
+        self.assertIn(cliente_buscado, response.json())
+
+    # GET - clientes/id
+    def test_consultar_clientes(self):
+        response = self.client.get(reverse('cliente-retrieve-update-destroy', kwargs={'pk': 1}))
+        cliente_buscado = self.cliente_data
+        cliente_buscado['id'] = 1
+        self.assertDictEqual(cliente_buscado, response.json())
+
+    # POST - clientes/
+    def test_criar_cliente(self):
+        cliente_criado = self.cliente_data
+        cliente_criado['id'] = 1
+        self.assertDictEqual(cliente_criado, self.response.json())
+
+    # PUT - clientes/id
+    def test_atualizar_cliente(self):
+        cliente_atualizado = self.cliente_data
+        cliente_atualizado['id'] = 1
+        cliente_atualizado['nome'] = 'Leonardo'
+        response = self.client.put(reverse('cliente-retrieve-update-destroy', kwargs={'pk': 1}), cliente_atualizado, format='json')
+        self.assertDictEqual(cliente_atualizado, response.json())
+
+    # DELETE - clientes/id
+    def test_deletar_cliente(self):
+        response = self.client.delete(reverse('cliente-retrieve-update-destroy', kwargs={'pk': 1}))
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
 
 class VendedorTests(TestCase):
@@ -40,12 +92,38 @@ class VendedorTests(TestCase):
         self.vendedor_data = {'nome': 'Bianca Oliveira Azevedo', 'email': 'BiancaOliveiraAzevedo@teleworm.us', 'telefone': '(12) 2179-5851'}
         self.response = self.client.post(reverse('vendedor-list-create'), self.vendedor_data, format='json')
 
-    def test_criar_vendedor(self):
-        self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
-
+    # GET - vendedores/
     def test_listar_vendedores(self):
         response = self.client.get(reverse('vendedor-list-create'))
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        vendedor_buscado = self.vendedor_data
+        vendedor_buscado['id'] = 1
+        self.assertIn(vendedor_buscado, response.json())
+
+    # GET - vendedores/id
+    def test_consultar_vendedores(self):
+        response = self.client.get(reverse('vendedor-retrieve-update-destroy', kwargs={'pk': 1}))
+        vendedor_buscado = self.vendedor_data
+        vendedor_buscado['id'] = 1
+        self.assertDictEqual(vendedor_buscado, response.json())
+
+    # POST - vendedores/
+    def test_criar_vendedor(self):
+        vendedor_criado = self.vendedor_data
+        vendedor_criado['id'] = 1
+        self.assertDictEqual(vendedor_criado, self.response.json())
+
+    # PUT - vendedores/id
+    def test_atualizar_vendedor(self):
+        vendedor_atualizado = self.vendedor_data
+        vendedor_atualizado['id'] = 1
+        vendedor_atualizado['nome'] = 'Bianca'
+        response = self.client.put(reverse('vendedor-retrieve-update-destroy', kwargs={'pk': 1}), vendedor_atualizado, format='json')
+        self.assertDictEqual(vendedor_atualizado, response.json())
+
+    # DELETE - vendedores/id
+    def test_deletar_vendedor(self):
+        response = self.client.delete(reverse('vendedor-retrieve-update-destroy', kwargs={'pk': 1}))
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
 
 class VendaTests(TestCase):
@@ -62,12 +140,54 @@ class VendaTests(TestCase):
         }
         self.response = self.client.post(reverse('venda-list-create'), self.venda_data, format='json')
 
-    def test_criar_venda(self):
-        self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
-
+    # GET - vendas/
     def test_listar_vendas(self):
+        venda_esperada = {
+            'id': 1,
+            'numero_nota_fiscal': '12345',
+            'cliente': 1,
+            'vendedor': 1,
+            'produtos': [{'codigo': 1, 'descricao': 'Papel Sulfite A4', 'valor_unitario': 20.99, 'percentual_comissao': 0.03, 'quantidade': 10}]
+        }
         response = self.client.get(reverse('venda-list-create'))
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        venda_encontrada = response.json()[0]
+        self.assertDictContainsSubset(venda_esperada, venda_encontrada)
+
+    # GET - vendas/id
+    def test_consultar_vendas(self):
+        venda_esperada = {
+            'id': 1,
+            'numero_nota_fiscal': '12345',
+            'cliente': 1,
+            'vendedor': 1,
+        }
+        response = self.client.get(reverse('venda-retrieve-update-destroy', kwargs={'pk': 1}))
+        venda_encontrada = response.json()
+        self.assertDictContainsSubset(venda_esperada, venda_encontrada)
+
+    # POST - vendas/
+    def test_criar_venda(self):
+        venda_esperada = {
+            'id': 1,
+            'numero_nota_fiscal': '12345',
+            'cliente': 1,
+            'vendedor': 1,
+        }
+        self.assertDictContainsSubset(venda_esperada, self.response.json())
+
+    # PUT - vendas/id
+    def test_atualizar_venda(self):
+        cliente_novo = Cliente.objects.create(nome='Anthony Cruz', email='anthony@email.com', telefone='(49) 9999-8888')
+        venda_atualizada = self.venda_data
+        venda_atualizada['cliente'] = cliente_novo.id
+        response = self.client.put(reverse('venda-retrieve-update-destroy', kwargs={'pk': 1}), venda_atualizada, format='json')
+        del venda_atualizada['produtos']
+        self.assertDictContainsSubset(venda_atualizada, response.json())
+
+    # DELETE - vendas/id
+    def test_deletar_venda(self):
+        response = self.client.delete(reverse('venda-retrieve-update-destroy', kwargs={'pk': 1}))
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_calculo_comissao(self):
         venda = Venda.objects.get(id=self.response.data['id'])
