@@ -1,4 +1,4 @@
-import { BotaoConfirmarExclusao, BotoesPerguntarExclusao } from "./VendasStyles";
+import { BotaoCancelarExclusao, BotaoConfirmarExclusao, BotoesPerguntarExclusao, Td } from "./VendasStyles";
 
 const LinhaExcluirVenda = (props) => {
   const venda = props.venda;
@@ -7,11 +7,13 @@ const LinhaExcluirVenda = (props) => {
 
   return (
     <tr>
-      <td colSpan="5"><p>Tem certeza de que deseja excluir esta venda?</p></td>
-      <BotoesPerguntarExclusao>
-        <BotaoConfirmarExclusao onClick={() => {excluirVenda(venda, setLinhaExclusao);}}>Sim, Excluir</BotaoConfirmarExclusao>
-        <button onClick={() => {setLinhaExclusao(false);}}>Cancelar</button>
-      </BotoesPerguntarExclusao>
+      <Td colSpan="5"><p>Tem certeza de que deseja excluir esta venda?</p></Td>
+      <Td>
+        <BotoesPerguntarExclusao>
+          <BotaoConfirmarExclusao onClick={() => {excluirVenda(venda, setLinhaExclusao);}}>Sim, Excluir</BotaoConfirmarExclusao>
+          <BotaoCancelarExclusao onClick={() => {setLinhaExclusao(false);}}>Cancelar</BotaoCancelarExclusao>
+        </BotoesPerguntarExclusao>
+      </Td>
     </tr>
   );
 };

@@ -180,7 +180,6 @@ export const ThCustom = styled.tr`
 `;
 
 export const BotoesPerguntarExclusao = styled.td`
-    width: 100%;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -188,6 +187,22 @@ export const BotoesPerguntarExclusao = styled.td`
 
 export const BotaoConfirmarExclusao = styled.button`
     background-color: rgb(158, 11, 11);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+`;
+
+export const BotaoCancelarExclusao = styled.button`
+    background-color: #00585e;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
 `;
 
 export const TabelaOpcoes = styled.td`
