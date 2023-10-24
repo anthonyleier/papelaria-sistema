@@ -102,6 +102,7 @@ const AlterarVenda = () => {
         }
     }, [vendedorVenda, clienteVenda, produtosVenda]);
 
+
     const adicionarProduto = () => {
         if (produtoSelecionado && quantidadeSelecionada > 0) {
             const produto = produtosDisponiveis.find((elemento) => elemento.codigo == produtoSelecionado.codigo);
@@ -112,7 +113,20 @@ const AlterarVenda = () => {
                 valor_unitario: parseFloat(produto.valor_unitario),
                 total: quantidadeSelecionada * produto.valor_unitario,
             };
-            setProdutosVenda([...produtosVenda, novoProduto]);
+            const produtoExistenteIndex = produtosVenda.findIndex((elemento) => elemento.produto === produtoSelecionado.codigo);
+
+            if (produtoExistenteIndex !== -1){
+                const produtosAtualizados = [...produtosVenda];
+                produtosAtualizados[produtoExistenteIndex] = {
+                    ...produtosAtualizados[produtoExistenteIndex],
+                    quantidade: produtosAtualizados[produtoExistenteIndex].quantidade + novoProduto.quantidade,
+                    total: produtosAtualizados[produtoExistenteIndex].total + novoProduto.total,
+                };
+                setProdutosVenda(produtosAtualizados);
+            }
+
+            if (produtoExistenteIndex === -1) setProdutosVenda([...produtosVenda, novoProduto])
+
             setProdutoSelecionado("");
             setQuantidadeSelecionada(1);
         }
