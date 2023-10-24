@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { buscarDadosAPI, deletarDadosAPI } from "../../utils";
 import Navbar from "../navbar/Navbar";
 import LinhaVenda from "./LinhaVenda";
-import "./vendas.css";
+import { BotaoHeader, HeaderPagina, Table, Th } from "./VendasStyles";
 
 const VendasPage = () => {
     const [vendas, setVendas] = useState([]);
@@ -32,22 +32,22 @@ const VendasPage = () => {
         <div>
             <Navbar titulo="Vendas" />
 
-            <div className="header-pagina">
+            <HeaderPagina>
                 <h1>Vendas Realizadas</h1>
-                <Link to="/vendas/adicionar" className="botao-header">
+                <BotaoHeader to="/vendas/adicionar">
                     <p>Inserir Nova Venda</p>
-                </Link>
-            </div>
+                </BotaoHeader>
+            </HeaderPagina>
 
-            <table>
+            <Table>
                 <thead>
                     <tr>
-                        <th>Nota Fiscal</th>
-                        <th>Cliente</th>
-                        <th>Vendedor</th>
-                        <th>Data da Venda</th>
-                        <th>Valor Total</th>
-                        <th>Opções</th>
+                        <Th>Nota Fiscal</Th>
+                        <Th>Cliente</Th>
+                        <Th>Vendedor</Th>
+                        <Th>Data da Venda</Th>
+                        <Th>Valor Total</Th>
+                        <Th>Opções</Th>
                     </tr>
                 </thead>
                 <tbody>
@@ -55,7 +55,7 @@ const VendasPage = () => {
                         <LinhaVenda venda={venda} onExcluir={excluirVenda} />
                     ))}
                 </tbody>
-            </table>
+            </Table>
         </div>
     );
 };

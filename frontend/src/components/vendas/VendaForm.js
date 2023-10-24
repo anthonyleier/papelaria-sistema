@@ -14,6 +14,21 @@ import {
     gerarNumeroNotaFiscal,
     enviarDadosAPI,
 } from "../../utils";
+import {
+    AbaDados,
+    AbaProdutos,
+    BotaoExcluirProduto,
+    BotaoPadraoVenda,
+    BotoesConfirmacao,
+    ConteudoPagina,
+    GrupoInputsProduto,
+    InputDados,
+    InputProduto,
+    Table,
+    Td,
+    Th,
+    ValorTotalVenda,
+} from "./VendasStyles";
 
 const VendaForm = () => {
     const [vendas, setVendas] = useState([]);
@@ -73,13 +88,14 @@ const VendaForm = () => {
 
     useEffect(() => {
         if (modoEdicao) {
+            console.log(vendas);
             if (
                 vendas.length > 0 &&
                 vendedoresDisponiveis.length > 0 &&
                 clientesDisponiveis.length > 0 &&
                 produtosDisponiveis.length > 0
             ) {
-                const vendaEncontrada = vendas.find((venda) => venda.id === id);
+                const vendaEncontrada = vendas.find((venda) => venda.id === parseInt(id));
                 if (vendaEncontrada) {
                     carregarVendedor(vendaEncontrada);
                     carregarCliente(vendaEncontrada);
@@ -101,7 +117,6 @@ const VendaForm = () => {
         }
     }, [vendedorVenda, clienteVenda, produtosVenda]);
 
-
     const adicionarProduto = () => {
         if (produtoSelecionado && quantidadeSelecionada > 0) {
             const produto = produtosDisponiveis.find((elemento) => elemento.codigo === produtoSelecionado.codigo);
@@ -112,9 +127,11 @@ const VendaForm = () => {
                 valor_unitario: parseFloat(produto.valor_unitario),
                 total: quantidadeSelecionada * produto.valor_unitario,
             };
-            const produtoExistenteIndex = produtosVenda.findIndex((elemento) => elemento.produto === produtoSelecionado.codigo);
+            const produtoExistenteIndex = produtosVenda.findIndex(
+                (elemento) => elemento.produto === produtoSelecionado.codigo
+            );
 
-            if (produtoExistenteIndex !== -1){
+            if (produtoExistenteIndex !== -1) {
                 const produtosAtualizados = [...produtosVenda];
                 produtosAtualizados[produtoExistenteIndex] = {
                     ...produtosAtualizados[produtoExistenteIndex],
@@ -124,7 +141,7 @@ const VendaForm = () => {
                 setProdutosVenda(produtosAtualizados);
             }
 
-            if (produtoExistenteIndex === -1) setProdutosVenda([...produtosVenda, novoProduto])
+            if (produtoExistenteIndex === -1) setProdutosVenda([...produtosVenda, novoProduto]);
 
             setProdutoSelecionado("");
             setQuantidadeSelecionada(1);
@@ -173,12 +190,12 @@ const VendaForm = () => {
     return (
         <div>
             <Navbar titulo={tituloPagina} />
-            <div className="conteudo-pagina-editar-venda">
-                <div className="aba-produtos">
+            <ConteudoPagina>
+                <AbaProdutos>
                     <h2>Produtos</h2>
 
-                    <div className="grupo-inputs-produto">
-                        <div className="input-produto">
+                    <GrupoInputsProduto>
+                        <InputProduto>
                             <Select
                                 options={produtosDisponiveis}
                                 onChange={handleProdutoChange}
@@ -188,57 +205,55 @@ const VendaForm = () => {
                                 placeholder="Buscar produto pelo código ou descrição"
                                 isSearchable={true}
                             />
-                        </div>
+                        </InputProduto>
 
-                        <div className="input-produto">
+                        <InputProduto>
                             <input
                                 type="number"
                                 className="input-texto"
                                 value={quantidadeSelecionada}
                                 onChange={(e) => setQuantidadeSelecionada(e.target.value)}
                             />
-                        </div>
+                        </InputProduto>
 
-                        <div className="input-produto">
-                            <button onClick={adicionarProduto} className="botao-padrao-venda">
-                                Adicionar
-                            </button>
-                        </div>
-                    </div>
+                        <InputProduto>
+                            <BotaoPadraoVenda onClick={adicionarProduto}>Adicionar</BotaoPadraoVenda>
+                        </InputProduto>
+                    </GrupoInputsProduto>
 
-                    <table className="tabela-produtos-venda">
+                    <Table>
                         <thead>
                             <tr>
-                                <th>Produto/Serviço</th>
-                                <th>Quantidade</th>
-                                <th>Preço Unitário</th>
-                                <th>Total</th>
-                                <th>Opções</th>
+                                <Th>Produto/Serviço</Th>
+                                <Th>Quantidade</Th>
+                                <Th>Preço Unitário</Th>
+                                <Th>Total</Th>
+                                <Th>Opções</Th>
                             </tr>
                         </thead>
                         <tbody>
                             {produtosVenda.map((item, index) => (
                                 <tr key={index}>
-                                    <td>{item.descricao}</td>
-                                    <td>{item.quantidade}</td>
-                                    <td>{formatarMoeda(item.valor_unitario)}</td>
-                                    <td>{formatarMoeda(item.total)}</td>
-                                    <td className="botao-excluir" onClick={() => removerProduto(index)}>
+                                    <Td>{item.descricao}</Td>
+                                    <Td>{item.quantidade}</Td>
+                                    <Td>{formatarMoeda(item.valor_unitario)}</Td>
+                                    <Td>{formatarMoeda(item.total)}</Td>
+                                    <BotaoExcluirProduto onClick={() => removerProduto(index)}>
                                         <FaTrash />
-                                    </td>
+                                    </BotaoExcluirProduto>
                                 </tr>
                             ))}
                         </tbody>
-                    </table>
-                </div>
-                <div className="aba-dados">
+                    </Table>
+                </AbaProdutos>
+                <AbaDados>
                     <h2>Dados da Venda</h2>
-                    <div className="input-dados">
+                    <InputDados>
                         <label>Data e Hora da Venda</label>
                         <input type="text" value={buscarDataAtual()} readOnly />
-                    </div>
+                    </InputDados>
 
-                    <div className="input-dados">
+                    <InputDados>
                         <label>Escolha um vendedor</label>
                         <select value={vendedorVenda} onChange={(e) => setVendedorVenda(e.target.value)}>
                             <option value="">Selecione o Vendedor</option>
@@ -248,9 +263,9 @@ const VendaForm = () => {
                                 </option>
                             ))}
                         </select>
-                    </div>
+                    </InputDados>
 
-                    <div className="input-dados">
+                    <InputDados>
                         <label>Escolha um cliente</label>
                         <select value={clienteVenda} onChange={(e) => setClienteVenda(e.target.value)}>
                             <option value="">Selecione o Cliente</option>
@@ -260,29 +275,23 @@ const VendaForm = () => {
                                 </option>
                             ))}
                         </select>
-                    </div>
+                    </InputDados>
 
-                    <div className="valor-total-venda">
+                    <ValorTotalVenda>
                         <p>Valor total da venda:</p>
                         <b>{calcularTotalVenda()}</b>
-                    </div>
+                    </ValorTotalVenda>
 
-                    <div className="botoes-confirmacao">
+                    <BotoesConfirmacao>
                         <Link to="/vendas">
-                            <button onClick={finalizarVenda} className="botao-padrao-venda">
-                                Cancelar
-                            </button>
+                            <BotaoPadraoVenda onClick={finalizarVenda}>Cancelar</BotaoPadraoVenda>
                         </Link>
-                        <button
-                            disabled={!formularioPreenchido}
-                            onClick={finalizarVenda}
-                            className="botao-padrao-venda"
-                        >
+                        <BotaoPadraoVenda disabled={!formularioPreenchido} onClick={finalizarVenda}>
                             Finalizar Venda
-                        </button>
-                    </div>
-                </div>
-            </div>
+                        </BotaoPadraoVenda>
+                    </BotoesConfirmacao>
+                </AbaDados>
+            </ConteudoPagina>
         </div>
     );
 };

@@ -6,6 +6,7 @@ import { FaTrash } from "react-icons/fa";
 import LinhaDetalhesVenda from "./LinhaDetalhesVenda";
 import LinhaExcluirVenda from "./LinhaExcluirVenda";
 import { formatarData, formatarMoeda, buscarDadosAPI } from "../../utils";
+import { BotaoEditarVenda, BotaoVerItensVenda, BotaoExcluirVenda, TabelaOpcoes, Td } from "./VendasStyles";
 
 const LinhaVenda = (props) => {
     const venda = props.venda;
@@ -17,7 +18,7 @@ const LinhaVenda = (props) => {
     const [linhaExclusao, setLinhaExclusao] = useState(false);
 
     function toggleLinhaExpandida() {
-        setLinhaExpandida(!linhaExpandida)
+        setLinhaExpandida(!linhaExpandida);
     }
 
     const calcularValorTotal = (produtos) => {
@@ -49,27 +50,26 @@ const LinhaVenda = (props) => {
     return (
         <>
             <tr key={venda.id}>
-                <td>{venda.numero_nota_fiscal}</td>
-                <td>{getNomeCliente(venda.cliente)}</td>
-                <td>{getNomeVendedor(venda.vendedor)}</td>
-                <td>{formatarData(venda.data_hora)}</td>
-                <td>{calcularValorTotal(venda.produtos)}</td>
-                <td className="tabela-opcoes">
-                    <span className="botao-ver-itens-venda" onClick={() => toggleLinhaExpandida()}>
-                        Ver Itens
-                    </span>
-                    <Link className="botao-editar-venda" to={`/vendas/alterar/${venda.id}`}>
-                        <RiEditBoxLine />
-                    </Link>
-                    <span
-                        className="botao-excluir"
-                        onClick={() => {
-                            setLinhaExclusao(true);
-                        }}
-                    >
-                        <FaTrash />
-                    </span>
-                </td>
+                <Td>{venda.numero_nota_fiscal}</Td>
+                <Td>{getNomeCliente(venda.cliente)}</Td>
+                <Td>{getNomeVendedor(venda.vendedor)}</Td>
+                <Td>{formatarData(venda.data_hora)}</Td>
+                <Td>{calcularValorTotal(venda.produtos)}</Td>
+                <Td>
+                    <TabelaOpcoes>
+                        <BotaoVerItensVenda onClick={() => toggleLinhaExpandida()}>Ver Itens</BotaoVerItensVenda>
+                        <BotaoEditarVenda to={`/vendas/alterar/${venda.id}`}>
+                            <RiEditBoxLine />
+                        </BotaoEditarVenda>
+                        <BotaoExcluirVenda
+                            onClick={() => {
+                                setLinhaExclusao(true);
+                            }}
+                        >
+                            <FaTrash />
+                        </BotaoExcluirVenda>
+                    </TabelaOpcoes>
+                </Td>
             </tr>
             {linhaExpandida && <LinhaDetalhesVenda venda={venda} />}
         </>

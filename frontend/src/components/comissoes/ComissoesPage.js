@@ -59,8 +59,8 @@ function ComissoesPage() {
                 </tbody>
                 <Tfoot>
                     <tr>
-                        <td colSpan="3">Total de Comissões do Período</td>
-                        <td>{formatarMoeda(totalComissoes)}</td>
+                        <Td colSpan="3">Total de Comissões do Período</Td>
+                        <Td>{formatarMoeda(totalComissoes)}</Td>
                     </tr>
                 </Tfoot>
             </Table>
