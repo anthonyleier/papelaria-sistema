@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { RiEditBoxLine } from 'react-icons/ri';
-import { FaTrash } from 'react-icons/fa';
+import { RiEditBoxLine } from "react-icons/ri";
+import { FaTrash } from "react-icons/fa";
 
 import DetalhesVenda from "./DetalhesVenda";
 import ExcluirVenda from "./ExcluirVenda";
@@ -9,19 +9,15 @@ import { formatarData, formatarMoeda, buscarDadosAPI } from "../utils";
 
 const LinhaVenda = (props) => {
     const venda = props.venda;
-    const index = props.index;
     const excluirVenda = props.onExcluir;
-    const [linhasExpandidas, setLinhasExpandidas] = useState([]);
+
+    const [linhaExpandida, setLinhaExpandida] = useState(false);
     const [vendedores, setVendedores] = useState([]);
     const [clientes, setClientes] = useState([]);
-    const [abrirPopupExclusao, setAbrirPopupExclusao] = useState(false);
+    const [linhaExclusao, setLinhaExclusao] = useState(false);
 
-    function toggleLinhaExpandida(index) {
-        if (linhasExpandidas.includes(index)) {
-            setLinhasExpandidas(linhasExpandidas.filter((i) => i !== index));
-        } else {
-            setLinhasExpandidas([...linhasExpandidas, index]);
-        }
+    function toggleLinhaExpandida() {
+        setLinhaExpandida(!linhaExpandida)
     }
 
     const calcularValorTotal = (produtos) => {
@@ -47,24 +43,36 @@ const LinhaVenda = (props) => {
         buscarDadosAPI("vendedores/", setVendedores);
     }, []);
 
-    if (abrirPopupExclusao) return <ExcluirVenda venda={venda} onExcluir={excluirVenda} setAbrirPopupExclusao={setAbrirPopupExclusao} />;
+    if (linhaExclusao)
+        return <ExcluirVenda venda={venda} onExcluir={excluirVenda} setLinhaExclusao={setLinhaExclusao} />;
 
     return (
-      <React.Fragment key={venda.id}>
-        <tr key={venda.id}>
-            <td>{venda.numero_nota_fiscal}</td>
-            <td>{getNomeCliente(venda.cliente)}</td>
-            <td>{getNomeVendedor(venda.vendedor)}</td>
-            <td>{formatarData(venda.data_hora)}</td>
-            <td>{calcularValorTotal(venda.produtos)}</td>
-            <td className="tabela-opcoes">
-                <span className="botao-ver-itens-venda" onClick={() => toggleLinhaExpandida(index)}>Ver Itens</span>
-                <Link className="botao-editar-venda" to={`/vendas/alterar/${venda.id}`}><RiEditBoxLine /></Link>
-                <span className="botao-excluir" onClick={() => {setAbrirPopupExclusao(true);}}><FaTrash/></span>
-            </td>
-        </tr>
-        {linhasExpandidas.includes(index) && <DetalhesVenda venda={venda} />}
-      </React.Fragment>
+        <>
+            <tr key={venda.id}>
+                <td>{venda.numero_nota_fiscal}</td>
+                <td>{getNomeCliente(venda.cliente)}</td>
+                <td>{getNomeVendedor(venda.vendedor)}</td>
+                <td>{formatarData(venda.data_hora)}</td>
+                <td>{calcularValorTotal(venda.produtos)}</td>
+                <td className="tabela-opcoes">
+                    <span className="botao-ver-itens-venda" onClick={() => toggleLinhaExpandida()}>
+                        Ver Itens
+                    </span>
+                    <Link className="botao-editar-venda" to={`/vendas/alterar/${venda.id}`}>
+                        <RiEditBoxLine />
+                    </Link>
+                    <span
+                        className="botao-excluir"
+                        onClick={() => {
+                            setLinhaExclusao(true);
+                        }}
+                    >
+                        <FaTrash />
+                    </span>
+                </td>
+            </tr>
+            {linhaExpandida && <DetalhesVenda venda={venda} />}
+        </>
     );
 };
 export default LinhaVenda;
