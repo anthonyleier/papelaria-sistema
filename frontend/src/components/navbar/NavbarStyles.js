@@ -1,4 +1,8 @@
-.navbar {
+import styled from "styled-components";
+import { FaWindowClose } from "react-icons/fa";
+import { Link } from "react-router-dom";
+
+export const NavbarStyle = styled.div`
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -6,27 +10,17 @@
     gap: 200px;
     background-color: #f0f0f0;
     color: #00585e;
-}
+`;
 
-.menu-button {
+export const MenuButton = styled.button`
     background: none;
     border: none;
     font-size: 20px;
     cursor: pointer;
     color: #00585e;
-}
+`;
 
-.logo {
-    width: 200px;
-    height: 50px;
-}
-
-.titulo-pagina {
-    font-size: 24px;
-    margin: 0;
-}
-
-.menu-aberto {
+export const MenuAbertoStyle = styled.div`
     height: 100%;
     width: 250px;
     position: fixed;
@@ -42,9 +36,14 @@
     justify-content: start;
     align-items: center;
     gap: 20px;
-}
+`;
 
-.menu-item {
+export const MenuBotaoFechar = styled(FaWindowClose)`
+    font-size: 30px;
+    cursor: pointer;
+`;
+
+export const MenuItem = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -55,13 +54,18 @@
     background-color: #fff;
     font-size: 20px;
     height: 50px;
-}
+`;
 
-.menu-link {
+export const MenuLink = styled(Link)`
     text-decoration: none;
-}
+`;
 
-.menu-button-fechar {
-    font-size: 30px;
-    cursor: pointer;
-}
+export const TituloPagina = styled.h1`
+  font-size: 24px;
+  margin: 0;
+`;
+
+export const Logo = styled.img`
+  width: 200px;
+  height: 50px;
+`;

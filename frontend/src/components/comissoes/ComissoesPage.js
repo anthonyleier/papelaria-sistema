@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 
-import Navbar from "../navbar/Navbar";
+import NavbarStyle from "../navbar/Navbar";
 import { formatarMoeda, buscarDadosAPI } from "../../utils";
 
-import { Table, Th, Td, Tfoot, DateInput, Header, Filtro } from "./comissoesStyles";
+import { Table, Th, Td, Tfoot, DateInput, Header, Filtro } from "./ComissoesStyles";
 
 function ComissoesPage() {
     const [dataInicio, setDataInicio] = useState("2023-10-01");
@@ -29,7 +29,7 @@ function ComissoesPage() {
 
     return (
         <div>
-            <Navbar titulo="Comissões" />
+            <NavbarStyle titulo="Comissões" />
             <Header>
                 <h1>Relatório de Comissões</h1>
                 <Filtro>

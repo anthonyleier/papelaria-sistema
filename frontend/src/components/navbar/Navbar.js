@@ -1,9 +1,17 @@
 import React, { useState } from "react";
-import { FaShoppingCart, FaDollarSign, FaArrowRight, FaWindowClose } from "react-icons/fa";
+import { FaShoppingCart, FaDollarSign, FaArrowRight } from "react-icons/fa";
 import { FaBars } from "react-icons/fa";
-import { Link } from "react-router-dom";
 
-import "./navbar.css";
+import {
+    NavbarStyle,
+    MenuButton,
+    MenuAbertoStyle,
+    MenuBotaoFechar,
+    MenuItem,
+    MenuLink,
+    TituloPagina,
+    Logo,
+} from "./NavbarStyles";
 
 const Navbar = (props) => {
     const titulo = props.titulo;
@@ -14,28 +22,29 @@ const Navbar = (props) => {
     };
 
     return (
-        <nav className="navbar">
-            <button className="menu-button" onClick={toggleMenu}>
+        <NavbarStyle>
+            <MenuButton onClick={toggleMenu}>
                 <FaBars />
-            </button>
+            </MenuButton>
+
             {menuAberto && (
-                <div className="menu-aberto">
-                    <FaWindowClose onClick={toggleMenu} className="menu-button-fechar" />
-                    <Link to="/vendas" className="menu-link">
-                        <div className="menu-item">
+                <MenuAbertoStyle>
+                    <MenuBotaoFechar onClick={toggleMenu} />
+                    <MenuLink to="/vendas">
+                        <MenuItem>
                             <FaShoppingCart /> <p>Vendas</p> <FaArrowRight />
-                        </div>
-                    </Link>
-                    <Link to="/comissoes" className="menu-link">
-                        <div className="menu-item">
+                        </MenuItem>
+                    </MenuLink>
+                    <MenuLink to="/comissoes">
+                        <MenuItem>
                             <FaDollarSign /> <p>Comissões</p> <FaArrowRight />
-                        </div>
-                    </Link>
-                </div>
+                        </MenuItem>
+                    </MenuLink>
+                </MenuAbertoStyle>
             )}
-            <img src="/logo.svg" alt="Logo da Empresa" className="logo" />
-            <h1 className="titulo-pagina">{titulo}</h1>
-        </nav>
+            <Logo src="/logo.svg" />
+            <TituloPagina>{titulo}</TituloPagina>
+        </NavbarStyle>
     );
 };
 
