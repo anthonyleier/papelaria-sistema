@@ -122,6 +122,12 @@ td {
     text-decoration: none;
 }
 
+.botao-padrao-venda[disabled] {
+    background-color: var(--secondary);
+    border: none;
+    cursor: not-allowed;
+}
+
 /* Aba Produtos */
 .aba-produtos {
     width: 60%;

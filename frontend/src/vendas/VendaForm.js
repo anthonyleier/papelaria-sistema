@@ -30,6 +30,8 @@ const AlterarVenda = () => {
     const [vendedorVenda, setVendedorVenda] = useState("");
     const [clienteVenda, setClienteVenda] = useState("");
     const [produtosVenda, setProdutosVenda] = useState([]);
+
+    const [formularioPreenchido, setFormularioPreenchido] = useState(false);
     const navigate = useNavigate();
     const { id } = useParams();
 
@@ -91,6 +93,13 @@ const AlterarVenda = () => {
             setCarregando(false);
         }
     }, [vendas, id]);
+
+    useEffect(() => {
+        console.log(produtosVenda.length)
+        if (vendedorVenda && clienteVenda && produtosVenda.length > 0) {
+            setFormularioPreenchido(true);
+        }
+    }, [vendedorVenda, clienteVenda, produtosVenda]);
 
     const adicionarProduto = () => {
         if (produtoSelecionado && quantidadeSelecionada > 0) {
@@ -179,7 +188,7 @@ const AlterarVenda = () => {
                         </div>
 
                         <div className="input-produto">
-                            <button onClick={adicionarProduto} className="botao-interacao">
+                            <button onClick={adicionarProduto} className="botao-padrao-venda">
                                 Adicionar
                             </button>
                         </div>
@@ -248,11 +257,15 @@ const AlterarVenda = () => {
 
                     <div className="botoes-confirmacao">
                         <Link to="/vendas">
-                            <button onClick={finalizarVenda} className="botao-interacao">
+                            <button onClick={finalizarVenda} className="botao-padrao-venda">
                                 Cancelar
                             </button>
                         </Link>
-                        <button onClick={finalizarVenda} className="botao-interacao">
+                        <button
+                            disabled={!formularioPreenchido}
+                            onClick={finalizarVenda}
+                            className="botao-padrao-venda"
+                        >
                             Finalizar Venda
                         </button>
                     </div>
