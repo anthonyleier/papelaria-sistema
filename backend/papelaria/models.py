@@ -77,6 +77,7 @@ class ItemVenda(models.Model):
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     quantidade = models.PositiveIntegerField()
     comissao = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    percentual_comissao = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
     def calcular_comissao(self):
         dia_semana = self.venda.data_hora.weekday()
@@ -91,10 +92,12 @@ class ItemVenda(models.Model):
             percentual_maximo_dia = 0.1
 
         percentual_produto = self.produto.percentual_comissao
-        percentual_comissao = calcular_percentual_aceitavel(percentual_produto, percentual_minimo_dia, percentual_maximo_dia)
+        percentual_comissao_item = calcular_percentual_aceitavel(percentual_produto, percentual_minimo_dia, percentual_maximo_dia)
 
-        comissao_item = Decimal(self.quantidade) * self.produto.valor_unitario * Decimal(percentual_comissao)
+        comissao_item = Decimal(self.quantidade) * self.produto.valor_unitario * Decimal(percentual_comissao_item)
+
         self.comissao = comissao_item
+        self.percentual_comissao = percentual_comissao_item
 
         self.save()
         return comissao_item

@@ -55,6 +55,8 @@ class VendedorSerializerCustom(serializers.Serializer):
 class ItemVendaSerializerCustom(serializers.Serializer):
     produto = ProdutoSerializerCustom()
     quantidade = serializers.IntegerField()
+    comissao = serializers.DecimalField(max_digits=10, decimal_places=2)
+    percentual_comissao = serializers.DecimalField(max_digits=10, decimal_places=2)
 
 
 class VendaSerializerCustom(serializers.Serializer):

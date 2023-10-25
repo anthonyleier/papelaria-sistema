@@ -53,7 +53,8 @@ class VendaListCreateView(APIView):
             for produto in produtos:
                 item_serializer = ItemVendaSerializer(data=produto)
                 if item_serializer.is_valid():
-                    item_serializer.save(venda=venda)
+                    item = item_serializer.save(venda=venda)
+                    item.calcular_comissao()
                 else:
                     return Response(item_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -93,7 +94,8 @@ class VendaRetrieveUpdateDestroyView(APIView):
             for produto in produtos:
                 item_serializer = ItemVendaSerializer(data=produto)
                 if item_serializer.is_valid():
-                    item_serializer.save(venda=venda)
+                    item = item_serializer.save(venda=venda)
+                    item.calcular_comissao()
                 else:
                     return Response(item_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             return Response(venda_serializer.data)
@@ -110,14 +112,14 @@ class VendaRetrieveUpdateDestroyView(APIView):
 
 class VendedorComissaoList(APIView):
     def get(self, request, format=None):
-        data_incial_param = request.query_params.get('data_inicial')
+        data_inicial_param = request.query_params.get('data_inicial')
         data_final_param = request.query_params.get('data_final')
 
-        if not data_incial_param or not data_final_param:
+        if not data_inicial_param or not data_final_param:
             return Response({'error': 'É necessário fornecer data inicial e data final.'}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            data_inicial = datetime.strptime(data_incial_param, '%Y-%m-%d').date()
+            data_inicial = datetime.strptime(data_inicial_param, '%Y-%m-%d').date()
             data_final = datetime.strptime(data_final_param, '%Y-%m-%d').date()
         except ValueError:
             return Response({'error': 'Formato de data inválido. Use o formato AAAA-MM-DD.'}, status=status.HTTP_400_BAD_REQUEST)

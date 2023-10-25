@@ -25,8 +25,8 @@ const LinhaVenda = (props) => {
             descricao: produto.descricao,
             quantidade: itemVenda.quantidade,
             valor_unitario: produto.valor_unitario,
-            percentual_comissao: produto.percentual_comissao,
-            comissao: produto.valor_unitario * produto.percentual_comissao,
+            percentual_comissao: itemVenda.percentual_comissao,
+            comissao: itemVenda.comissao,
         });
     });
 
