@@ -4,13 +4,11 @@ O projeto é um sistema de papelaria simples, com controle de clientes, vendedor
 
 ## Dificuldades
 
-- buscar_quantidade_itemvenda
-- montar_json_venda
-(Explicar)
+A maior dificuldade foi a tratativa necessária para conseguir coletar a quantidade de produtos por venda na model de ItemVenda. Não estava conseguindo utilizar os serializers padrões do Django para coletar essas informações. Minha alternativa inicial foi criar uma função que serviria de serializer e faria uma consulta direta ao banco de dados com django.db.connection. Essa alternativa foi bem sucedida, porém por não se tratar de uma boa prática, busquei outras opções. Por fim, optei pela criação de um serializer personalizado para as vendas que montasse a venda com essa informação, seguindo os padrões do Django.
 
 ## Desenvolvimentos Futuros
 
-Como desenvolvimentos futuros para esta aplicação, gostaria de implantar a parte de frontend em NextJS, pois facilitaria o desenvolvimento, além de deixar mais robusto e organizado para novas funcionalidades. Além disso, também gostaria de implantar testes no frontend e realizar melhoria nas interface de forma geral.
+Como desenvolvimentos futuros para esta aplicação, gostaria de refatorar a parte das views de vendas. Como precisei criar um serializer customizado, as views das vendas ficaram um pouco fora do padrão das demais. Além disso, gostaria de implantar a parte de frontend em NextJS, pois facilitaria o desenvolvimento, além de deixar mais robusto e organizado para novas funcionalidades. Por fim, também gostaria de implantar testes no frontend e realizar melhorias nas interfaces de forma geral.
 
 ## Postman
 
@@ -32,7 +30,7 @@ O projeto foi desenvolvido e pensado para ser executado com Docker Compose, onde
 
 ## Django
 
-Para executar o projeto Django manualmente, sem o uso do Docker, podemos seguir os seguintes comandos:
+Para executar o projeto Django manualmente, **sem o uso do Docker**, podemos seguir os seguintes comandos:
 
 `cd backend`
 
@@ -52,7 +50,7 @@ Para ativar o venv, em ambiente Linux, utilizar `source ./venv/bin/activate` e e
 
 ## ReactJS
 
-Para executar o projeto ReactJS manualmente, sem precisar do Docker, podemos seguir os seguintes comandos:
+Para executar o projeto ReactJS manualmente, **sem precisar do Docker**, podemos seguir os seguintes comandos:
 
 `cd frontend `
 
