@@ -44,10 +44,12 @@ class ProdutoSerializerCustom(serializers.Serializer):
 
 class ClienteSerializerCustom(serializers.Serializer):
     id = serializers.IntegerField()
+    nome = serializers.CharField()
 
 
 class VendedorSerializerCustom(serializers.Serializer):
     id = serializers.IntegerField()
+    nome = serializers.CharField()
 
 
 class ItemVendaSerializerCustom(serializers.Serializer):

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { RiEditBoxLine } from "react-icons/ri";
 import { FaTrash } from "react-icons/fa";
 
 import LinhaDetalhesVenda from "./LinhaDetalhesVenda";
 import LinhaExcluirVenda from "./LinhaExcluirVenda";
-import { formatarData, formatarMoeda, buscarDadosAPI } from "../../utils";
+import { formatarData, formatarMoeda } from "../../utils";
 import { BotaoEditarVenda, BotaoVerItensVenda, BotaoExcluirVenda, TabelaOpcoes, Td } from "./VendasStyles";
 
 const LinhaVenda = (props) => {
@@ -12,9 +12,23 @@ const LinhaVenda = (props) => {
     const excluirVenda = props.onExcluir;
 
     const [linhaExpandida, setLinhaExpandida] = useState(false);
-    const [vendedores, setVendedores] = useState([]);
-    const [clientes, setClientes] = useState([]);
     const [linhaExclusao, setLinhaExclusao] = useState(false);
+
+    const produtos = venda.produtos;
+    const itensVenda = venda.itemvenda_set;
+    const produtosPreparados = [];
+
+    produtos.forEach((produto) => {
+        const itemVenda = itensVenda.find((itemVenda) => itemVenda.produto.codigo === produto.codigo);
+
+        produtosPreparados.push({
+            descricao: produto.descricao,
+            quantidade: itemVenda.quantidade,
+            valor_unitario: produto.valor_unitario,
+            percentual_comissao: produto.percentual_comissao,
+            comissao: produto.valor_unitario * produto.percentual_comissao,
+        });
+    });
 
     function toggleLinhaExpandida() {
         setLinhaExpandida(!linhaExpandida);
@@ -28,21 +42,6 @@ const LinhaVenda = (props) => {
         return formatarMoeda(valorTotal);
     };
 
-    const getNomeVendedor = (id) => {
-        const vendedor = vendedores.find((vendedor) => vendedor.id === id);
-        return vendedor ? vendedor.nome : null;
-    };
-
-    const getNomeCliente = (id) => {
-        const cliente = clientes.find((vendedor) => vendedor.id === id);
-        return cliente ? cliente.nome : null;
-    };
-
-    useEffect(() => {
-        buscarDadosAPI("clientes/", setClientes);
-        buscarDadosAPI("vendedores/", setVendedores);
-    }, []);
-
     if (linhaExclusao)
         return <LinhaExcluirVenda venda={venda} onExcluir={excluirVenda} setLinhaExclusao={setLinhaExclusao} />;
 
@@ -50,10 +49,10 @@ const LinhaVenda = (props) => {
         <>
             <tr key={venda.id}>
                 <Td>{venda.numero_nota_fiscal}</Td>
-                <Td>{getNomeCliente(venda.cliente)}</Td>
-                <Td>{getNomeVendedor(venda.vendedor)}</Td>
+                <Td>{venda.cliente.nome}</Td>
+                <Td>{venda.vendedor.nome}</Td>
                 <Td>{formatarData(venda.data_hora)}</Td>
-                <Td>{calcularValorTotal(venda.produtos)}</Td>
+                <Td>{calcularValorTotal(produtosPreparados)}</Td>
                 <Td>
                     <TabelaOpcoes>
                         <BotaoVerItensVenda onClick={() => toggleLinhaExpandida()}>Ver Itens</BotaoVerItensVenda>
@@ -70,7 +69,7 @@ const LinhaVenda = (props) => {
                     </TabelaOpcoes>
                 </Td>
             </tr>
-            {linhaExpandida && <LinhaDetalhesVenda venda={venda} />}
+            {linhaExpandida && <LinhaDetalhesVenda produtos={produtosPreparados} />}
         </>
     );
 };
