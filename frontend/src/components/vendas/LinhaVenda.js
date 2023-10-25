@@ -42,8 +42,7 @@ const LinhaVenda = (props) => {
         return formatarMoeda(valorTotal);
     };
 
-    if (linhaExclusao)
-        return <LinhaExcluirVenda venda={venda} onExcluir={excluirVenda} setLinhaExclusao={setLinhaExclusao} />;
+    if (linhaExclusao) return <LinhaExcluirVenda venda={venda} onExcluir={excluirVenda} setLinhaExclusao={setLinhaExclusao} />;
 
     return (
         <>

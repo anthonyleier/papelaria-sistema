@@ -61,11 +61,11 @@ export const MenuLink = styled(Link)`
 `;
 
 export const TituloPagina = styled.h1`
-  font-size: 24px;
-  margin: 0;
+    font-size: 24px;
+    margin: 0;
 `;
 
 export const Logo = styled.img`
-  width: 200px;
-  height: 50px;
+    width: 200px;
+    height: 50px;
 `;

@@ -6,14 +6,7 @@ import { FaTrash } from "react-icons/fa";
 import Select from "react-select";
 
 import Navbar from "../navbar/Navbar";
-import {
-    buscarDadosAPI,
-    buscarDataAtual,
-    formatarMoeda,
-    atualizarDadosAPI,
-    gerarNumeroNotaFiscal,
-    enviarDadosAPI,
-} from "../../utils";
+import { buscarDadosAPI, buscarDataAtual, formatarMoeda, atualizarDadosAPI, gerarNumeroNotaFiscal, enviarDadosAPI } from "../../utils";
 import {
     AbaDados,
     AbaProdutos,
@@ -83,12 +76,7 @@ const VendaForm = () => {
 
     useEffect(() => {
         if (modoEdicao) {
-            if (
-                vendas.length > 0 &&
-                vendedoresDisponiveis.length > 0 &&
-                clientesDisponiveis.length > 0 &&
-                produtosDisponiveis.length > 0
-            ) {
+            if (vendas.length > 0 && vendedoresDisponiveis.length > 0 && clientesDisponiveis.length > 0 && produtosDisponiveis.length > 0) {
                 const vendaEncontrada = vendas.find((venda) => venda.id === parseInt(id));
 
                 if (vendaEncontrada) {
@@ -204,12 +192,7 @@ const VendaForm = () => {
                         </InputProduto>
 
                         <InputProduto>
-                            <input
-                                type="number"
-                                className="input-texto"
-                                value={quantidadeSelecionada}
-                                onChange={(e) => setQuantidadeSelecionada(e.target.value)}
-                            />
+                            <input type="number" className="input-texto" value={quantidadeSelecionada} onChange={(e) => setQuantidadeSelecionada(e.target.value)} />
                         </InputProduto>
 
                         <InputProduto>

@@ -2,16 +2,7 @@ import React, { useState } from "react";
 import { FaShoppingCart, FaDollarSign, FaArrowRight } from "react-icons/fa";
 import { FaBars } from "react-icons/fa";
 
-import {
-    NavbarStyle,
-    MenuButton,
-    MenuAbertoStyle,
-    MenuBotaoFechar,
-    MenuItem,
-    MenuLink,
-    TituloPagina,
-    Logo,
-} from "./NavbarStyles";
+import { NavbarStyle, MenuButton, MenuAbertoStyle, MenuBotaoFechar, MenuItem, MenuLink, TituloPagina, Logo } from "./NavbarStyles";
 
 const Navbar = (props) => {
     const titulo = props.titulo;

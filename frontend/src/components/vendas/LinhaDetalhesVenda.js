@@ -20,7 +20,7 @@ const LinhaDetalhesVenda = (props) => {
                     <Td colSpan="2">{produto.descricao}</Td>
                     <Td>{produto.quantidade}</Td>
                     <Td>{formatarMoeda(produto.valor_unitario)}</Td>
-                    <Td>{Math.round(produto.percentual_comissao * 100) + '%'}</Td>
+                    <Td>{Math.round(produto.percentual_comissao * 100) + "%"}</Td>
                     <Td>{formatarMoeda(produto.comissao)}</Td>
                 </tr>
             ))}

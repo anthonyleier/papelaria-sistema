@@ -1,15 +1,15 @@
 import styled from "styled-components";
 
 export const Header = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #fff;
-  color: #00585e;
-  padding-top: 20px;
-  padding-bottom: 50px;
-  padding-left: 100px;
-  padding-right: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    color: #00585e;
+    padding-top: 20px;
+    padding-bottom: 50px;
+    padding-left: 100px;
+    padding-right: 100px;
 `;
 
 export const Table = styled.table`
@@ -40,18 +40,17 @@ export const Tfoot = styled.tfoot`
 `;
 
 export const DateInput = styled.input`
-  width: 150px;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 14px;
-  outline: none;
+    width: 150px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    outline: none;
 `;
 
 export const Filtro = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
 `;
-
