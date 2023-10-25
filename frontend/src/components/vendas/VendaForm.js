@@ -62,13 +62,17 @@ const VendaForm = () => {
 
     const carregarProdutos = (venda) => {
         let produtosCarregados = [];
+
         venda.produtos.forEach((produto) => {
+            const itensVenda = venda.itemvenda_set;
+            const itemVenda = itensVenda.find((itemVenda) => itemVenda.produto.codigo === produto.codigo);
+
             produtosCarregados.push({
                 produto: parseInt(produto.codigo),
                 descricao: produto.descricao,
-                valor_unitario: produto.valor_unitario,
-                quantidade: parseInt(produto.quantidade),
-                total: produto.valor_unitario * parseInt(produto.quantidade),
+                valor_unitario: parseFloat(produto.valor_unitario),
+                quantidade: parseInt(itemVenda.quantidade),
+                total: produto.valor_unitario * parseInt(itemVenda.quantidade),
             });
         });
         setProdutosVenda(produtosCarregados);
