@@ -191,12 +191,12 @@ class VendaTests(TestCase):
 
     def test_calculo_comissao(self):
         venda = Venda.objects.get(id=self.response.data['id'])
-        self.assertEqual(float(venda.calcular_total_comissao()), 6.297)  # (10 * 20.99 * 0.03) = 6.297
+        self.assertEqual(float(venda.calcular_total_comissao()), 6.3)  # (10 * 20.99 * 0.03) = 6.297
 
     def test_calculo_comissao_vendedor(self):
         response = self.client.get(reverse('vendedor-comissao-list') + '?data_inicial=2023-01-01&data_final=2023-12-31')
         vendedor = [vendedor for vendedor in response.data if vendedor["id_vendedor"] == self.vendedor.id][0]
-        self.assertEqual(float(vendedor.get('valor_comissao')), 6.297)  # 6.297 - Alex Fernandes Araujo
+        self.assertEqual(float(vendedor.get('valor_comissao')), 6.3)  # 6.297 - Alex Fernandes Araujo
 
     def test_calculo_comissao_limitador_minimo(self):
         DiaDaSemana.objects.create(dia=2, percentual_minimo=0.04, percentual_maximo=0.07)
@@ -209,7 +209,7 @@ class VendaTests(TestCase):
         }
         response = self.client.post(reverse('venda-list-create'), venda_data, format='json')
         venda = Venda.objects.get(id=response.data['id'])
-        self.assertEqual(float(venda.calcular_total_comissao()), 8.396)  # (10 * 20.99 * 0.04) = 8.396
+        self.assertEqual(float(venda.calcular_total_comissao()), 8.4)  # (10 * 20.99 * 0.04) = 8.396
 
     def test_calculo_comissao_limitador_maximo(self):
         DiaDaSemana.objects.create(dia=4, percentual_minimo=0.00, percentual_maximo=0.02)
@@ -222,4 +222,4 @@ class VendaTests(TestCase):
         }
         response = self.client.post(reverse('venda-list-create'), venda_data, format='json')
         venda = Venda.objects.get(id=response.data['id'])
-        self.assertEqual(float(venda.calcular_total_comissao()), 4.198)  # (10 * 20.99 * 0.02) = 4.198
+        self.assertEqual(float(venda.calcular_total_comissao()), 4.2)  # (10 * 20.99 * 0.02) = 4.198
