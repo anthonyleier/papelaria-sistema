@@ -90,6 +90,9 @@ class VendaRetrieveUpdateDestroyView(APIView):
             venda.produtos.set([])
             venda.save()
 
+            venda.data_hora = datetime.now()
+            venda.save()
+
             produtos = request.data.get('produtos', [])
             for produto in produtos:
                 item_serializer = ItemVendaSerializer(data=produto)
