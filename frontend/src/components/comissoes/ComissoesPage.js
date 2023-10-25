@@ -7,7 +7,7 @@ import { Table, Th, Td, Tfoot, DateInput, Header, Filtro } from "./ComissoesStyl
 
 function ComissoesPage() {
     const [dataInicio, setDataInicio] = useState("2023-10-01");
-    const [dataFim, setDataFim] = useState("2023-10-31");
+    const [dataFim, setDataFim] = useState("2023-11-30");
     const [comissoes, setComissoes] = useState([]);
     const [totalComissoes, setTotalComissoes] = useState(0);
 
