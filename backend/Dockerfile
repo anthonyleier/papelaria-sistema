@@ -8,7 +8,10 @@ COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+COPY papelaria papelaria
+COPY projeto projeto
+COPY manage.py manage.py
+COPY .env-example .env
 
 RUN python manage.py collectstatic --noinput
 
