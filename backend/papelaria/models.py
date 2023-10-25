@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
-from django.utils import timezone
+from datetime import datetime
 
 from decimal import Decimal
 
@@ -53,7 +53,7 @@ class DiaDaSemana(models.Model):
 
 class Venda(models.Model):
     numero_nota_fiscal = models.CharField(max_length=20)
-    data_hora = models.DateTimeField(default=timezone.now)
+    data_hora = models.DateTimeField(default=datetime.now())
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     vendedor = models.ForeignKey(Vendedor, on_delete=models.CASCADE)
     produtos = models.ManyToManyField(Produto, through='ItemVenda')
