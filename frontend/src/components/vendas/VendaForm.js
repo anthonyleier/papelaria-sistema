@@ -84,8 +84,8 @@ const VendaForm = () => {
                 const vendaEncontrada = vendas.find((venda) => venda.id === parseInt(id));
 
                 if (vendaEncontrada) {
-                    setVendedorVenda(vendaEncontrada.vendedor);
-                    setClienteVenda(vendaEncontrada.cliente);
+                    setVendedorVenda(vendaEncontrada.vendedor.id);
+                    setClienteVenda(vendaEncontrada.cliente.id);
                     carregarProdutos(vendaEncontrada);
                     setVenda(vendaEncontrada);
                 }
