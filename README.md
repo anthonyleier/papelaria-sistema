@@ -52,11 +52,11 @@ Para ativar o venv, em ambiente Linux, utilizar `source ./venv/bin/activate` e e
 
 Para executar o projeto ReactJS manualmente, **sem precisar do Docker**, podemos seguir os seguintes comandos:
 
-`cd frontend `
+`cd frontend`
 
-`npm install `
+`npm install`
 
-`npm start `
+`npm start`
 
 ## URLs
 
