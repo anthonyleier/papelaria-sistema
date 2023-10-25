@@ -53,7 +53,7 @@ class DiaDaSemana(models.Model):
 
 class Venda(models.Model):
     numero_nota_fiscal = models.CharField(max_length=20)
-    data_hora = models.DateTimeField(default=datetime.now())
+    data_hora = models.DateTimeField(default=datetime.now)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     vendedor = models.ForeignKey(Vendedor, on_delete=models.CASCADE)
     produtos = models.ManyToManyField(Produto, through='ItemVenda')
@@ -61,7 +61,7 @@ class Venda(models.Model):
     def calcular_total_comissao(self):
         total_comissao = 0
         for item in self.itemvenda_set.all():
-            total_comissao += item.calcular_comissao()
+            total_comissao += item.comissao
         return total_comissao
 
     def __str__(self):
