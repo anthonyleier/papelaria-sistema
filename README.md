@@ -2,14 +2,6 @@
 
 O projeto é um sistema de papelaria simples, com controle de clientes, vendedores, produtos, vendas e comissões. Algumas funcionalidades estão no frontend, outras podem ser acessadas via Django Admin ou através de API. A estrutura desse projeto foi baseada em Python v3.11 para o backend em Django e NodeJS v18.18 para o frontend em ReactJS. Todo o desenvolvimento do projeto buscou utilizar os conceitos de SOLID, The Twelve-Factor App, bem como mensagens claras e outras boas práticas de versionamento GIT. O projeto atende aos requisitos do desafio.
 
-## Dificuldades
-
-A maior dificuldade foi a tratativa necessária para conseguir coletar a quantidade de produtos por venda na model de ItemVenda. Não estava conseguindo utilizar os serializers padrões do Django para coletar essas informações. Minha alternativa inicial foi criar uma função que serviria de serializer e faria uma consulta direta ao banco de dados com django.db.connection. Essa alternativa foi bem sucedida, porém por não se tratar de uma boa prática, busquei outras opções. Por fim, optei pela criação de um serializer personalizado para as vendas que montasse a venda com essa informação, seguindo os padrões do Django.
-
-## Desenvolvimentos Futuros
-
-Como desenvolvimentos futuros para esta aplicação, gostaria de refatorar a parte das views de vendas. Como precisei criar um serializer customizado, as views das vendas ficaram um pouco fora do padrão das demais. Além disso, gostaria de implantar a parte de frontend em NextJS, pois facilitaria o desenvolvimento, além de deixar mais robusto e organizado para novas funcionalidades. Por fim, também gostaria de implantar testes no frontend e realizar melhorias nas interfaces de forma geral.
-
 ## Postman
 
 A aplicação fornece uma API para interagir com os modelos, é possível realizar o CRUD de clientes, vendedores, produtos e vendas, assim como consultar a comissão calculada pelo sistema para cada vendedor em um período de datas.
