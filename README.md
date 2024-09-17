@@ -1,14 +1,12 @@
 # Sistema de Papelaria
 
-O projeto é um sistema de papelaria simples, com controle de clientes, vendedores, produtos, vendas e comissões. Algumas funcionalidades estão no frontend, outras podem ser acessadas via Django Admin ou através de API. A estrutura desse projeto foi baseada em Python v3.11 para o backend em Django e NodeJS v18.18 para o frontend em ReactJS. Todo o desenvolvimento do projeto buscou utilizar os conceitos de SOLID, The Twelve-Factor App, bem como mensagens claras e outras boas práticas de versionamento GIT. O projeto atende aos requisitos do desafio.
+O projeto é um sistema de papelaria simples, com controle de clientes, vendedores, produtos, vendas e comissões. Algumas funcionalidades estão no frontend, outras podem ser acessadas via Django Admin ou através de API. A estrutura desse projeto foi baseada em Python v3.11 para o backend em Django e NodeJS v18.18 para o frontend em ReactJS. Todo o desenvolvimento do projeto buscou utilizar os conceitos de SOLID, The Twelve-Factor App, bem como mensagens claras e outras boas práticas de versionamento GIT.
 
 ## Postman
 
 A aplicação fornece uma API para interagir com os modelos, é possível realizar o CRUD de clientes, vendedores, produtos e vendas, assim como consultar a comissão calculada pelo sistema para cada vendedor em um período de datas.
 
-Elaborei um exemplo no Postman que pode ser usado como base para utilizar esses endpoints:
-
-https://www.postman.com/anthonyleier/workspace/pblico/collection/24415316-ccb80016-93f6-4e8b-be03-2a7f0952d714?action=share&creator=24415316
+Elaborei exemplos no Insomnia que podem ser utilizados através da importação do `insomnia.json`
 
 # Instalação
 
