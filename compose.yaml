@@ -18,9 +18,9 @@ services:
     image: postgres:16
     volumes:
       - postgres-data:/var/lib/postgresql/data
-      - ./init.sh:/docker-entrypoint-initdb.d/init.sh
     environment:
       POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: papelaria
 
 volumes:
   postgres-data:
